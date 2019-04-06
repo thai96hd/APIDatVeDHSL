@@ -113,7 +113,7 @@ namespace APIDatVe.API.QuanLy
                     {
                         if (!db.DoiTuongs.Any(x => x.madoituong == _doiTuong.madoituong))
                             return BadRequest("Mã đối tượng không tồn tại");
-                        DoiTuong oldDoiTuong = db.DoiTuongs.FirstOrDefault(x => x.madoituong == _doiTuong.madoituong))
+                        DoiTuong oldDoiTuong = db.DoiTuongs.FirstOrDefault(x => x.madoituong == _doiTuong.madoituong);
                         oldDoiTuong.tendoituong = _doiTuong.tendoituong;
                         oldDoiTuong.trangthai = _doiTuong.trangthai;
                         db.SaveChanges();
