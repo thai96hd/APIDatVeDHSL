@@ -22,8 +22,18 @@ namespace APIDatVe.API.QuanLy
             {
                 using (var db = new DB())
                 {
-                    List<Ghe> ghes = db.Ghes.Where(x => x.maxe == _maxe).OrderByDescending(x => x.ngaycapnhat).ToList();
-                    return Ok(ghes);
+                    var ghes = db.Ghes
+                            .Where(x => x.maxe == _maxe).OrderByDescending(x => x.ngaycapnhat)
+                            .ToList();
+                    return Ok(ghes.Select(x => new
+                    {
+                        x.maghe,
+                        x.maxe,
+                        x.ngaycapnhat,
+                        x.soghe,
+                        x.vitriX,
+                        x.vitriY
+                    }));
                 }
             }
             catch (Exception ex)

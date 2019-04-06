@@ -23,11 +23,20 @@ namespace APIDatVe.API.QuanLy
             {
                 using (var db = new DB())
                 {
-                    List<TinhThanh> tinhThanhs = db.TinhThanhs.Where(x => (x.tentinh.Contains(_tukhoa) || x.matinh.Contains(_tukhoa))).ToList();
+                    var tinhThanhs = db.TinhThanhs
+                            .Where(x => (x.tentinh.Contains(_tukhoa) || x.matinh.Contains(_tukhoa)))
+                            .ToList();
                     int sobanghi = tinhThanhs.Count;
                     return Ok(new
                     {
-                        tinhThanhs = tinhThanhs.Skip(_trang).Take(_sobanghi),
+                        tinhThanhs = tinhThanhs
+                            .Select(x => new
+                            {
+                                x.matinh,
+                                x.tentinh,
+                                x.trangthai
+                            })
+                            .Skip(_trang).Take(_sobanghi),
                         sobanghi = sobanghi
                     });
                 }
@@ -50,7 +59,12 @@ namespace APIDatVe.API.QuanLy
                     if (db.TinhThanhs.Any(x => x.matinh == _matinh))
                         return BadRequest("Tỉnh thành không tồn tại");
                     TinhThanh tinhThanh = db.TinhThanhs.FirstOrDefault(x => x.matinh == _matinh);
-                    return Ok(tinhThanh);
+                    return Ok(new
+                    {
+                        tinhThanh.matinh,
+                        tinhThanh.tentinh,
+                        tinhThanh.trangthai
+                    });
                 }
             }
             catch (Exception ex)

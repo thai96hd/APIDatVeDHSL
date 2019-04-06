@@ -23,17 +23,26 @@ namespace APIDatVe.API.QuanLy
             {
                 using (var db = new DB())
                 {
-                    List<DiemChungChuyen> diemChungChuyens = new List<DiemChungChuyen>();
+                    var diemChungChuyens = new List<DiemChungChuyen>();
                     if (_matinh == "")
                         diemChungChuyens = db.DiemChungChuyens
-                                .Where(x => x.tendiemtrungchuyen.Contains(_tukhoa) || x.matinh.Contains(_tukhoa) || x.diachi.Contains(_tukhoa)).ToList();
+                                .Where(x => x.tendiemtrungchuyen.Contains(_tukhoa) || x.matinh.Contains(_tukhoa) || x.diachi.Contains(_tukhoa))
+                                .ToList();
                     else
                         diemChungChuyens = db.DiemChungChuyens
                                 .Where(x => (x.tendiemtrungchuyen.Contains(_tukhoa) || x.matinh.Contains(_tukhoa) || x.diachi.Contains(_tukhoa)) && x.matinh == _matinh).ToList();
                     int sobanghi = diemChungChuyens.Count;
                     return Ok(new
                     {
-                        diemChungChuyens = diemChungChuyens.Skip(_trang).Take(_sobanghi),
+                        diemChungChuyens = diemChungChuyens
+                                .Select(x => new
+                                {
+                                    x.trangthai,
+                                    x.tendiemtrungchuyen,
+                                    x.matinh,
+                                    x.madiemtrungchuyen,
+                                    x.diachi
+                                }).Skip(_trang).Take(_sobanghi),
                         sobanghi = sobanghi
                     });
                 }

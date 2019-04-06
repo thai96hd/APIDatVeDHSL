@@ -21,11 +21,20 @@ namespace APIDatVe.API.QuanLy
             {
                 using (var db = new DB())
                 {
-                    List<Xe> xes = db.Xes.Where(x => (x.maxe.Contains(_tukhoa) || x.biensoxe.Contains(_tukhoa)) && x.trangthai != (int)Constant.KHOA).ToList();
+                    var xes = db.Xes
+                                .Where(x => (x.maxe.Contains(_tukhoa) || x.biensoxe.Contains(_tukhoa)) && x.trangthai != (int)Constant.KHOA)
+                                .ToList();
                     int sobanghi = xes.Count;
                     return Ok(new
                     {
-                        xes = xes.Skip(_trang).Take(_sobanghi),
+                        xes = xes.Select(x => new
+                                {
+                                    x.biensoxe,
+                                    x.ghichu,
+                                    x.maxe,
+                                    x.soghe,
+                                    x.trangthai
+                                }).Skip(_trang).Take(_sobanghi),
                         sobanghi = sobanghi
                     });
                 }
@@ -48,7 +57,14 @@ namespace APIDatVe.API.QuanLy
                     if (db.Xes.Any(x => x.maxe == _maxe))
                         return BadRequest("Xe không tồn tại");
                     Xe xe = db.Xes.FirstOrDefault(x => x.maxe == _maxe);
-                    return Ok(xe);
+                    return Ok(new
+                    {
+                        xe.ghichu,
+                        xe.maxe,
+                        xe.soghe,
+                        xe.trangthai,
+                        xe.biensoxe
+                    });
                 }
             }
             catch (Exception ex)
