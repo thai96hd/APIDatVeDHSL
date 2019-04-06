@@ -7,5 +7,7 @@ namespace APIDatVe.Helper
 {
     public class Constant
     {
+        public static int KHOA = -1;
+        public static int HOATDONG = 1;
     }
 }
