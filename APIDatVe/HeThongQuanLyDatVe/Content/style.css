@@ -1,0 +1,25 @@
+﻿.table-header {
+    overflow: hidden;
+}
+
+.tableTools-container {
+    margin-right: 3px;
+    margin-bottom: 2px;
+}
+
+.margin-md-bottom {
+    margin-bottom: 10px
+}
+
+#dynamic-table_wrapper > .row {
+    padding: 0
+}
+
+.button-upload {
+    margin: 10px auto;
+    display: block;
+}
+.action-buttons a {
+    margin-right: 5px;
+    cursor: pointer;
+}
