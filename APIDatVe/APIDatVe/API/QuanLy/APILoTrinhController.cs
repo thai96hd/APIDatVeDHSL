@@ -16,7 +16,7 @@ namespace APIDatVe.API.QuanLy
         [Route()]
         [HttpGet]
         [AcceptAction(ActionName = "Get", ControllerName = "APITinhThanhController")]
-        public IHttpActionResult Get(string _tukhoa, string _matinh = "", int _trang = 1, int _sobanghi = 100)
+        public IHttpActionResult Get(string _tukhoa = "", string _matinh = "", int _trang = 1, int _sobanghi = 100)
         {
             try
             {

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace APIDatVe.API.QuanLy
 {
@@ -15,26 +16,26 @@ namespace APIDatVe.API.QuanLy
         [Route()]
         [HttpGet]
         [AcceptAction(ActionName = "Get", ControllerName = "APIXeController")]
-        public IHttpActionResult Get(string _tukhoa, int _trang = 1, int _sobanghi = 100)
+        public IHttpActionResult Get(string _tukhoa = "", int _trang = 1, int _sobanghi = 100)
         {
             try
             {
                 using (var db = new DB())
                 {
                     var xes = db.Xes
-                                .Where(x => (x.maxe.Contains(_tukhoa) || x.biensoxe.Contains(_tukhoa)) && x.trangthai != (int)Constant.KHOA)
+                                .Where(x => (string.IsNullOrEmpty(_tukhoa) || x.maxe.Contains(_tukhoa) || x.biensoxe.Contains(_tukhoa)))
                                 .ToList();
                     int sobanghi = xes.Count;
                     return Ok(new
                     {
                         xes = xes.Select(x => new
-                                {
-                                    x.biensoxe,
-                                    x.ghichu,
-                                    x.maxe,
-                                    x.soghe,
-                                    x.trangthai
-                                }).Skip(_trang).Take(_sobanghi),
+                        {
+                            x.biensoxe,
+                            x.ghichu,
+                            x.maxe,
+                            x.soghe,
+                            x.trangthai
+                        }).Skip((_trang - 1) * _sobanghi).Take(_sobanghi),
                         sobanghi = sobanghi
                     });
                 }
@@ -44,7 +45,6 @@ namespace APIDatVe.API.QuanLy
                 return BadRequest(ex.Message);
             }
         }
-
         [Route("detail")]
         [HttpGet]
         [AcceptAction(ActionName = "Detail", ControllerName = "APIXeController")]
@@ -54,9 +54,9 @@ namespace APIDatVe.API.QuanLy
             {
                 using (var db = new DB())
                 {
-                    if (db.Xes.Any(x => x.maxe == _maxe))
-                        return BadRequest("Xe không tồn tại");
                     Xe xe = db.Xes.FirstOrDefault(x => x.maxe == _maxe);
+                    if (xe == null)
+                        return BadRequest("Xe không tồn tại");
                     return Ok(new
                     {
                         xe.ghichu,
@@ -86,10 +86,11 @@ namespace APIDatVe.API.QuanLy
                     {
                         if (db.Xes.Any(x => x.maxe == xe.maxe))
                             return BadRequest("Mã xe đã tồn tại");
+                        xe.trangthai = Constant.HOATDONG;
                         db.Xes.Add(xe);
                         db.SaveChanges();
                         transaction.Commit();
-                        return Ok();
+                        return Ok(xe);
                     }
 
                 }
@@ -117,9 +118,10 @@ namespace APIDatVe.API.QuanLy
                         oldxe.soghe = xe.soghe;
                         oldxe.ghichu = xe.ghichu;
                         oldxe.biensoxe = xe.biensoxe;
+                        oldxe.trangthai = xe.trangthai;
                         db.SaveChanges();
                         transaction.Commit();
-                        return Ok();
+                        return Ok(xe);
                     }
                 }
             }
@@ -129,10 +131,10 @@ namespace APIDatVe.API.QuanLy
             }
         }
 
-        [Route("delete")]
-        [HttpDelete]
-        [AcceptAction(ActionName = "Delete", ControllerName = "APIXeController")]
-        public IHttpActionResult Delete(string _maxe)
+        [Route("change-status")]
+        [HttpGet]
+        [AcceptAction(ActionName = "ChangeStatus", ControllerName = "APIXeController")]
+        public IHttpActionResult ChangeStatus(string _maxe)
         {
             try
             {
@@ -140,10 +142,13 @@ namespace APIDatVe.API.QuanLy
                 {
                     using (var transaction = db.Database.BeginTransaction())
                     {
-                        if (db.Xes.Any(x => x.maxe == _maxe))
-                            return BadRequest("Xe không tồn tại");
                         Xe xe = db.Xes.FirstOrDefault(x => x.maxe == _maxe);
-                        xe.trangthai = (int)Constant.KHOA;
+                        if (xe == null)
+                            return BadRequest("Xe không tồn tại");
+                        if (xe.trangthai == (int)Constant.KHOA)
+                            xe.trangthai = (int)Constant.HOATDONG;
+                        else
+                            xe.trangthai = (int)Constant.KHOA;
                         db.SaveChanges();
                         transaction.Commit();
                         return Ok();
