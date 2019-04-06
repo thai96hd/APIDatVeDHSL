@@ -1,0 +1,119 @@
+﻿
+@{
+    ViewBag.Title = "Quản lý tài khoản";
+}
+<script src="~/ckfinder/ckfinder.js"></script>
+
+<div class="page-content">
+    <div class="page-header">
+        <h1>
+            Thông tin tài khoản
+        </h1>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label no-padding-right text-center" style="display:block">Avatar</label>
+                        <img id="img-logo" src="~/FileDefault/img-default.gif" style="width:100%">
+                        <input id="Logo" style="display: none; width: 0px;" name="Logo" class="upload">
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <label class="control-label no-padding-right">Họ và tên</label>
+                        <div>
+                            <input name="hoten" disabled value="Nguyễn Thị A" type="text" class="col-xs-12" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label no-padding-right">Giới tính</label>
+                        <div>
+                            <input value="Nam" id="gioi_tinh_nam" type="checkbox" checked />
+                            <label for="gioi_tinh_nam" style="margin-right:10px">Nam</label>
+                            <input value="Nữ" id="gioi_tinh_nu" type="checkbox" />
+                            <label for="gioi_tinh_nu">Nữ</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label no-padding-right">Ngày sinh</label>
+                        <div>
+                            <input name="ngaysinh" disabled type="date" class="col-xs-12" value="1996-01-01" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label no-padding-right"><b>Thông tin</b></label>
+                    </div>
+                    <label class="control-label no-padding-right">Địa chỉ</label>
+                    <div>
+                        <input name="diachi" disabled value="" type="text" class="col-xs-12" />
+                    </div>
+                </div>
+                <div class="col-md-12 text-center hidden" id="box_submit" style="margin-top:10px">
+                    <button class="btn btn-primary btn-sm">Cập nhật</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1">
+
+        </div>
+        <div class="col-md-5">
+            <div class="form-group clearfix">
+                <label class="control-label no-padding-right">Địa chỉ email</label>
+                <div>
+                    <label class="control-label no-padding-right">
+                        <b>anonymous@gmail.com</b>
+                    </label>
+                    <button class="btn btn-primary btn-sm pull-right">Edit</button>
+                </div>
+            </div>
+            <div class="form-group clearfix">
+                <div>
+                    <label class="control-label no-padding-right">Mật khẩu</label>
+                    <button class="btn btn-primary btn-sm pull-right">Edit</button>
+                </div>
+            </div>
+            <div class="form-group clearfix">
+                <div>
+                    <label class="control-label no-padding-right">Thông tin cơ bản</label>
+                    <button class="btn btn-primary btn-sm pull-right" onclick="editInfo()">Edit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function editInfo() {
+        $(document.getElementsByName('hoten')[0]).removeAttr("disabled");
+        $(document.getElementsByName('ngaysinh')[0]).removeAttr("disabled");
+        $(document.getElementsByName('diachi')[0]).removeAttr("disabled");
+        $("#box_submit").removeClass("hidden")
+    }
+    $(document).ready(function () {
+        function setFileField(fileUrl) {
+            $('#' + $(upload).attr('for')).val(fileUrl);
+            $("#img-logo").attr("src", fileUrl);
+        }
+        if (!$('.button-upload').length > 0) {
+            var upload;
+            var textBox = $('.upload');
+            for (var i = 0; i < textBox.length; i++) {
+                var uploadText = $(textBox[i]);
+                uploadText.css('width', uploadText.width() - 70);
+                uploadText.after('<button type="button" for="' + uploadText.attr('id') + '" class="button-upload btn-sm btn btn-success">Chọn ảnh</button>');
+                $('.button-upload').click(function () {
+                    upload = $(this);
+                    // You can use the "CKFinder" class to render CKFinder in a page:
+                    var finder = new CKFinder();
+                    finder.basePath = '../files';
+                    finder.selectActionFunction = setFileField;
+                    finder.popup();
+                });
+            }
+        }
+    });
+</script>

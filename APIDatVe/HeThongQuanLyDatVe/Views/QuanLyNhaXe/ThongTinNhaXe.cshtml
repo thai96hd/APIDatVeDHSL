@@ -1,0 +1,128 @@
+﻿
+@{
+    ViewBag.Title = "Quản lý nhà xe";
+}
+
+<script src="~/ckeditor/ckeditor.js"></script>
+<script src="~/ckfinder/ckfinder.js"></script>
+<script src="~/ckeditor/config.js"></script>
+<script src="~/ckeditor/styles.js"></script>
+<script src="~/ckeditor/sample.js"></script>
+<div class="page-content">
+    <div class="page-header">
+        <h1>
+            Thông tin nhà xe
+        </h1>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="row">
+                <div class="col-md-12 margin-md-bottom">
+                    <div class="form-group">
+                        <label class="control-label no-padding-right" style="display:block">Hình ảnh</label>
+                        <img id="img-logo" src="~/FileDefault/img-default.gif" style="width:100%">
+                        <input id="Logo" style="display: none; width: 0px;" name="Logo" class="upload">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="col-md-12 margin-md-bottom">
+                        <div class="form-group">
+                            <label class="control-label no-padding-right">Tên nhà xe</label>
+                            <div>
+                                <input type="text" class="col-xs-12" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 margin-md-bottom">
+                        <div class="form-group">
+                            <label class="control-label no-padding-right">Số điện thoại</label>
+                            <div>
+                                <input type="text" class="col-xs-12" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 margin-md-bottom">
+                        <div class="form-group">
+                            <label class="control-label no-padding-right">Fax</label>
+                            <div>
+                                <input type="text" class="col-xs-12" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 margin-md-bottom">
+                        <div class="form-group">
+                            <label class="control-label no-padding-right">Địa chỉ</label>
+                            <div>
+                                <input type="text" class="col-xs-12" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="col-md-12 margin-md-bottom">
+                        <div class="form-group">
+                            <label class="control-label no-padding-right">Email</label>
+                            <div>
+                                <input type="text" class="col-xs-12" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 margin-md-bottom">
+                        <div class="form-group">
+                            <label class="control-label no-padding-right">Website</label>
+                            <div>
+                                <input type="text" class="col-xs-12" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 margin-md-bottom">
+                        <div class="form-group">
+                            <label class="control-label no-padding-right">Facebook</label>
+                            <div>
+                                <input type="text" class="col-xs-12" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 margin-md-bottom">
+            <textarea rows="2" name="Description"></textarea>
+        </div>
+        <div class="col-md-12 center">
+            <button class="btn btn-success btn-sm">Cập nhật</button>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        CKEDITOR.replace("Description");
+        function setFileField(fileUrl) {
+            $('#' + $(upload).attr('for')).val(fileUrl);
+            $("#img-logo").attr("src", fileUrl);
+        }
+        if (!$('.button-upload').length > 0) {
+            var upload;
+            var textBox = $('.upload');
+            for (var i = 0; i < textBox.length; i++) {
+                var uploadText = $(textBox[i]);
+                uploadText.css('width', uploadText.width() - 70);
+                uploadText.after('<button type="button" for="' + uploadText.attr('id') + '" class="button-upload btn-sm btn btn-success">Chọn ảnh</button>');
+                $('.button-upload').click(function () {
+                    upload = $(this);
+                    // You can use the "CKFinder" class to render CKFinder in a page:
+                    var finder = new CKFinder();
+                    finder.basePath = '../files';
+                    finder.selectActionFunction = setFileField;
+                    finder.popup();
+                });
+            }
+        }
+    });
+</script>

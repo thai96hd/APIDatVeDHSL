@@ -1,0 +1,116 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta charset="utf-8" />
+    <title>Đăng nhập hệ thống</title>
+    <link rel="stylesheet" href="~/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/assets/font-awesome/4.5.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="~/assets/css/fonts.googleapis.com.css" />
+    <link rel="stylesheet" href="~/assets/css/ace.min.css" />
+    <link rel="stylesheet" href="~/assets/css/ace-rtl.min.css" />
+</head>
+
+<body class="login-layout light-login">
+    <div class="main-container">
+        <div class="main-content">
+            <div class="row">
+                <div class="col-sm-10 col-sm-offset-1">
+                    <div class="login-container">
+                        <div class="position-relative" style="padding-top:100px">
+                            <div id="login-box" class="login-box visible widget-box no-border">
+                                <div class="widget-body">
+                                    <div class="widget-main">
+                                        <h4 class="header blue lighter bigger">
+                                            <i class="ace-icon fa fa-coffee green"></i>
+                                            Vui lòng nhập LoginID
+                                        </h4>
+                                        <div class="space-6"></div>
+                                        <fieldset>
+                                            <label class="block clearfix">
+                                                <span class="block input-icon input-icon-right">
+                                                    <input type="text" class="form-control" placeholder="Login ID" />
+                                                    <i class="ace-icon fa fa-user"></i>
+                                                </span>
+                                            </label>
+                                            <div class="toolbar clearfix text-center" style="background:none;border:none">
+                                                <a href="#" class="btn btn-primary btn-sm" data-target="#step2">
+                                                    Next
+                                                </a>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="step2" class="forgot-box widget-box no-border">
+                                <div class="widget-body">
+                                    <div class="widget-main">
+                                        <h4 class="header lighter bigger">
+                                            Setting Password
+                                        </h4>
+                                        <fieldset>
+                                            <label class="block clearfix">
+                                                <span class="block input-icon input-icon-right">
+                                                    <input type="text" class="form-control" placeholder="Password" />
+                                                    <i class="ace-icon fa fa-key"></i>
+                                                </span>
+                                            </label>
+                                            <label class="block clearfix">
+                                                <span class="block input-icon input-icon-right">
+                                                    <input type="text" class="form-control" placeholder="Password confirm" />
+                                                    <i class="ace-icon fa fa-key"></i>
+                                                </span>
+                                            </label>
+                                            <div class="clearfix text-center">
+                                                <div class="toolbar clearfix text-center" style="background:none;border:none">
+                                                    <a href="#" class="btn btn-primary btn-sm" data-target="#step3">
+                                                        Next
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="step3" class="forgot-box widget-box no-border">
+                                <div class="widget-body">
+                                    <div class="widget-main">
+                                        <h4 class="header lighter bigger">
+                                            Kết thúc xác nhận tài khoản
+                                        </h4>
+                                        <fieldset>
+                                            <div class="clearfix text-center">
+                                                <a href="/login/DangNhap" class="width-35 btn btn-sm btn-primary">
+                                                    <span class="bigger-110">Back to login</span>
+                                                </a>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div>
+    </div>
+    <script src="~/assets/js/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript">
+        jQuery(function ($) {
+            $(document).on('click', '.toolbar a[data-target]', function (e) {
+                e.preventDefault();
+                var target = $(this).data('target');
+                $('.widget-box.visible').removeClass('visible');//hide others
+                $(target).addClass('visible');//show target
+            });
+        });
+    </script>
+</body>
+</html>
+
+

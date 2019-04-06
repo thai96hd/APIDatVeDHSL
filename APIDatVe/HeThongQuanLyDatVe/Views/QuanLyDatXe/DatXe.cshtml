@@ -1,0 +1,87 @@
+﻿
+@{
+    ViewBag.Title = "Đặt xe";
+}
+
+<div class="page-content">
+    <div class="page-header">
+        <h1>
+            Đặt xe trực tuyến - Nhà Xe Đồng Hương Sông Lam
+        </h1>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="widget-box">
+                <div class="widget-header widget-header-blue widget-header-flat">
+                    <h4 class="widget-title lighter">Quy trình đặt xe</h4>
+                </div>
+
+                <div class="widget-body">
+                    <div class="widget-main">
+                        <div id="fuelux-wizard-container">
+                            <div>
+                                <ul class="steps">
+                                    <li id="step_1" class="active">
+                                        <span class="step">1</span>
+                                        <span class="title">Chọn tuyến</span>
+                                    </li>
+
+                                    <li id="step_2">
+                                        <span class="step">2</span>
+                                        <span class="title">Chọn tuyến đi</span>
+                                    </li>
+
+                                    <li id="step_3">
+                                        <span class="step">3</span>
+                                        <span class="title">Xác nhận đặt vé</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <hr />
+                            <div class="step-content pos-rel">
+                                <div id="content_step_1" class="step-pane active">
+                                    @Html.Partial("/Views/QuanLyDatXe/QuyTrinhDatXe/Buoc1.cshtml")
+                                </div>
+                                <div id="content_step_2" class="step-pane">
+                                    @Html.Partial("/Views/QuanLyDatXe/QuyTrinhDatXe/Buoc2.cshtml")
+                                </div>
+                                <div id="content_step_3" class="step-pane">
+                                    @Html.Partial("/Views/QuanLyDatXe/QuyTrinhDatXe/Buoc3.cshtml")
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="wizard-actions">
+                            <button class="btn btn-sm" onclick="gotoStep(-1)">
+                                <i class="ace-icon fa fa-arrow-left"></i>
+                                Quay lại
+                            </button>
+
+                            <button class="btn btn-success btn-sm" onclick="gotoStep(1)">
+                                Tiếp theo
+                                <i class="ace-icon fa fa-arrow-right icon-on-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var currentStep = 1;
+    function gotoStep(step) {
+        let newStep = currentStep + step;
+        if (newStep < 1 || newStep > 3)
+            return;
+        $(".steps > li").removeClass('active');
+        $(".steps > li").removeClass('complete');
+        $(".step-pane").removeClass('active');
+        for (let i = 1; i < newStep; i++) {
+            $("#step_" + i).addClass('complete');
+        }
+        $("#step_" + newStep).addClass('active');
+        $("#content_step_" + newStep).addClass('active');
+        currentStep = newStep;
+    }
+</script>

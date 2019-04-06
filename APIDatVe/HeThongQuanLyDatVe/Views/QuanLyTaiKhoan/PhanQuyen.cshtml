@@ -1,0 +1,92 @@
+﻿
+@{
+    ViewBag.Title = "Quản lý tài khoản";
+}
+
+<div class="page-content">
+    <div class="page-header">
+        <h1>
+            Phân quyền
+        </h1>
+    </div>
+    <p>Chọn nút  <i class="ace-icon fa fa-pencil bigger-130"></i> tương ứng với quyền trong danh sách quyền để cập nhật các chức năng được phép thực hiện.</p>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="table-header">
+                Danh sách quyền
+            </div>
+            <div>
+                <table id="dynamic-table" class="table table-striped table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>Mã quyền</th>
+                            <th>Tên quyền</th>
+                            <th class="center">Phân quyền</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @for (int i = 1; i < 3; i++)
+                        {
+                            <tr>
+                                <td>
+                                    <span>Mã quyền @i</span>
+                                </td>
+                                <td>
+                                    <span>Tên quyền @i</span>
+                                </td>
+                                <td class="center">
+                                    <div class="action-buttons">
+                                        <a class="green" href="#">
+                                            <i class="ace-icon fa fa-pencil bigger-130"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="table-header">
+                Danh sách chức năng
+            </div>
+            <div>
+                <table class="table table-bordered table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Tên chức năng</th>
+                            <th class="center">Quyền Xem</th>
+                            <th class="center">Quyền Thêm</th>
+                            <th class="center">Quyền Sửa</th>
+                            <th class="center">Quyền Xóa</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 1; i < 10; i++)
+                        {
+                            <tr>
+                                <td>
+                                    <span>Tên chức năng @i</span>
+                                </td>
+                                <td class="center">
+                                    <input name="form-field-checkbox" type="checkbox" />
+                                </td>
+                                <td class="center">
+                                    <input name="form-field-checkbox" type="checkbox" />
+                                </td>
+                                <td class="center">
+                                    <input name="form-field-checkbox" type="checkbox" />
+                                </td>
+                                <td class="center">
+                                    <input name="form-field-checkbox" type="checkbox" />
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

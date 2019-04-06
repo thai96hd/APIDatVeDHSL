@@ -1,0 +1,61 @@
+﻿<div style="max-width: 600px;margin: 0 auto;">
+    <div class="row">
+        <div class="col-md-12 margin-md-bottom">
+            <div class="form-group">
+                <label class="control-label no-padding-right">Chuyến</label>
+                <div>
+                    <select class="col-xs-12">
+                        <option value="">Chọn...</option>
+                        <option value="1">Nghệ An - Hà Nội</option>
+                        <option value="2">Hà Nội - Nghệ An</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 margin-md-bottom">
+            <div class="form-group">
+                <label class="control-label no-padding-right">Điểm xuất phát</label>
+                <div>
+                    <select class="col-xs-12">
+                        <option value="">Chọn...</option>
+                        @for (int i = 0; i < 10; i++)
+                        {
+                            <option value="@i">Điểm xuất phát</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 margin-md-bottom">
+            <div class="form-group">
+                <label class="control-label no-padding-right">Điểm đến</label>
+                <div>
+                    <select class="col-xs-12">
+                        <option value="">Chọn...</option>
+                        @for (int i = 0; i < 10; i++)
+                        {
+                            <option value="@i">Điểm đến</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 margin-md-bottom">
+            <div class="form-group">
+                <label class="control-label no-padding-right">Ngày đi</label>
+                <div>
+                    <input type="date" class="col-xs-12" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 margin-md-bottom text-center">
+            <div class="form-group">
+                <label class="control-label no-padding-right"> </label>
+                <div>
+                    <button class="btn btn-success btn-sm">Hôm nay</button>
+                    <button class="btn btn-success btn-sm">Ngày mai</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

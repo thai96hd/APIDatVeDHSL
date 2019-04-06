@@ -1,0 +1,276 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="~/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/assets/font-awesome/4.5.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="~/assets/css/fonts.googleapis.com.css" />
+    <link rel="stylesheet" href="~/assets/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
+    <link rel="stylesheet" href="~/assets/css/ace-skins.min.css" />
+    <link rel="stylesheet" href="~/assets/css/ace-rtl.min.css" />
+    <script src="~/assets/js/ace-extra.min.js"></script>
+    <script src="~/assets/js/jquery-2.1.4.min.js"></script>
+    <link href="~/Content/style.css" rel="stylesheet" />
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/Scripts/angular-sanitize.min.js"></script>
+    <script src="~/Scripts/layout-angular.js"></script>
+</head>
+
+<body class="no-skin" ng-app="app">
+    <div id="navbar" class="navbar navbar-default ace-save-state">
+        <div class="navbar-container ace-save-state" id="navbar-container">
+            <button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler" data-target="#sidebar">
+                <span class="sr-only">Toggle sidebar</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+            <div class="navbar-header pull-left">
+                <a href="/" class="navbar-brand">
+                    <small>
+                        <i class="fa fa-leaf"></i>
+                        Admin
+                    </small>
+                </a>
+            </div>
+
+            <div class="navbar-buttons navbar-header pull-right" role="navigation">
+                <ul class="nav ace-nav">
+                    <li class="light-blue dropdown-modal">
+                        <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+                            <img class="nav-user-photo" src="~/assets/images/avatars/user.jpg" alt="Thông tin tài khoản" />
+                            <span class="user-info">
+                                <small>Admin</small>
+                            </span>
+                            <i class="ace-icon fa fa-caret-down"></i>
+                        </a>
+                        <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+                            <li>
+                                <a href="profile.html">
+                                    <i class="ace-icon fa fa-user"></i>
+                                    Thông tin tài khoản
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="#">
+                                    <i class="ace-icon fa fa-power-off"></i>
+                                    Đăng xuất
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-container ace-save-state" id="main-container">
+        <div id="sidebar" class="sidebar responsive ace-save-state">
+            <ul class="nav nav-list">
+                <li class="active">
+                    <a href="/TongQuan/ManHinhTongQuan">
+                        <i class="menu-icon fa fa-tachometer"></i>
+                        <span class="menu-text"> Tổng quan </span>
+                    </a>
+                    <b class="arrow"></b>
+                </li>
+                <li class="open">
+                    <a href="/QuanLyDatXe/DatXe">
+                        <i class="menu-icon fa fa-fax"></i>
+                        <span class="menu-text"> Đặt xe </span>
+                    </a>
+                </li>
+                <li class="open">
+                    <a href="/QuanLyDatXe/DanhSachDatXe">
+                        <i class="menu-icon fa fa-list-ol"></i>
+                        <span class="menu-text"> Danh sách đặt xe </span>
+                    </a>
+                </li>
+                <li class="open">
+                    <a href="#" class="dropdown-toggle">
+                        <i class="menu-icon fa fa-bus"></i>
+                        <span class="menu-text">
+                            Quản lý xe &amp; ghế
+                        </span>
+                        <b class="arrow fa fa-angle-down"></b>
+                    </a>
+                    <b class="arrow"></b>
+                    <ul class="submenu">
+                        <li class="open">
+                            <a href="/QuanLyXe/DanhSachXe">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                Quản lý xe
+                            </a>
+                            <b class="arrow"></b>
+                        </li>
+                        <li class="open">
+                            <a href="/QuanLyGheNgoi/DanhSachGheNgoi">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                Quản lý ghế ngồi
+                            </a>
+                            <b class="arrow"></b>
+                        </li>
+                        <li class="open">
+                            <a href="/QuanLyGiaGhe/GiaGhe">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                Quản lý giá ghế
+                            </a>
+                            <b class="arrow"></b>
+                        </li>
+                    </ul>
+                </li>
+                <li class="open">
+                    <a href="#" class="dropdown-toggle">
+                        <i class="menu-icon fa fa-code-fork"></i>
+                        <span class="menu-text">
+                            Lộ trình &amp; ĐCC
+                        </span>
+                        <b class="arrow fa fa-angle-down"></b>
+                    </a>
+                    <b class="arrow"></b>
+                    <ul class="submenu">
+                        <li class="open">
+                            <a href="/QuanLyLoTrinh/DanhSachLoTrinh">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                Quản lý lộ trình
+                            </a>
+                            <b class="arrow"></b>
+                        </li>
+                        <li class="open">
+                            <a href="/QuanLyDiemChungChuyen/DanhSachDiemCC">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                Quản lý điểm chung chuyển
+                            </a>
+                            <b class="arrow"></b>
+                        </li>
+                    </ul>
+                </li>
+                <li class="open">
+                    <a href="#" class="dropdown-toggle">
+                        <i class="menu-icon fa fa-users"></i>
+                        <span class="menu-text">
+                            Quản lý khách hàng
+                        </span>
+                        <b class="arrow fa fa-angle-down"></b>
+                    </a>
+                    <b class="arrow"></b>
+                    <ul class="submenu">
+                        <li class="open">
+                            <a href="/QuanLyKhachHang/DanhSachKhachHang">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                DS khách hàng
+                            </a>
+                            <b class="arrow"></b>
+                        </li>
+                        <li class="open">
+                            <a href="#">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                Tích điểm
+                            </a>
+                            <b class="arrow"></b>
+                        </li>
+                        <li class="open">
+                            <a href="#">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                Loại khách hàng
+                            </a>
+                            <b class="arrow"></b>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="open">
+                    <a href="#" class="dropdown-toggle">
+                        <i class="menu-icon fa fa-users"></i>
+                        <span class="menu-text">
+                            Quản lý tài khoản
+                        </span>
+                        <b class="arrow fa fa-angle-down"></b>
+                    </a>
+                    <b class="arrow"></b>
+                    <ul class="submenu">
+                        <li class="open">
+                            <a href="/QuanLyTaiKhoan/ThongTinTaiKhoan">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                Profile
+                            </a>
+                            <b class="arrow"></b>
+                        </li>
+                        <li class="open">
+                            <a href="/QuanLyTaiKhoan/DanhSachTaiKhoan">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                Danh sách tài khoản
+                            </a>
+                            <b class="arrow"></b>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="open">
+                    <a href="#" class="dropdown-toggle">
+                        <i class="menu-icon fa fa-gear"></i>
+                        <span class="menu-text">
+                            Cài đặt
+                        </span>
+                        <b class="arrow fa fa-angle-down"></b>
+                    </a>
+                    <b class="arrow"></b>
+                    <ul class="submenu">
+                        <li class="open">
+                            <a href="/QuanLyTaiKhoan/PhanQuyen">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                Cài đặt quyền
+                            </a>
+                            <b class="arrow"></b>
+                        </li>
+                        <li class="open">
+                            <a href="/QuanLyTaiKhoan/DanhSachTaiKhoan">
+                                <i class="menu-icon fa fa-caret-right"></i>
+                                Cấu hình
+                            </a>
+                            <b class="arrow"></b>
+                        </li>
+                    </ul>
+                </li>
+                <li class="open">
+                    <a href="/QuanLyNhaXe/ThongTinNhaXe">
+                        <i class="menu-icon fa fa-building"></i>
+                        <span class="menu-text"> Thông tin nhà xe </span>
+                    </a>
+                </li>
+            </ul><!-- /.nav-list -->
+
+            <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
+                <i id="sidebar-toggle-icon" class="ace-icon fa fa-angle-double-left ace-save-state" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="main-content-inner">
+                @RenderBody()
+            </div>
+        </div><!-- /.main-content -->
+
+        <div class="footer">
+            <div class="footer-inner">
+                <div class="footer-content">
+                    <span class="bigger-120">
+                        Hệ thống quản lý nhà xe &copy; 2019
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/assets/js/bootstrap.min.js"></script>
+    <script src="~/assets/js/jquery-ui.custom.min.js"></script>
+    <script src="~/assets/js/jquery.ui.touch-punch.min.js"></script>
+    <script src="~/assets/js/jquery.easypiechart.min.js"></script>
+    <script src="~/assets/js/jquery.sparkline.index.min.js"></script>
+    <script src="~/assets/js/ace-elements.min.js"></script>
+    <script src="~/assets/js/ace.min.js"></script>
+</body>
+</html>
