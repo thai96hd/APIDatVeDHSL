@@ -1,5 +1,6 @@
 ﻿using APIDatVe.API.Quyen;
 using APIDatVe.Database;
+using APIDatVe.Helper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,10 +8,6 @@ using System.Web.Http;
 
 namespace APIDatVe.API.QuanLy
 {
-    public enum TrangThaiXe
-    {
-        XOA = -1
-    }
     [RoutePrefix("api/xe")]
     [BaseAuthenticationAttribute]
     public class APIXeController : ApiController
@@ -24,7 +21,7 @@ namespace APIDatVe.API.QuanLy
             {
                 using (var db = new DB())
                 {
-                    List<Xe> xes = db.Xes.Where(x => (x.maxe.Contains(_tukhoa) || x.biensoxe.Contains(_tukhoa)) && x.trangthai != (int)TrangThaiXe.XOA).ToList();
+                    List<Xe> xes = db.Xes.Where(x => (x.maxe.Contains(_tukhoa) || x.biensoxe.Contains(_tukhoa)) && x.trangthai != (int)Constant.KHOA).ToList();
                     int sobanghi = xes.Count;
                     return Ok(new
                     {
@@ -130,7 +127,7 @@ namespace APIDatVe.API.QuanLy
                         if (db.Xes.Any(x => x.maxe == _maxe))
                             return BadRequest("Xe không tồn tại");
                         Xe xe = db.Xes.FirstOrDefault(x => x.maxe == _maxe);
-                        xe.trangthai = (int)TrangThaiXe.XOA;
+                        xe.trangthai = (int)Constant.KHOA;
                         db.SaveChanges();
                         transaction.Commit();
                         return Ok();

@@ -1,5 +1,6 @@
 ﻿using APIDatVe.API.Quyen;
 using APIDatVe.Database;
+using APIDatVe.Helper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,12 +10,7 @@ using System.Web.Http;
 
 namespace APIDatVe.API.QuanLy
 {
-    public enum TrangThaiTinhThanh
-    {
-        KHOA = 0,
-        HOATDONG = 1
-    }
-    [RoutePrefix("api/xe")]
+    [RoutePrefix("api/tinhthanh")]
     [BaseAuthenticationAttribute]
     public class APITinhThanhController : ApiController
     {
@@ -132,7 +128,7 @@ namespace APIDatVe.API.QuanLy
                         if (db.TinhThanhs.Any(x => x.matinh == _matinh))
                             return BadRequest("Tỉnh thành không tồn tại");
                         TinhThanh tinhThanh = db.TinhThanhs.FirstOrDefault(x => x.matinh == _matinh);
-                        tinhThanh.trangthai = (int)TrangThaiTinhThanh.KHOA;
+                        tinhThanh.trangthai = (int)Constant.KHOA;
                         db.SaveChanges();
                         transaction.Commit();
                         return Ok();

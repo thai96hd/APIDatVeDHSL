@@ -9,7 +9,7 @@ using System.Web.Http;
 
 namespace APIDatVe.API.QuanLy
 {
-    [RoutePrefix("api/xe")]
+    [RoutePrefix("api/ghe")]
     [BaseAuthenticationAttribute]
     public class APIGheController : ApiController
     {
