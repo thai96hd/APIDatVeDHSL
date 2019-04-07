@@ -14,6 +14,12 @@ namespace APIDatVe.Database
     
     public partial class TaiKhoan
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public TaiKhoan()
+        {
+            this.NhanViens = new HashSet<NhanVien>();
+        }
+    
         public string tentaikhoan { get; set; }
         public string maquyen { get; set; }
         public string matkhau { get; set; }
@@ -24,6 +30,8 @@ namespace APIDatVe.Database
         public string linklaylaitaikhoan { get; set; }
         public Nullable<System.DateTime> thoigianyeucaulaylaitk { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<NhanVien> NhanViens { get; set; }
         public virtual Quyen Quyen { get; set; }
     }
 }

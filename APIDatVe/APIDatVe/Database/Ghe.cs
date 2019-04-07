@@ -21,9 +21,12 @@ namespace APIDatVe.Database
         }
     
         public string maghe { get; set; }
+        public Nullable<int> tang { get; set; }
         public string maxe { get; set; }
         public int vitriX { get; set; }
         public int vitriY { get; set; }
+        public Nullable<bool> active { get; set; }
+        public System.DateTime ngaycapnhat { get; set; }
     
         public virtual Xe Xe { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

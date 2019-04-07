@@ -5,7 +5,7 @@ using System.Web;
 
 namespace APIDatVe.DTO
 {
-	public class KhachHang
+	public class KhachHangDTO
 	{
 		public string makhachhang{ get; set; }
 		public string hoten { get; set; }

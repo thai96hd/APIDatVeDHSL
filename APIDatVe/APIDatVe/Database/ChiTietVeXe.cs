@@ -14,15 +14,10 @@ namespace APIDatVe.Database
     
     public partial class ChiTietVeXe
     {
-        public int chitietvexeId { get; set; }
-        public int vexeId { get; set; }
+        public string chitietvexeId { get; set; }
+        public string vexeId { get; set; }
         public string maghe { get; set; }
-        public string madiemtrungchuyendon { get; set; }
-        public string madiemtrungchuyentra { get; set; }
-        public Nullable<double> tongtien { get; set; }
     
-        public virtual DiemChungChuyen DiemChungChuyen { get; set; }
-        public virtual DiemChungChuyen DiemChungChuyen1 { get; set; }
         public virtual VeXe VeXe { get; set; }
     }
 }

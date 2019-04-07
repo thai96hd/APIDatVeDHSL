@@ -30,7 +30,7 @@ namespace APIDatVe.Controllers
 		}
 		[HttpPost]
 		[Route("add_customer")]
-		public KhachHang AddCumstomer([FromBody] KhachHang kh)
+		public KhachHangDTO AddCumstomer([FromBody] KhachHangDTO kh)
 		{
 			return new KhachHangDAL().AddCustomer(kh);
 		}
@@ -40,7 +40,7 @@ namespace APIDatVe.Controllers
 		/// <returns>customer information</returns>
 		[HttpGet]
 		[Route("get_customer/{username}")]
-		public KhachHang FindCustomerByUserName(string username)
+		public KhachHangDTO FindCustomerByUserName(string username)
 		{
 			return new KhachHangDAL().FindCustomerByUserName(username);
 		}

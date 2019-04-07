@@ -20,13 +20,20 @@ namespace APIDatVe.Database
             this.ChiTietVeXes = new HashSet<ChiTietVeXe>();
         }
     
-        public int vexeId { get; set; }
-        public int chitiethoatdongxeId { get; set; }
-        public int khachhangId { get; set; }
+        public string vexeId { get; set; }
+        public string machuyenxe { get; set; }
+        public string khachhangId { get; set; }
+        public Nullable<int> matrangthaive { get; set; }
+        public string tongtien { get; set; }
         public Nullable<int> sokhach { get; set; }
+        public string ghichu { get; set; }
+        public string madiemtrungchuyendon { get; set; }
+        public string madiemtrungchuyentra { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ChiTietVeXe> ChiTietVeXes { get; set; }
+        public virtual ChuyenXe ChuyenXe { get; set; }
         public virtual KhachHang KhachHang { get; set; }
+        public virtual TrangThaiVeXe TrangThaiVeXe { get; set; }
     }
 }

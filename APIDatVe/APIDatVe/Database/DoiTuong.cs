@@ -22,6 +22,7 @@ namespace APIDatVe.Database
     
         public string madoituong { get; set; }
         public string tendoituong { get; set; }
+        public int trangthai { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<KhachHang> KhachHangs { get; set; }

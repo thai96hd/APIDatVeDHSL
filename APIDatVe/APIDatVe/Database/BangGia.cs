@@ -18,9 +18,9 @@ namespace APIDatVe.Database
         public string madiemtrungchuyendon { get; set; }
         public string madiemtrungchuyentra { get; set; }
         public Nullable<double> giave { get; set; }
-        public Nullable<double> thoigianhanhtrinh { get; set; }
+        public Nullable<double> thoigiandukien { get; set; }
     
-        public virtual DiemChungChuyen DiemChungChuyen { get; set; }
-        public virtual DiemChungChuyen DiemChungChuyen1 { get; set; }
+        public virtual DiemTrungChuyen DiemTrungChuyen { get; set; }
+        public virtual DiemTrungChuyen DiemTrungChuyen1 { get; set; }
     }
 }

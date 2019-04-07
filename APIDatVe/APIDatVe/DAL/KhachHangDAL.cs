@@ -22,7 +22,7 @@ namespace APIDatVe.DAL
 				return true;
 			return false;
 		}
-		public KhachHang AddCustomer(KhachHang kh)
+		public KhachHangDTO AddCustomer(KhachHangDTO kh)
 		{
 			string makhachhang = "KH" + Guid.NewGuid().ToString();
 			SqlParameter[] parameters = new SqlParameter[] {
@@ -38,7 +38,7 @@ namespace APIDatVe.DAL
 				return kh;
 			return null;
 		}
-		public KhachHang FindCustomerByUserName(string username)
+		public KhachHangDTO FindCustomerByUserName(string username)
 		{
 			SqlParameter[] parameters = new SqlParameter[] {
 				new SqlParameter("@username",username)
@@ -47,7 +47,7 @@ namespace APIDatVe.DAL
 			dt = DataProvider.Instance.GetData("sp_search_customerbyusername", parameters);
 			if (dt.Rows.Count > 0)
 			{
-				KhachHang kh = new KhachHang();
+				KhachHangDTO kh = new KhachHangDTO();
 				DataRow dr = dt.Rows[0];
 				kh.makhachhang = dr["khachhangid"].ToString();
 				kh.hoten = dr["hoten"].ToString();

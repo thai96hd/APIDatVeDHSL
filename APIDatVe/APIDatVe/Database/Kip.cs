@@ -17,13 +17,14 @@ namespace APIDatVe.Database
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Kip()
         {
-            this.ChiTietHoatDongXes = new HashSet<ChiTietHoatDongXe>();
+            this.ChuyenXes = new HashSet<ChuyenXe>();
         }
     
         public string makip { get; set; }
         public string tenkip { get; set; }
+        public int trangthai { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ChiTietHoatDongXe> ChiTietHoatDongXes { get; set; }
+        public virtual ICollection<ChuyenXe> ChuyenXes { get; set; }
     }
 }

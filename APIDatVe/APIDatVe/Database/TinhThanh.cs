@@ -17,19 +17,17 @@ namespace APIDatVe.Database
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public TinhThanh()
         {
-            this.DiemChungChuyens = new HashSet<DiemChungChuyen>();
-            this.LoTrinhs = new HashSet<LoTrinh>();
-            this.LoTrinhs1 = new HashSet<LoTrinh>();
+            this.ChiTietLoTrinhs = new HashSet<ChiTietLoTrinh>();
+            this.DiemTrungChuyens = new HashSet<DiemTrungChuyen>();
         }
     
         public string matinh { get; set; }
         public string tentinh { get; set; }
+        public Nullable<int> trangthai { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DiemChungChuyen> DiemChungChuyens { get; set; }
+        public virtual ICollection<ChiTietLoTrinh> ChiTietLoTrinhs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<LoTrinh> LoTrinhs { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<LoTrinh> LoTrinhs1 { get; set; }
+        public virtual ICollection<DiemTrungChuyen> DiemTrungChuyens { get; set; }
     }
 }
