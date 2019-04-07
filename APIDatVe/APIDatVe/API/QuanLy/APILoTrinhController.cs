@@ -22,10 +22,7 @@ namespace APIDatVe.API.QuanLy
             {
                 using (var db = new DB())
                 {
-                    var loTrinhs = db.LoTrinhs.Where(x => (x.TinhThanh.tentinh.Contains(_tukhoa)
-                                            || x.TinhThanh1.tentinh.Contains(_tukhoa)
-                                            || x.diemxuatphat.Contains(_tukhoa)
-                                            || x.diemketthuc.Contains(_tukhoa))).ToList();
+                    var loTrinhs = db.LoTrinhs.Where(x => (x.tenlotrinh.Contains(_tukhoa))).ToList();
                     if (_matinh != "")
                         loTrinhs = loTrinhs.Where(x => x.matinhdon == _matinh).ToList();
                     int sobanghi = loTrinhs.Count;
@@ -36,12 +33,9 @@ namespace APIDatVe.API.QuanLy
                                     {
                                         x.matinhdon,
                                         x.matinhtra,
-                                        tentinhdon = x.TinhThanh.tentinh,
-                                        tentinhtra = x.TinhThanh1.tentinh,
-                                        x.thoigiandukien,
-                                        x.ghichu,
-                                        x.diemxuatphat,
-                                        x.diemketthuc
+                                        x.tenlotrinh,
+                                        x.khoangthoigiandukien,
+                                        x.malotrinh
                                     })
                                     .Skip(_trang).Take(_sobanghi),
                         sobanghi = sobanghi
@@ -69,14 +63,10 @@ namespace APIDatVe.API.QuanLy
                     return Ok(new
                     {
                         loTrinh.malotrinh,
-                        loTrinh.ghichu,
+                        loTrinh.tenlotrinh,
                         loTrinh.matinhdon,
                         loTrinh.matinhtra,
-                        tentinhdon = loTrinh.TinhThanh.tentinh,
-                        tentinhtra = loTrinh.TinhThanh1.tentinh,
-                        loTrinh.thoigiandukien,
-                        loTrinh.diemxuatphat,
-                        loTrinh.diemketthuc
+                        loTrinh.khoangthoigiandukien,
                     });
                 }
             }
@@ -127,10 +117,10 @@ namespace APIDatVe.API.QuanLy
                         if (!db.LoTrinhs.Any(x => x.malotrinh == _loTrinh.malotrinh))
                             return BadRequest("Mã lộ trình không tồn tại");
                         LoTrinh oldloTrinh = db.LoTrinhs.FirstOrDefault(x => x.malotrinh == _loTrinh.malotrinh);
-                        oldloTrinh.ghichu = _loTrinh.ghichu;
+                        oldloTrinh.tenlotrinh = _loTrinh.tenlotrinh;
                         oldloTrinh.matinhdon = _loTrinh.matinhdon;
                         oldloTrinh.matinhtra = _loTrinh.matinhtra;
-                        oldloTrinh.thoigiandukien = _loTrinh.thoigiandukien;
+                        oldloTrinh.khoangthoigiandukien = _loTrinh.khoangthoigiandukien;
                         db.SaveChanges();
                         transaction.Commit();
                         return Ok();
@@ -157,7 +147,7 @@ namespace APIDatVe.API.QuanLy
                         if (db.LoTrinhs.Any(x => x.malotrinh == _malotrinh))
                             return BadRequest("Lộ trình không tồn tại");
                         LoTrinh loTrinh = db.LoTrinhs.FirstOrDefault(x => x.malotrinh == _malotrinh);
-                        db.ChiTietHoatDongXes.RemoveRange(db.ChiTietHoatDongXes.Where(x => x.malotrinh == _malotrinh));
+                        db.ChuyenXes.RemoveRange(db.ChuyenXes.Where(x => x.malotrinh == _malotrinh));
                         db.LoTrinhs.Remove(loTrinh);
                         db.SaveChanges();
                         transaction.Commit();

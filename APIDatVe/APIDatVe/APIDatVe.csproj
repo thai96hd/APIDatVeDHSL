@@ -167,7 +167,7 @@
   <ItemGroup>
     <Compile Include="API\QuanLy\APIBangGiaController.cs" />
     <Compile Include="API\QuanLy\APIChucVuController.cs" />
-    <Compile Include="API\QuanLy\APIDiemChungChuyenController.cs" />
+    <Compile Include="API\QuanLy\APIDiemTrungChuyenController.cs" />
     <Compile Include="API\QuanLy\APIDoiTuongController.cs" />
     <Compile Include="API\QuanLy\APIGheController.cs" />
     <Compile Include="API\QuanLy\APIKipController.cs" />
@@ -216,16 +216,22 @@
     <Compile Include="Database\BangGia.cs">
       <DependentUpon>DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Database\ChiTietHoatDongXe.cs">
+    <Compile Include="Database\ChiTietLaiXe.cs">
       <DependentUpon>DB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Database\ChiTietLaiXe.cs">
+    <Compile Include="Database\ChiTietLoTrinh.cs">
       <DependentUpon>DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\ChiTietVeXe.cs">
       <DependentUpon>DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\ChucVu.cs">
+      <DependentUpon>DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\ChuyenXe.cs">
+      <DependentUpon>DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\DanhGia.cs">
       <DependentUpon>DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\DB.Context.cs">
@@ -243,7 +249,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DB.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Database\DiemChungChuyen.cs">
+    <Compile Include="Database\DiemTrungChuyen.cs">
       <DependentUpon>DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\DoiTuong.cs">
@@ -283,6 +289,9 @@
       <DependentUpon>DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\TrangThaiGhe.cs">
+      <DependentUpon>DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\TrangThaiVeXe.cs">
       <DependentUpon>DB.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\VeXe.cs">

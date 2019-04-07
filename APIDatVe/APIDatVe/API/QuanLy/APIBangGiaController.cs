@@ -30,12 +30,12 @@ namespace APIDatVe.API.QuanLy
                             giave = 0,
                             madiemtrungchuyendon = "",
                             madiemtrungchuyentra = "",
-                            thoigianhanhtrinh = 0
+                            thoigiandukien = 0
                         };
                     }
                     return Ok(new
                     {
-                        bangGia.thoigianhanhtrinh,
+                        bangGia.thoigiandukien,
                         bangGia.madiemtrungchuyentra,
                         bangGia.madiemtrungchuyendon,
                         bangGia.giave
@@ -64,9 +64,9 @@ namespace APIDatVe.API.QuanLy
                     {
                         bangGia.madiemtrungchuyendon,
                         bangGia.madiemtrungchuyentra,
-                        bangGia.thoigianhanhtrinh,
-                        tendiemtrungchuyendon = bangGia.DiemChungChuyen.tendiemtrungchuyen,
-                        tendiemtrungchuyentra = bangGia.DiemChungChuyen1.tendiemtrungchuyen,
+                        bangGia.thoigiandukien,
+                        tendiemtrungchuyendon = bangGia.DiemTrungChuyen.tendiemtrungchuyen,
+                        tendiemtrungchuyentra = bangGia.DiemTrungChuyen1.tendiemtrungchuyen,
                         bangGia.giave
                     });
                 }
@@ -97,7 +97,7 @@ namespace APIDatVe.API.QuanLy
                             bangGia.giave = _bangGia.giave;
                             bangGia.madiemtrungchuyendon = _bangGia.madiemtrungchuyendon;
                             bangGia.madiemtrungchuyentra = _bangGia.madiemtrungchuyentra;
-                            bangGia.thoigianhanhtrinh = _bangGia.thoigianhanhtrinh;
+                            bangGia.thoigiandukien = _bangGia.thoigiandukien;
                         }
                         db.SaveChanges();
                         transaction.Commit();

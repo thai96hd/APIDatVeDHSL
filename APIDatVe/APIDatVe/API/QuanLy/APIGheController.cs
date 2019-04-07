@@ -30,9 +30,10 @@ namespace APIDatVe.API.QuanLy
                         x.maghe,
                         x.maxe,
                         x.ngaycapnhat,
-                        x.soghe,
                         x.vitriX,
-                        x.vitriY
+                        x.vitriY,
+                        x.active,
+                        x.tang
                     }));
                 }
             }
@@ -61,9 +62,11 @@ namespace APIDatVe.API.QuanLy
                             {
                                 ngaycapnhat = DateTime.Now,
                                 maxe = _maxe,
-                                soghe = x.soghe,
                                 vitriX = x.vitriX,
-                                vitriY = x.vitriY
+                                vitriY = x.vitriY,
+                                tang = x.tang,
+                                active = x.active,
+                                maghe = x.maghe
                             });
                         });
                         db.SaveChanges();
