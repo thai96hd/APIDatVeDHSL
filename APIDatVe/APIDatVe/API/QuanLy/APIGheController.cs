@@ -45,7 +45,7 @@ namespace APIDatVe.API.QuanLy
         [Route("put")]
         [HttpPut]
         [AcceptAction(ActionName = "Put", ControllerName = "APIGheController")]
-        public IHttpActionResult Put(string _maxe, List<Ghe> _ghes)
+        public IHttpActionResult Put(GheXe _gheXe)
         {
             try
             {
@@ -53,25 +53,37 @@ namespace APIDatVe.API.QuanLy
                 {
                     using (var transaction = db.Database.BeginTransaction())
                     {
-                        if (!db.Xes.Any(x => x.maxe == _maxe))
+                        Xe xe = db.Xes.FirstOrDefault(x => x.maxe == _gheXe._maxe);
+                        if (xe == null)
                             return BadRequest("Xe không tồn tại");
-
-                        _ghes.ForEach(x =>
+                        DateTime ngayCapNhat = DateTime.Now;
+                        _gheXe._ghes.ForEach(x =>
                         {
-                            db.Ghes.Add(new Ghe()
+                            Ghe ghe = db.Ghes.FirstOrDefault(y => y.maghe == x.maghe);
+                            if(ghe == null)
                             {
-                                ngaycapnhat = DateTime.Now,
-                                maxe = _maxe,
-                                vitriX = x.vitriX,
-                                vitriY = x.vitriY,
-                                tang = x.tang,
-                                active = x.active,
-                                maghe = x.maghe
-                            });
+                                db.Ghes.Add(new Ghe()
+                                {
+                                    ngaycapnhat = ngayCapNhat,
+                                    maxe = _gheXe._maxe,
+                                    vitriX = x.vitriX,
+                                    vitriY = x.vitriY,
+                                    tang = x.tang,
+                                    active = x.active,
+                                    maghe = x.maghe
+                                });
+                            }
+                            else
+                            {
+                                ghe.vitriX = x.vitriX;
+                                ghe.vitriY = x.vitriY;
+                                ghe.tang = x.tang;
+                                ghe.active = x.active;
+                            }
+                            db.SaveChanges();
                         });
-                        db.SaveChanges();
                         transaction.Commit();
-                        return Ok();
+                        return Ok(_gheXe);
                     }
                 }
             }
@@ -80,5 +92,11 @@ namespace APIDatVe.API.QuanLy
                 return BadRequest(ex.Message);
             }
         }
+    }
+
+    public class GheXe
+    {
+        public string _maxe { get; set; }
+        public List<Ghe> _ghes { get; set; }
     }
 }

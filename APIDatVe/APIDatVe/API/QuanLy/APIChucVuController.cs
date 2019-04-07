@@ -24,7 +24,7 @@ namespace APIDatVe.API.QuanLy
                 using (var db = new DB())
                 {
                     var chucvus = db.ChucVus
-                            .Where(x => (x.machucvu.Contains(_tukhoa) || x.tenchucvu.Contains(_tukhoa)))
+                            .Where(x => (string.IsNullOrEmpty(_tukhoa) || x.machucvu.Contains(_tukhoa) || x.tenchucvu.Contains(_tukhoa)))
                             .ToList();
                     int sobanghi = chucvus.Count;
                     return Ok(new
@@ -35,8 +35,7 @@ namespace APIDatVe.API.QuanLy
                                 x.machucvu,
                                 x.tenchucvu,
                                 x.trangthai
-                            })
-                            .Skip(_trang).Take(_sobanghi),
+                            }).Skip((_trang - 1) * _sobanghi).Take(_sobanghi),
                         sobanghi = sobanghi
                     });
                 }
@@ -56,9 +55,9 @@ namespace APIDatVe.API.QuanLy
             {
                 using (var db = new DB())
                 {
-                    if (db.ChucVus.Any(x => x.machucvu == _machucvu))
-                        return BadRequest("Chức vụ không tồn tại");
                     ChucVu chucVu = db.ChucVus.FirstOrDefault(x => x.machucvu == _machucvu);
+                    if (chucVu == null)
+                        return BadRequest("Chức vụ không tồn tại");
                     return Ok(new
                     {
                         chucVu.machucvu,
@@ -84,12 +83,18 @@ namespace APIDatVe.API.QuanLy
                 {
                     using (var transaction = db.Database.BeginTransaction())
                     {
-                        if (db.ChucVus.Any(x => x.machucvu == _chucVu.machucvu))
+                        ChucVu chucVu = db.ChucVus.FirstOrDefault(x => x.machucvu == _chucVu.machucvu);
+                        if (chucVu != null)
                             return BadRequest("Mã chức vụ đã tồn tại");
                         db.ChucVus.Add(_chucVu);
                         db.SaveChanges();
                         transaction.Commit();
-                        return Ok();
+                        return Ok(new
+                        {
+                            _chucVu.machucvu,
+                            _chucVu.tenchucvu,
+                            _chucVu.trangthai
+                        });
                     }
 
                 }
@@ -111,14 +116,19 @@ namespace APIDatVe.API.QuanLy
                 {
                     using (var transaction = db.Database.BeginTransaction())
                     {
-                        if (db.ChucVus.Any(x => x.machucvu == _chucVu.machucvu))
-                            return BadRequest("Mã chức vụ không tồn tại");
                         ChucVu oldChucVu = db.ChucVus.FirstOrDefault(x => x.machucvu == _chucVu.machucvu);
+                        if (oldChucVu == null)
+                            return BadRequest("Chức vụ không tồn tại");
                         oldChucVu.tenchucvu = _chucVu.tenchucvu;
                         oldChucVu.trangthai = _chucVu.trangthai;
                         db.SaveChanges();
                         transaction.Commit();
-                        return Ok();
+                        return Ok(new
+                        {
+                            _chucVu.machucvu,
+                            _chucVu.tenchucvu,
+                            _chucVu.trangthai
+                        });
                     }
                 }
             }
@@ -139,13 +149,13 @@ namespace APIDatVe.API.QuanLy
                 {
                     using (var transaction = db.Database.BeginTransaction())
                     {
-                        if (db.ChucVus.Any(x => x.machucvu == _machucvu))
-                            return BadRequest("Chức vụ không tồn tại");
                         ChucVu chucVu = db.ChucVus.FirstOrDefault(x => x.machucvu == _machucvu);
+                        if (chucVu == null)
+                            return BadRequest("Chức vụ không tồn tại");
                         chucVu.trangthai = (int)Constant.KHOA;
                         db.SaveChanges();
                         transaction.Commit();
-                        return Ok();
+                        return Ok(_machucvu);
                     }
                 }
             }

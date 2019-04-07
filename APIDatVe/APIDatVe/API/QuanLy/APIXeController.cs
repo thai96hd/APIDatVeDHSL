@@ -84,7 +84,8 @@ namespace APIDatVe.API.QuanLy
                 {
                     using (var transaction = db.Database.BeginTransaction())
                     {
-                        if (db.Xes.Any(x => x.maxe == xe.maxe))
+                        Xe _xe = db.Xes.FirstOrDefault(x => x.maxe == xe.maxe);
+                        if (_xe != null)
                             return BadRequest("Mã xe đã tồn tại");
                         xe.trangthai = Constant.HOATDONG;
                         db.Xes.Add(xe);
@@ -112,9 +113,9 @@ namespace APIDatVe.API.QuanLy
                 {
                     using (var transaction = db.Database.BeginTransaction())
                     {
-                        if (!db.Xes.Any(x => x.maxe == xe.maxe))
-                            return BadRequest("Mã xe không tồn tại");
                         Xe oldxe = db.Xes.FirstOrDefault(x => x.maxe == xe.maxe);
+                        if (oldxe == null)
+                            return BadRequest("Mã xe không tồn tại");
                         oldxe.soghe = xe.soghe;
                         oldxe.ghichu = xe.ghichu;
                         oldxe.biensoxe = xe.biensoxe;
@@ -151,7 +152,7 @@ namespace APIDatVe.API.QuanLy
                             xe.trangthai = (int)Constant.KHOA;
                         db.SaveChanges();
                         transaction.Commit();
-                        return Ok();
+                        return Ok(_maxe);
                     }
                 }
             }

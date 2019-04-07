@@ -24,7 +24,7 @@ namespace APIDatVe.API.QuanLy
                 using (var db = new DB())
                 {
                     var tinhThanhs = db.TinhThanhs
-                            .Where(x => (x.tentinh.Contains(_tukhoa) || x.matinh.Contains(_tukhoa)))
+                            .Where(x => (string.IsNullOrEmpty(_tukhoa) || x.tentinh.Contains(_tukhoa) || x.matinh.Contains(_tukhoa)))
                             .ToList();
                     int sobanghi = tinhThanhs.Count;
                     return Ok(new
@@ -35,8 +35,7 @@ namespace APIDatVe.API.QuanLy
                                 x.matinh,
                                 x.tentinh,
                                 x.trangthai
-                            })
-                            .Skip(_trang).Take(_sobanghi),
+                            }).Skip((_trang - 1) * _sobanghi).Take(_sobanghi),
                         sobanghi = sobanghi
                     });
                 }
@@ -56,9 +55,9 @@ namespace APIDatVe.API.QuanLy
             {
                 using (var db = new DB())
                 {
-                    if (db.TinhThanhs.Any(x => x.matinh == _matinh))
-                        return BadRequest("Tỉnh thành không tồn tại");
                     TinhThanh tinhThanh = db.TinhThanhs.FirstOrDefault(x => x.matinh == _matinh);
+                    if (tinhThanh == null)
+                        return BadRequest("Tỉnh thành không tồn tại");
                     return Ok(new
                     {
                         tinhThanh.matinh,
@@ -84,12 +83,18 @@ namespace APIDatVe.API.QuanLy
                 {
                     using (var transaction = db.Database.BeginTransaction())
                     {
-                        if (db.TinhThanhs.Any(x => x.matinh == _tinhThanh.matinh))
+                        TinhThanh tinhThanh = db.TinhThanhs.FirstOrDefault(x => x.matinh == _tinhThanh.matinh);
+                        if (tinhThanh != null)
                             return BadRequest("Mã tỉnh thành đã tồn tại");
                         db.TinhThanhs.Add(_tinhThanh);
                         db.SaveChanges();
                         transaction.Commit();
-                        return Ok();
+                        return Ok(new
+                        {
+                            _tinhThanh.matinh,
+                            _tinhThanh.tentinh,
+                            _tinhThanh.trangthai
+                        });
                     }
 
                 }
@@ -111,14 +116,19 @@ namespace APIDatVe.API.QuanLy
                 {
                     using (var transaction = db.Database.BeginTransaction())
                     {
-                        if (!db.TinhThanhs.Any(x => x.matinh == _tinhThanh.matinh))
-                            return BadRequest("Mã tỉnh thành không tồn tại");
                         TinhThanh oldtinhThanh = db.TinhThanhs.FirstOrDefault(x => x.matinh == _tinhThanh.matinh);
+                        if (oldtinhThanh == null)
+                            return BadRequest("Mã tỉnh thành không tồn tại");
                         oldtinhThanh.tentinh = _tinhThanh.tentinh;
                         oldtinhThanh.trangthai = _tinhThanh.trangthai;
                         db.SaveChanges();
                         transaction.Commit();
-                        return Ok();
+                        return Ok(new
+                        {
+                            _tinhThanh.matinh,
+                            _tinhThanh.tentinh,
+                            _tinhThanh.trangthai
+                        });
                     }
                 }
             }
@@ -139,13 +149,13 @@ namespace APIDatVe.API.QuanLy
                 {
                     using (var transaction = db.Database.BeginTransaction())
                     {
-                        if (db.TinhThanhs.Any(x => x.matinh == _matinh))
-                            return BadRequest("Tỉnh thành không tồn tại");
                         TinhThanh tinhThanh = db.TinhThanhs.FirstOrDefault(x => x.matinh == _matinh);
+                        if (tinhThanh == null)
+                            return BadRequest("Tỉnh thành không tồn tại");
                         tinhThanh.trangthai = (int)Constant.KHOA;
                         db.SaveChanges();
                         transaction.Commit();
-                        return Ok();
+                        return Ok(_matinh);
                     }
                 }
             }

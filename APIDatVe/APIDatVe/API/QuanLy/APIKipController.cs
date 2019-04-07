@@ -24,7 +24,7 @@ namespace APIDatVe.API.QuanLy
                 using (var db = new DB())
                 {
                     var kips = db.Kips
-                            .Where(x => (x.makip.Contains(_tukhoa) || x.tenkip.Contains(_tukhoa)))
+                            .Where(x => (string.IsNullOrEmpty(_tukhoa) || x.makip.Contains(_tukhoa) || x.tenkip.Contains(_tukhoa)))
                             .ToList();
                     int sobanghi = kips.Count;
                     return Ok(new
@@ -35,8 +35,7 @@ namespace APIDatVe.API.QuanLy
                                 x.makip,
                                 x.tenkip,
                                 x.trangthai
-                            })
-                            .Skip(_trang).Take(_sobanghi),
+                            }).Skip((_trang - 1) * _sobanghi).Take(_sobanghi),
                         sobanghi = sobanghi
                     });
                 }
@@ -56,9 +55,9 @@ namespace APIDatVe.API.QuanLy
             {
                 using (var db = new DB())
                 {
-                    if (db.Kips.Any(x => x.makip == _makip))
-                        return BadRequest("Kip không tồn tại");
                     Kip kip = db.Kips.FirstOrDefault(x => x.makip == _makip);
+                    if (kip == null)
+                        return BadRequest("Kip không tồn tại");
                     return Ok(new
                     {
                         kip.makip,
@@ -84,12 +83,18 @@ namespace APIDatVe.API.QuanLy
                 {
                     using (var transaction = db.Database.BeginTransaction())
                     {
-                        if (db.Kips.Any(x => x.makip == _kip.makip))
+                        Kip kip = db.Kips.FirstOrDefault(x => x.makip == _kip.makip);
+                        if (kip != null)
                             return BadRequest("Mã kip đã tồn tại");
                         db.Kips.Add(_kip);
                         db.SaveChanges();
                         transaction.Commit();
-                        return Ok();
+                        return Ok(new
+                        {
+                            _kip.makip,
+                            _kip.tenkip,
+                            _kip.trangthai
+                        });
                     }
 
                 }
@@ -111,14 +116,19 @@ namespace APIDatVe.API.QuanLy
                 {
                     using (var transaction = db.Database.BeginTransaction())
                     {
-                        if (!db.Kips.Any(x => x.makip == _kip.makip))
-                            return BadRequest("Mã kip không tồn tại");
                         Kip oldKip = db.Kips.FirstOrDefault(x => x.makip == _kip.makip);
+                        if (oldKip == null)
+                            return BadRequest("Mã kip không tồn tại");
                         oldKip.tenkip = _kip.tenkip;
                         oldKip.trangthai = _kip.trangthai;
                         db.SaveChanges();
                         transaction.Commit();
-                        return Ok();
+                        return Ok(new
+                        {
+                            _kip.makip,
+                            _kip.tenkip,
+                            _kip.trangthai
+                        });
                     }
                 }
             }
@@ -139,13 +149,13 @@ namespace APIDatVe.API.QuanLy
                 {
                     using (var transaction = db.Database.BeginTransaction())
                     {
-                        if (db.Kips.Any(x => x.makip == _makip))
-                            return BadRequest("Kip không tồn tại");
                         Kip kip = db.Kips.FirstOrDefault(x => x.makip == _makip);
+                        if (kip == null)
+                            return BadRequest("Kip không tồn tại");
                         kip.trangthai = (int)Constant.KHOA;
                         db.SaveChanges();
                         transaction.Commit();
-                        return Ok();
+                        return Ok(_makip);
                     }
                 }
             }

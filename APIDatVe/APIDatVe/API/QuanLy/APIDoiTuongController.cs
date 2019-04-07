@@ -24,7 +24,7 @@ namespace APIDatVe.API.QuanLy
                 using (var db = new DB())
                 {
                     var doituongs = db.DoiTuongs
-                            .Where(x => (x.madoituong.Contains(_tukhoa) || x.tendoituong.Contains(_tukhoa)))
+                            .Where(x => (string.IsNullOrEmpty(_tukhoa) || x.madoituong.Contains(_tukhoa) || x.tendoituong.Contains(_tukhoa)))
                             .ToList();
                     int sobanghi = doituongs.Count;
                     return Ok(new
@@ -35,8 +35,7 @@ namespace APIDatVe.API.QuanLy
                                 x.tendoituong,
                                 x.madoituong,
                                 x.trangthai
-                            })
-                            .Skip(_trang).Take(_sobanghi),
+                            }).Skip((_trang - 1) * _sobanghi).Take(_sobanghi),
                         sobanghi = sobanghi
                     });
                 }
@@ -56,9 +55,9 @@ namespace APIDatVe.API.QuanLy
             {
                 using (var db = new DB())
                 {
-                    if (db.DoiTuongs.Any(x => x.madoituong == _madoituong))
-                        return BadRequest("Đối tượng không tồn tại");
                     DoiTuong doiTuong = db.DoiTuongs.FirstOrDefault(x => x.madoituong == _madoituong);
+                    if (doiTuong == null)
+                        return BadRequest("Đối tượng không tồn tại");
                     return Ok(new
                     {
                         doiTuong.madoituong,
@@ -84,12 +83,18 @@ namespace APIDatVe.API.QuanLy
                 {
                     using (var transaction = db.Database.BeginTransaction())
                     {
-                        if (db.DoiTuongs.Any(x => x.madoituong == _doiTuong.madoituong))
+                        DoiTuong doiTuong = db.DoiTuongs.FirstOrDefault(x => x.madoituong == _doiTuong.madoituong);
+                        if (doiTuong != null)
                             return BadRequest("Mã đối tượng đã tồn tại");
                         db.DoiTuongs.Add(_doiTuong);
                         db.SaveChanges();
                         transaction.Commit();
-                        return Ok();
+                        return Ok(new
+                        {
+                            _doiTuong.madoituong,
+                            _doiTuong.tendoituong,
+                            _doiTuong.trangthai
+                        });
                     }
 
                 }
@@ -111,14 +116,19 @@ namespace APIDatVe.API.QuanLy
                 {
                     using (var transaction = db.Database.BeginTransaction())
                     {
-                        if (!db.DoiTuongs.Any(x => x.madoituong == _doiTuong.madoituong))
-                            return BadRequest("Mã đối tượng không tồn tại");
                         DoiTuong oldDoiTuong = db.DoiTuongs.FirstOrDefault(x => x.madoituong == _doiTuong.madoituong);
+                        if (oldDoiTuong == null)
+                            return BadRequest("Mã đối tượng không tồn tại");
                         oldDoiTuong.tendoituong = _doiTuong.tendoituong;
                         oldDoiTuong.trangthai = _doiTuong.trangthai;
                         db.SaveChanges();
                         transaction.Commit();
-                        return Ok();
+                        return Ok(new
+                        {
+                            _doiTuong.madoituong,
+                            _doiTuong.tendoituong,
+                            _doiTuong.trangthai
+                        });
                     }
                 }
             }
@@ -139,13 +149,13 @@ namespace APIDatVe.API.QuanLy
                 {
                     using (var transaction = db.Database.BeginTransaction())
                     {
-                        if (db.DoiTuongs.Any(x => x.madoituong == _madoituong))
-                            return BadRequest("Đối tượng không tồn tại");
                         DoiTuong doiTuong = db.DoiTuongs.FirstOrDefault(x => x.madoituong == _madoituong);
+                        if (doiTuong == null)
+                            return BadRequest("Đối tượng không tồn tại");
                         doiTuong.trangthai = (int)Constant.KHOA;
                         db.SaveChanges();
                         transaction.Commit();
-                        return Ok();
+                        return Ok(_madoituong);
                     }
                 }
             }

@@ -16,29 +16,31 @@ namespace APIDatVe.API.QuanLy
         [Route()]
         [HttpGet]
         [AcceptAction(ActionName = "Get", ControllerName = "APIBangGiaController")]
-        public IHttpActionResult Get()
+        public IHttpActionResult Get(string _madiemtrungchuyendon = "", string _madiemtrungchuyentra = "", int _trang = 1, int _sobanghi = 100)
         {
             try
             {
                 using (var db = new DB())
                 {
-                    BangGia bangGia = db.BangGias.FirstOrDefault();
-                    if (bangGia == null)
-                    {
-                        bangGia = new BangGia()
-                        {
-                            giave = 0,
-                            madiemtrungchuyendon = "",
-                            madiemtrungchuyentra = "",
-                            thoigiandukien = 0
-                        };
-                    }
+                    List<BangGia> bangGias = db.BangGias.ToList();
+                    if (_madiemtrungchuyendon != "")
+                        bangGias = bangGias.Where(x => x.madiemtrungchuyendon == _madiemtrungchuyendon).ToList();
+                    if (_madiemtrungchuyentra != "")
+                        bangGias = bangGias.Where(x => x.madiemtrungchuyentra == _madiemtrungchuyentra).ToList();
+
+                    int sobanghi = bangGias.Count;
                     return Ok(new
                     {
-                        bangGia.thoigiandukien,
-                        bangGia.madiemtrungchuyentra,
-                        bangGia.madiemtrungchuyendon,
-                        bangGia.giave
+                        bangGias = bangGias.Select(x => new
+                        {
+                            x.madiemtrungchuyentra,
+                            x.madiemtrungchuyendon,
+                            x.giave,
+                            x.thoigiandukien,
+                            tendiemtrungchuyendon = x.DiemTrungChuyen.tendiemtrungchuyen,
+                            tendiemtrungchuyentra = x.DiemTrungChuyen1.tendiemtrungchuyen
+                        }).Skip((_trang - 1) * _sobanghi).Take(_sobanghi),
+                        sobanghi = sobanghi
                     });
                 }
             }
@@ -89,19 +91,23 @@ namespace APIDatVe.API.QuanLy
                 {
                     using (var transaction = db.Database.BeginTransaction())
                     {
-                        BangGia bangGia = db.BangGias.FirstOrDefault();
+                        BangGia bangGia = db.BangGias.FirstOrDefault(x => x.madiemtrungchuyendon == _bangGia.madiemtrungchuyendon && x.madiemtrungchuyentra == _bangGia.madiemtrungchuyentra);
                         if (bangGia == null)
                             db.BangGias.Add(_bangGia);
                         else
                         {
                             bangGia.giave = _bangGia.giave;
-                            bangGia.madiemtrungchuyendon = _bangGia.madiemtrungchuyendon;
-                            bangGia.madiemtrungchuyentra = _bangGia.madiemtrungchuyentra;
                             bangGia.thoigiandukien = _bangGia.thoigiandukien;
                         }
                         db.SaveChanges();
                         transaction.Commit();
-                        return Ok();
+                        return Ok(new
+                        {
+                            _bangGia.madiemtrungchuyendon,
+                            _bangGia.madiemtrungchuyentra,
+                            _bangGia.thoigiandukien,
+                            _bangGia.giave
+                        });
                     }
 
                 }
@@ -123,13 +129,13 @@ namespace APIDatVe.API.QuanLy
                 {
                     using (var transaction = db.Database.BeginTransaction())
                     {
-                        if (db.BangGias.Any(x => x.banggiaId == _banggiaId))
-                            return BadRequest("Bảng giá không tồn tại");
                         BangGia bangGia = db.BangGias.FirstOrDefault(x => x.banggiaId == _banggiaId);
+                        if (bangGia == null)
+                            return BadRequest("Bảng giá không tồn tại");
                         db.BangGias.Remove(bangGia);
                         db.SaveChanges();
                         transaction.Commit();
-                        return Ok();
+                        return Ok(_banggiaId);
                     }
                 }
             }

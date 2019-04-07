@@ -9,7 +9,7 @@ using System.Web.Http;
 
 namespace APIDatVe.API.QuanLy
 {
-    [RoutePrefix("api/tinhthanh")]
+    [RoutePrefix("api/lotrinh")]
     [BaseAuthenticationAttribute]
     public class APILoTrinhController : ApiController
     {
@@ -22,13 +22,13 @@ namespace APIDatVe.API.QuanLy
             {
                 using (var db = new DB())
                 {
-                    var loTrinhs = db.LoTrinhs.Where(x => (x.tenlotrinh.Contains(_tukhoa))).ToList();
+                    var loTrinhs = db.LoTrinhs.Where(x => (string.IsNullOrEmpty(_tukhoa) || x.tenlotrinh.Contains(_tukhoa))).ToList();
                     if (_matinh != "")
                         loTrinhs = loTrinhs.Where(x => x.matinhdon == _matinh).ToList();
                     int sobanghi = loTrinhs.Count;
                     return Ok(new
                     {
-                        tinhThanhs = loTrinhs
+                        loTrinhs = loTrinhs
                                     .Select(x => new
                                     {
                                         x.matinhdon,
@@ -57,9 +57,9 @@ namespace APIDatVe.API.QuanLy
             {
                 using (var db = new DB())
                 {
-                    if (db.LoTrinhs.Any(x => x.malotrinh == _malotrinh))
-                        return BadRequest("Lộ trình không tồn tại");
                     LoTrinh loTrinh = db.LoTrinhs.FirstOrDefault(x => x.malotrinh == _malotrinh);
+                    if (loTrinh == null)
+                        return BadRequest("Lộ trình không tồn tại");
                     return Ok(new
                     {
                         loTrinh.malotrinh,
@@ -87,12 +87,20 @@ namespace APIDatVe.API.QuanLy
                 {
                     using (var transaction = db.Database.BeginTransaction())
                     {
-                        if (db.LoTrinhs.Any(x => x.malotrinh == _loTrinh.malotrinh))
+                        LoTrinh loTrinh = db.LoTrinhs.FirstOrDefault(x => x.malotrinh == _loTrinh.malotrinh);
+                        if (loTrinh != null)
                             return BadRequest("Mã lộ trình đã tồn tại");
                         db.LoTrinhs.Add(_loTrinh);
                         db.SaveChanges();
                         transaction.Commit();
-                        return Ok();
+                        return Ok(new
+                        {
+                            _loTrinh.malotrinh,
+                            _loTrinh.tenlotrinh,
+                            _loTrinh.matinhdon,
+                            _loTrinh.matinhtra,
+                            _loTrinh.khoangthoigiandukien,
+                        });
                     }
 
                 }
@@ -114,16 +122,23 @@ namespace APIDatVe.API.QuanLy
                 {
                     using (var transaction = db.Database.BeginTransaction())
                     {
-                        if (!db.LoTrinhs.Any(x => x.malotrinh == _loTrinh.malotrinh))
-                            return BadRequest("Mã lộ trình không tồn tại");
                         LoTrinh oldloTrinh = db.LoTrinhs.FirstOrDefault(x => x.malotrinh == _loTrinh.malotrinh);
+                        if (oldloTrinh == null)
+                            return BadRequest("Mã lộ trình không tồn tại");
                         oldloTrinh.tenlotrinh = _loTrinh.tenlotrinh;
                         oldloTrinh.matinhdon = _loTrinh.matinhdon;
                         oldloTrinh.matinhtra = _loTrinh.matinhtra;
                         oldloTrinh.khoangthoigiandukien = _loTrinh.khoangthoigiandukien;
                         db.SaveChanges();
                         transaction.Commit();
-                        return Ok();
+                        return Ok(new
+                        {
+                            _loTrinh.malotrinh,
+                            _loTrinh.tenlotrinh,
+                            _loTrinh.matinhdon,
+                            _loTrinh.matinhtra,
+                            _loTrinh.khoangthoigiandukien,
+                        });
                     }
                 }
             }
@@ -144,14 +159,14 @@ namespace APIDatVe.API.QuanLy
                 {
                     using (var transaction = db.Database.BeginTransaction())
                     {
-                        if (db.LoTrinhs.Any(x => x.malotrinh == _malotrinh))
-                            return BadRequest("Lộ trình không tồn tại");
                         LoTrinh loTrinh = db.LoTrinhs.FirstOrDefault(x => x.malotrinh == _malotrinh);
+                        if (loTrinh == null)
+                            return BadRequest("Lộ trình không tồn tại");
                         db.ChuyenXes.RemoveRange(db.ChuyenXes.Where(x => x.malotrinh == _malotrinh));
                         db.LoTrinhs.Remove(loTrinh);
                         db.SaveChanges();
                         transaction.Commit();
-                        return Ok();
+                        return Ok(_malotrinh);
                     }
                 }
             }
