@@ -23,7 +23,7 @@ namespace APIDatVe.API.QuanLy
                 using (var db = new DB())
                 {
                     var loTrinhs = db.LoTrinhs.Where(x => (string.IsNullOrEmpty(_tukhoa) || x.tenlotrinh.Contains(_tukhoa))).ToList();
-                    if (_matinh != "")
+                    if (!string.IsNullOrEmpty(_matinh))
                         loTrinhs = loTrinhs.Where(x => x.matinhdon == _matinh).ToList();
                     int sobanghi = loTrinhs.Count;
                     return Ok(new
@@ -35,9 +35,10 @@ namespace APIDatVe.API.QuanLy
                                         x.matinhtra,
                                         x.tenlotrinh,
                                         x.khoangthoigiandukien,
-                                        x.malotrinh
-                                    })
-                                    .Skip(_trang).Take(_sobanghi),
+                                        x.malotrinh,
+                                        tentinhdon = db.TinhThanhs.FirstOrDefault(y => y.matinh == x.matinhdon).tentinh,
+                                        tentinhtra = db.TinhThanhs.FirstOrDefault(y => y.matinh == x.matinhtra).tentinh
+                                    }).Skip((_trang - 1) * _sobanghi).Take(_sobanghi).ToList(),
                         sobanghi = sobanghi
                     });
                 }

@@ -84,10 +84,11 @@ namespace APIDatVe.API.QuanLy
                 {
                     using (var transaction = db.Database.BeginTransaction())
                     {
+                        if(string.IsNullOrEmpty(xe.maxe))
+                            return BadRequest("Mã xe không hợp lệ");
                         Xe _xe = db.Xes.FirstOrDefault(x => x.maxe == xe.maxe);
                         if (_xe != null)
                             return BadRequest("Mã xe đã tồn tại");
-                        xe.trangthai = Constant.HOATDONG;
                         db.Xes.Add(xe);
                         db.SaveChanges();
                         transaction.Commit();

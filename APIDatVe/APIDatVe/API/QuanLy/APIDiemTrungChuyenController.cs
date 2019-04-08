@@ -23,26 +23,28 @@ namespace APIDatVe.API.QuanLy
             {
                 using (var db = new DB())
                 {
-                    var DiemTrungChuyens = new List<DiemTrungChuyen>();
-                    if (_matinh == "")
-                        DiemTrungChuyens = db.DiemTrungChuyens
+                    List<DiemTrungChuyen> diemTrungChuyens = new List<DiemTrungChuyen>();
+                    if (string.IsNullOrEmpty(_matinh))
+                        diemTrungChuyens = db.DiemTrungChuyens
                                 .Where(x => string.IsNullOrEmpty(_tukhoa) || x.tendiemtrungchuyen.Contains(_tukhoa) || x.matinh.Contains(_tukhoa) || x.diachi.Contains(_tukhoa))
                                 .ToList();
                     else
-                        DiemTrungChuyens = db.DiemTrungChuyens
+                        diemTrungChuyens = db.DiemTrungChuyens
                                 .Where(x => (string.IsNullOrEmpty(_tukhoa) || x.tendiemtrungchuyen.Contains(_tukhoa) || x.matinh.Contains(_tukhoa) || x.diachi.Contains(_tukhoa)) && x.matinh == _matinh).ToList();
-                    int sobanghi = DiemTrungChuyens.Count;
+                    int sobanghi = diemTrungChuyens.Count;
+
                     return Ok(new
                     {
-                        DiemTrungChuyens = DiemTrungChuyens
+                        diemTrungChuyens = diemTrungChuyens
                                 .Select(x => new
                                 {
                                     x.trangthai,
                                     x.tendiemtrungchuyen,
                                     x.matinh,
                                     x.madiemtrungchuyen,
-                                    x.diachi
-                                }).Skip((_trang - 1) * _sobanghi).Take(_sobanghi),
+                                    x.diachi,
+                                    tentinh = x.TinhThanh.tentinh
+                                }).Skip((_trang - 1) * _sobanghi).Take(_sobanghi).ToList(),
                         sobanghi = sobanghi
                     });
                 }
@@ -179,5 +181,66 @@ namespace APIDatVe.API.QuanLy
                 return BadRequest(ex.Message);
             }
         }
+
+
+        [Route("change-status")]
+        [HttpGet]
+        [AcceptAction(ActionName = "ChangeStatus", ControllerName = "APIDiemTrungChuyenController")]
+        public IHttpActionResult ChangeStatus(string _madiemtrungchuyen)
+        {
+            try
+            {
+                using (var db = new DB())
+                {
+                    using (var transaction = db.Database.BeginTransaction())
+                    {
+                        DiemTrungChuyen DiemTrungChuyen = db.DiemTrungChuyens.FirstOrDefault(x => x.madiemtrungchuyen == _madiemtrungchuyen);
+                        if (DiemTrungChuyen == null)
+                            return BadRequest("Điểm chung chuyển không tồn tại");
+                        if (DiemTrungChuyen.trangthai == (int)Constant.KHOA)
+                            DiemTrungChuyen.trangthai = (int)Constant.HOATDONG;
+                        else
+                            DiemTrungChuyen.trangthai = (int)Constant.KHOA;
+                        db.SaveChanges();
+                        transaction.Commit();
+                        return Ok(_madiemtrungchuyen);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
+        [Route("ready")]
+        [HttpGet]
+        [AcceptAction(ActionName = "Ready", ControllerName = "APIDiemTrungChuyenController")]
+        public IHttpActionResult Ready()
+        {
+            try
+            {
+                using (var db = new DB())
+                {
+                    List<DiemTrungChuyen> diemTrungChuyens = db.DiemTrungChuyens
+                                .Where(x => x.trangthai == (int)Constant.HOATDONG)
+                                .OrderBy(x => x.matinh)
+                                .ToList();
+
+                    return Ok(diemTrungChuyens.Select(x => new
+                    {
+                        x.madiemtrungchuyen,
+                        tendiemtrungchuyen = x.TinhThanh.tentinh + " - " + x.tendiemtrungchuyen,
+
+                    }).ToList());
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
     }
 }

@@ -164,5 +164,62 @@ namespace APIDatVe.API.QuanLy
                 return BadRequest(ex.Message);
             }
         }
+
+        [Route("change-status")]
+        [HttpGet]
+        [AcceptAction(ActionName = "ChangeStatus", ControllerName = "APITinhThanhController")]
+        public IHttpActionResult ChangeStatus(string _matinh)
+        {
+            try
+            {
+                using (var db = new DB())
+                {
+                    using (var transaction = db.Database.BeginTransaction())
+                    {
+                        TinhThanh tinhThanh = db.TinhThanhs.FirstOrDefault(x => x.matinh == _matinh);
+                        if (tinhThanh == null)
+                            return BadRequest("Tỉnh thành không tồn tại");
+                        if (tinhThanh.trangthai == (int)Constant.KHOA)
+                            tinhThanh.trangthai = (int)Constant.HOATDONG;
+                        else
+                            tinhThanh.trangthai = (int)Constant.KHOA;
+                        db.SaveChanges();
+                        transaction.Commit();
+                        return Ok(_matinh);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
+
+        [Route("ready")]
+        [HttpGet]
+        [AcceptAction(ActionName = "Ready", ControllerName = "APITinhThanhController")]
+        public IHttpActionResult Ready()
+        {
+            try
+            {
+                using (var db = new DB())
+                {
+                    var tinhThanhs = db.TinhThanhs
+                                .Where(x => x.trangthai == (int)Constant.HOATDONG)
+                                .ToList();
+                    return Ok(tinhThanhs.Select(x => new
+                    {
+                        x.matinh,
+                        x.tentinh
+                    }));
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

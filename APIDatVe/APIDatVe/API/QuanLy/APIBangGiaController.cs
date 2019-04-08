@@ -23,9 +23,9 @@ namespace APIDatVe.API.QuanLy
                 using (var db = new DB())
                 {
                     List<BangGia> bangGias = db.BangGias.ToList();
-                    if (_madiemtrungchuyendon != "")
+                    if (!string.IsNullOrEmpty(_madiemtrungchuyendon))
                         bangGias = bangGias.Where(x => x.madiemtrungchuyendon == _madiemtrungchuyendon).ToList();
-                    if (_madiemtrungchuyentra != "")
+                    if (!string.IsNullOrEmpty(_madiemtrungchuyentra))
                         bangGias = bangGias.Where(x => x.madiemtrungchuyentra == _madiemtrungchuyentra).ToList();
 
                     int sobanghi = bangGias.Count;
@@ -33,13 +33,16 @@ namespace APIDatVe.API.QuanLy
                     {
                         bangGias = bangGias.Select(x => new
                         {
+                            x.banggiaId,
                             x.madiemtrungchuyentra,
                             x.madiemtrungchuyendon,
                             x.giave,
                             x.thoigiandukien,
                             tendiemtrungchuyendon = x.DiemTrungChuyen.tendiemtrungchuyen,
-                            tendiemtrungchuyentra = x.DiemTrungChuyen1.tendiemtrungchuyen
-                        }).Skip((_trang - 1) * _sobanghi).Take(_sobanghi),
+                            tendiemtrungchuyentra = x.DiemTrungChuyen1.tendiemtrungchuyen,
+                            tentinhdon = x.DiemTrungChuyen.TinhThanh.tentinh,
+                            tentinhtra = x.DiemTrungChuyen1.TinhThanh.tentinh
+                        }).Skip((_trang - 1) * _sobanghi).Take(_sobanghi).ToList(),
                         sobanghi = sobanghi
                     });
                 }
@@ -59,9 +62,9 @@ namespace APIDatVe.API.QuanLy
             {
                 using (var db = new DB())
                 {
-                    if (db.BangGias.Any(x => x.banggiaId == _banggiaId))
-                        return BadRequest("Bảng giá không tồn tại");
                     BangGia bangGia = db.BangGias.FirstOrDefault(x => x.banggiaId == _banggiaId);
+                    if (bangGia == null)
+                        return BadRequest("Bảng giá không tồn tại");
                     return Ok(new
                     {
                         bangGia.madiemtrungchuyendon,
