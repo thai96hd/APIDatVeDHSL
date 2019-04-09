@@ -188,5 +188,28 @@ namespace APIDatVe.API.QuanLy
                 return BadRequest(ex.Message);
             }
         }
+
+        [Route("ready")]
+        [HttpGet]
+        [AcceptAction(ActionName = "Ready", ControllerName = "APIQuyenController")]
+        public IHttpActionResult Ready()
+        {
+            try
+            {
+                using (var db = new DB())
+                {
+                    var quyens = db.Quyens.ToList();
+                    return Ok(quyens.Select(x => new
+                    {
+                        x.maquyen,
+                        x.tenquyen
+                    }));
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

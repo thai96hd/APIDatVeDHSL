@@ -140,7 +140,7 @@ namespace APIDatVe.API.QuanLy
 
         [Route("change-status")]
         [HttpGet]
-        [AcceptAction(ActionName = "ChangeStatus", ControllerName = "APIKipController")]
+        [AcceptAction(ActionName = "ChangeStatus", ControllerName = "APIChucVuController")]
         public IHttpActionResult ChangeStatus(string _machucvu)
         {
             try
@@ -187,6 +187,29 @@ namespace APIDatVe.API.QuanLy
                         transaction.Commit();
                         return Ok(_machucvu);
                     }
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [Route("ready")]
+        [HttpGet]
+        [AcceptAction(ActionName = "Ready", ControllerName = "APIChucVuController")]
+        public IHttpActionResult Ready()
+        {
+            try
+            {
+                using (var db = new DB())
+                {
+                    var chucvus = db.ChucVus.ToList();
+                    return Ok(chucvus.Select(x => new
+                    {
+                        x.machucvu,
+                        x.tenchucvu
+                    }));
                 }
             }
             catch (Exception ex)

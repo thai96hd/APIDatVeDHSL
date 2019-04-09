@@ -53,11 +53,11 @@ namespace APIDatVe.DAL
                        "   AND cx.machuyenxe = @machuyenxe";
             SqlCommand command = DataProvider.Instance.getCommand(sql);
 
-            SqlDataReader rowsAffected = command.ExecuteReader();
-
             command.Parameters.AddWithValue("@madiemtrungchuyen", madiemtrungchuyen);
 
             command.Parameters.AddWithValue("@machuyenxe", machuyenxe);
+
+            SqlDataReader rowsAffected = command.ExecuteReader();
 
             var dataTable = new DataTable();
             if (rowsAffected.HasRows)
