@@ -2,8 +2,7 @@
 @{
     ViewBag.Title = "Đặt xe";
 }
-
-<div class="page-content">
+<div class="page-content" ng-controller="controller">
     <div class="page-header">
         <h1>
             Đặt xe trực tuyến - Nhà Xe Đồng Hương Sông Lam
@@ -15,7 +14,6 @@
                 <div class="widget-header widget-header-blue widget-header-flat">
                     <h4 class="widget-title lighter">Quy trình đặt xe</h4>
                 </div>
-
                 <div class="widget-body">
                     <div class="widget-main">
                         <div id="fuelux-wizard-container">
@@ -23,14 +21,12 @@
                                 <ul class="steps">
                                     <li id="step_1" class="active">
                                         <span class="step">1</span>
-                                        <span class="title">Chọn tuyến</span>
+                                        <span class="title">Chọn lộ trình</span>
                                     </li>
-
                                     <li id="step_2">
                                         <span class="step">2</span>
                                         <span class="title">Chọn tuyến đi</span>
                                     </li>
-
                                     <li id="step_3">
                                         <span class="step">3</span>
                                         <span class="title">Xác nhận đặt vé</span>
@@ -51,13 +47,13 @@
                             </div>
                         </div>
                         <hr />
-                        <div class="wizard-actions">
-                            <button class="btn btn-sm" onclick="gotoStep(-1)">
+                        <div class="wizard-actions" style="text-align: center !important">
+                            <p class="text-left"><span class="require">(*)</span> Thông tin trường bắt buộc</p>
+                            <button class="btn btn-sm" ng-click="gotoStep(-1)">
                                 <i class="ace-icon fa fa-arrow-left"></i>
                                 Quay lại
                             </button>
-
-                            <button class="btn btn-success btn-sm" onclick="gotoStep(1)">
+                            <button class="btn btn-success btn-sm" ng-click="gotoStep(1)">
                                 Tiếp theo
                                 <i class="ace-icon fa fa-arrow-right icon-on-right"></i>
                             </button>
@@ -69,19 +65,101 @@
     </div>
 </div>
 <script>
-    var currentStep = 1;
-    function gotoStep(step) {
-        let newStep = currentStep + step;
-        if (newStep < 1 || newStep > 3)
-            return;
-        $(".steps > li").removeClass('active');
-        $(".steps > li").removeClass('complete');
-        $(".step-pane").removeClass('active');
-        for (let i = 1; i < newStep; i++) {
-            $("#step_" + i).addClass('complete');
+    var urlGetLoTrinh = 'http://localhost:56893/api/datxe/getlotrinh';
+    var urlDiemTrungChuyenTheoLoTrinh = 'http://localhost:56893/api/datxe/getdiemtrungchuyenlotrinh';
+    var urlGetTuyenDi = 'http://localhost:56893/api/datxe/gettuyendi';
+    var urlPost = 'http://localhost:56893/api/datxe/post';
+    app.controller('controller', ['$scope', '$http', function ($scope, $http) {
+        $scope.lotrinhs = [];
+        $scope.diemtrungchuyens = {};
+        $scope.tuyenxes = [];
+        $scope.detail = {
+            madiemtrungchuyendon: '',
+            madiemtrungchuyentra: ''
+        };
+
+        $scope.malotrinh = '';
+        $scope.ngaydi = new Date('@DateTime.Now.ToString("yyyy-MM-dd")');
+        $scope.currentStep = 1;
+        
+        $scope.getLoTrinh = function () {
+            $http({
+                url: urlGetLoTrinh,
+                method: "GET"
+            }).then(function success(response) {
+                $scope.lotrinhs = response.data;
+                $scope.malotrinh = '';
+                $scope.diemtrungchuyens = {}
+            }, function error(response) {
+                alert("Thực hiện không thành công");
+            })
+        };
+        $scope.getDiemTrungChuyenTheoLoTrinh = function () {
+            $http({
+                url: urlDiemTrungChuyenTheoLoTrinh,
+                method: "GET",
+                params: {
+                    _malotrinh: $scope.malotrinh
+                }
+            }).then(function success(response) {
+                $scope.diemtrungchuyens = response.data;
+                console.log($scope.diemtrungchuyens)
+            }, function error(response) {
+                alert("Thực hiện không thành công");
+            })
+        };
+        $scope.getTuyenDi = function () {
+            //$http({
+            //    url: urlGetTuyenDi,
+            //    method: "GET",
+            //    params: {
+            //        _malotrinh: $scope.malotrinh
+            //    }
+            //}).then(function success(response) {
+            //    $scope.diemtrungchuyens = response.data;
+            //    console.log($scope.diemtrungchuyens)
+            //}, function error(response) {
+            //    alert("Thực hiện không thành công");
+            //})
+        };
+
+        $scope.gotoStep = function (step) {
+            let newStep = $scope.currentStep + step;
+            if (newStep < 1 || newStep > 3)
+                return;
+            if (newStep == 2) {
+                if ($scope.malotrinh == "" || $scope.detail.madiemtrungchuyendon == "" || $scope.detail.madiemtrungchuyentra == "") {
+                    alert("Vui lòng nhập đầy đủ thông tin");
+                    return;
+                }
+            }
+            $(".steps > li").removeClass('active');
+            $(".steps > li").removeClass('complete');
+            $(".step-pane").removeClass('active');
+            for (let i = 1; i < newStep; i++) {
+                $("#step_" + i).addClass('complete');
+            }
+            $("#step_" + newStep).addClass('active');
+            $("#content_step_" + newStep).addClass('active');
+            $scope.currentStep = newStep;
         }
-        $("#step_" + newStep).addClass('active');
-        $("#content_step_" + newStep).addClass('active');
-        currentStep = newStep;
-    }
+
+        $scope.submit = function () {
+            if ($scope.detail.matinh == "" || $scope.detail.tentinh == "") {
+                alert("Vui lòng nhập đủ thông tin")
+                return;
+            }
+            $http({
+                url: urlPost,
+                method: "POST",
+                data: $scope.detail
+            }).then(function success(response) {
+                alert("Thành công")
+            }, function error(response) {
+                alert("Thực hiện không thành công");
+            })
+        }
+
+        $scope.getLoTrinh();
+    }]);
 </script>

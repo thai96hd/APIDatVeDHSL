@@ -128,14 +128,19 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\QuanLyChucVuController.cs" />
+    <Compile Include="Controllers\QuanLyChuyenXeController.cs" />
     <Compile Include="Controllers\QuanLyDatXeController.cs" />
     <Compile Include="Controllers\QuanLyDiemChungChuyenController.cs" />
     <Compile Include="Controllers\QuanLyGheNgoiController.cs" />
     <Compile Include="Controllers\QuanLyGiaGheController.cs" />
     <Compile Include="Controllers\QuanLyKhachHangController.cs" />
+    <Compile Include="Controllers\QuanLyKipController.cs" />
     <Compile Include="Controllers\QuanLyLoTrinhController.cs" />
     <Compile Include="Controllers\QuanLyNhaXeController.cs" />
+    <Compile Include="Controllers\QuanLyQuyenController.cs" />
     <Compile Include="Controllers\QuanLyTaiKhoanController.cs" />
+    <Compile Include="Controllers\QuanLyTinhThanhController.cs" />
     <Compile Include="Controllers\QuanLyXeController.cs" />
     <Compile Include="Controllers\SettingPasswordController.cs" />
     <Compile Include="Controllers\TongQuanController.cs" />
@@ -1400,11 +1405,16 @@
     <Content Include="Views\QuanLyXe\DanhSachXe.cshtml" />
     <Content Include="Views\SettingPassword\CaiDat.cshtml" />
     <Content Include="Views\TongQuan\ManHinhTongQuan.cshtml" />
+    <Content Include="Views\QuanLyTinhThanh\DanhSachTinhThanh.cshtml" />
+    <Content Include="Views\QuanLyKip\DanhSachKip.cshtml" />
+    <Content Include="Views\QuanLyChucVu\DanhSachChucVu.cshtml" />
+    <Content Include="Views\QuanLyQuyen\DanhSachQuyen.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="ckfinder\bin\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\QuanLyChuyenXe\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

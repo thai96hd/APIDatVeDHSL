@@ -2,40 +2,33 @@
     <div class="row">
         <div class="col-md-12 margin-md-bottom">
             <div class="form-group">
-                <label class="control-label no-padding-right">Chuyến</label>
+                <label class="control-label no-padding-right">Chọn lộ trình <span class="require">(*)</span></label>
                 <div>
-                    <select class="col-xs-12">
+                    <select ng-model="malotrinh" class="col-xs-12" ng-change="getDiemTrungChuyenTheoLoTrinh()">
                         <option value="">Chọn...</option>
-                        <option value="1">Nghệ An - Hà Nội</option>
-                        <option value="2">Hà Nội - Nghệ An</option>
+                        <option ng-repeat="item in lotrinhs" value="{{item.malotrinh}}">{{item.tenlotrinh}}</option>
                     </select>
                 </div>
             </div>
         </div>
         <div class="col-md-6 margin-md-bottom">
             <div class="form-group">
-                <label class="control-label no-padding-right">Điểm xuất phát</label>
+                <label class="control-label no-padding-right">Điểm trung chuyển đón <span class="require">(*)</span></label>
                 <div>
-                    <select class="col-xs-12">
+                    <select ng-model="detail.madiemtrungchuyendon" class="col-xs-12" ng-change="getTuyenDi()">
                         <option value="">Chọn...</option>
-                        @for (int i = 0; i < 10; i++)
-                        {
-                            <option value="@i">Điểm xuất phát</option>
-                        }
+                        <option ng-repeat="item in diemtrungchuyens.diemTrungChuyensDon" value="{{item.madiemtrungchuyen}}">{{item.tendiemtrungchuyen}}</option>
                     </select>
                 </div>
             </div>
         </div>
         <div class="col-md-6 margin-md-bottom">
             <div class="form-group">
-                <label class="control-label no-padding-right">Điểm đến</label>
+                <label class="control-label no-padding-right">Điểm trung chuyển trả <span class="require">(*)</span></label>
                 <div>
-                    <select class="col-xs-12">
+                    <select ng-model="detail.madiemtrungchuyentra" class="col-xs-12" ng-change="getTuyenDi()">
                         <option value="">Chọn...</option>
-                        @for (int i = 0; i < 10; i++)
-                        {
-                            <option value="@i">Điểm đến</option>
-                        }
+                        <option ng-repeat="item in diemtrungchuyens.diemTrungChuyensTra" value="{{item.madiemtrungchuyen}}">{{item.tendiemtrungchuyen}}</option>
                     </select>
                 </div>
             </div>
@@ -44,16 +37,7 @@
             <div class="form-group">
                 <label class="control-label no-padding-right">Ngày đi</label>
                 <div>
-                    <input type="date" class="col-xs-12" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
-                </div>
-            </div>
-        </div>
-        <div class="col-md-12 margin-md-bottom text-center">
-            <div class="form-group">
-                <label class="control-label no-padding-right"> </label>
-                <div>
-                    <button class="btn btn-success btn-sm">Hôm nay</button>
-                    <button class="btn btn-success btn-sm">Ngày mai</button>
+                    <input type="date" class="col-xs-12" ng-model="ngaydi" />
                 </div>
             </div>
         </div>

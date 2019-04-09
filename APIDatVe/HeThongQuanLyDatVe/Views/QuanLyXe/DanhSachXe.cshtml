@@ -5,17 +5,17 @@
 <div class="page-content" ng-controller="controller">
     <div class="page-header">
         <h1>
-            Quản lý xe
+            Quản lý xe &amp; ghế
             <small>
                 <i class="ace-icon fa fa-angle-double-right"></i>
-                Danh sách xe
+                Quản lý xe
             </small>
         </h1>
     </div>
     <div class="row">
         <div class="col-xs-12">
             <div class="table-header">
-                Danh sách xe
+                Quản lý xe
                 <div class="pull-right tableTools-container"></div>
                 <button class="btn btn-success pull-right btn-sm" style="margin: 4px;" ng-click="addXe()">Thêm mới</button>
             </div>
@@ -26,7 +26,7 @@
                             <th class="center">#</th>
                             <th>Mã xe</th>
                             <th>Biển số xe</th>
-                            <th>Số ghế</th>
+                            <th class="center">Số ghế</th>
                             <th class="center">Trạng thái</th>
                             <th>Ghi chú</th>
                             <th class="center">Thao tác</th>
@@ -43,7 +43,7 @@
                             <td>
                                 {{item.biensoxe}}
                             </td>
-                            <td>
+                            <td class="center">
                                 {{item.soghe}}
                             </td>
                             <td class="center">
@@ -96,12 +96,13 @@
                     <h3 class="smaller lighter blue no-margin">Thông tin xe</h3>
                 </div>
                 <div class="modal-body">
+                    <p><span class="require">(*)</span> Thông tin trường bắt buộc</p>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="row">
                                 <div class="col-md-12 margin-md-bottom">
                                     <div class="form-group">
-                                        <label class="control-label no-padding-right">Mã xe</label>
+                                        <label class="control-label no-padding-right">Mã xe <span class="require">(*)</span> </label>
                                         <div>
                                             <input type="text" ng-disabled="!isAdd" ng-model="detail.maxe" class="col-xs-12" />
                                         </div>
@@ -109,7 +110,7 @@
                                 </div>
                                 <div class="col-md-12 margin-md-bottom">
                                     <div class="form-group">
-                                        <label class="control-label no-padding-right">Mã xe</label>
+                                        <label class="control-label no-padding-right">Biển số xe <span class="require">(*)</span></label>
                                         <div>
                                             <input type="text" ng-model="detail.biensoxe" class="col-xs-12" />
                                         </div>
@@ -132,7 +133,7 @@
                                 </div>
                                 <div class="col-md-12 margin-md-bottom">
                                     <div class="form-group">
-                                        <label class="control-label no-padding-right">Số ghế</label>
+                                        <label class="control-label no-padding-right">Số ghế <span class="require">(*)</span></label>
                                         <input type="number" min="1" ng-model="detail.soghe" class="col-xs-12" />
                                     </div>
                                 </div>
@@ -206,7 +207,8 @@
                 maxe: '',
                 biensoxe: '',
                 trangthai: 1,
-                ghichu: ''
+                ghichu: '',
+                soghe: 1
             }
             $("#modal").modal();
         }
@@ -227,6 +229,10 @@
             })
         };
         $scope.submit = function () {
+            if ($scope.detail.maxe == "" || $scope.detail.biensoxe == "") {
+                alert("Vui lòng nhập đủ thông tin")
+                return;
+            }
             if ($scope.isAdd) {
                 $http({
                     url: urlPost,

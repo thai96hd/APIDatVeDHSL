@@ -3,15 +3,22 @@
     ViewBag.Title = "Quản lý ghế ngồi";
 }
 <style>
+
     .lbl-ghe {
         display: block;
-        cursor:pointer
+        cursor: pointer;
+        font-size: 12px;
+        margin-bottom: 8px;
     }
 </style>
-<div class="page-content">
+<div class="page-content" ng-controller="controller">
     <div class="page-header">
         <h1>
-            Quản lý ghế ngồi
+            Quản lý xe &amp; ghế
+            <small>
+                <i class="ace-icon fa fa-angle-double-right"></i>
+                Quản lý ghế ngồi
+            </small>
         </h1>
     </div>
     <div class="row">
@@ -25,95 +32,176 @@
                     <thead>
                         <tr>
                             <th class="center">#</th>
-                            <th>Tên xe</th>
-                            <th>Loại xe</th>
+                            <th>Mã xe</th>
                             <th>Biển số</th>
                             <th class="center">Số ghế</th>
-                            <th class="center">Trạng thái cập nhật</th>
                             <th class="center">Thao tác</th>
                         </tr>
                     </thead>
-
-                    <tbody>
-                        @for (int i = 1; i < 20; i++)
-                        {
-                            <tr>
-                                <td class="center">
-                                    <label class="pos-rel">@i</label>
-                                </td>
-                                <td>
-                                    <span>Tên xe @i</span>
-                                </td>
-                                <td>
-                                    <span>Loại xe @i</span>
-                                </td>
-                                <td><span>Biển số @i</span></td>
-                                <td class="center">
-                                    <span>@i</span>
-                                </td>
-                                <td class="center"><span> -------</span></td>
-                                <td class="center">
-                                    <div class="action-buttons">
-                                        <a class="green"onclick="showModalInfo()">
-                                            <i class="ace-icon fa fa-pencil bigger-130"></i>
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
-                        }
+                    <tbody ng-cloak>
+                        <tr ng-repeat="item in datas.xes">
+                            <td class="center">
+                                <label class="pos-rel">{{$index + 1}}</label>
+                            </td>
+                            <td>
+                                {{item.maxe}}
+                            </td>
+                            <td>
+                                {{item.biensoxe}}
+                            </td>
+                            <td class="center">
+                                {{item.soghe}}
+                            </td>
+                            <td class="center">
+                                <div class="action-buttons">
+                                    <a class="green" ng-click="getThongTinXe(item.maxe)">
+                                        <i class="ace-icon fa fa-pencil bigger-130"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
         </div>
-    </div>
-</div>
-<div id="modal" class="modal fade" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h3 class="smaller lighter blue no-margin">Thông tin ghế ngồi</h3>
-            </div>
 
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-12 margin-md-bottom">
-                        <table class="table table-bordered table-condensed table-hover">
-                            <tbody>
-                                @for(int i = 0; i < 10; i++)
-                                {
-                                    int vitri = 3 * i + 1;
-                                    <tr>
-                                        <td class="text-center">
-                                            <input id="ghe_@vitri" type="checkbox" />
-                                            <label for="ghe_@vitri" class="lbl-ghe">Ghế @vitri</label>
-                                        </td>
-                                        <td class="text-center">
-                                            <input id="ghe_@(vitri+1)" type="checkbox" />
-                                            <label for="ghe_@(vitri+1)" class="lbl-ghe">Ghế @(vitri + 1)</label>
-                                        </td>
-                                        <td class="text-center">
-                                            <input id="ghe_@(vitri+2)" type="checkbox" />
-                                            <label for="ghe_@(vitri+2)" class="lbl-ghe">Ghế @(vitri + 2)</label>
-                                        </td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-xs-6">
+                    <select ng-model="filter._sobanghi" class="col-xs-2" convert-to-number ng-change="getDanhSachXe()">
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                </div>
+                <div class="col-xs-6">
+                    <span style="float:right;margin-top: 3px;"> {{datas.sobanghi}} bản ghi</span>
+                    <input type="number" min="1" max="{{datas.sobanghi % filter._sobanghi == 0?datas.sobanghi / filter._sobanghi:datas.sobanghi / filter._sobanghi + 1}}" name="name" ng-model="filter._trang" ng-change="getDanhSachXe()" class="col-xs-2" style="float:right;margin-right:50px;height: 27px;margin-right:15px" />
+                    <label style="float:right;margin-right:10px;margin-top: 3px;">Trang</label>
                 </div>
             </div>
-            <div class="modal-footer text-right">
-                <button class="btn btn-sm btn-success">Lưu</button>
-                <button class="btn btn-sm btn-default" data-dismiss="modal">Hủy</button>
+        </div>
+    </div>
+    <div id="modal" class="modal fade" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h3 class="smaller lighter blue no-margin">Thông tin ghế ngồi</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6 margin-md-bottom">
+                            <table class="table table-bordered table-condensed table-hover">
+                                <thead>
+                                    <tr>
+                                        <th colspan="5" class="text-center">
+                                            <h4>TẦNG 1</h4>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody ng-cloak>
+                                    <tr ng-repeat="item in detail.ghetang1">
+                                        <td class="text-center" ng-repeat="item2 in item.Ghes">
+                                            <input id="ghe_{{item.Tang}}_{{item.Hang}}_{{item2.vitriX}}" ng-model="item2.active" type="checkbox" />
+                                            <label for="ghe_{{item.Tang}}_{{item.Hang}}_{{item2.vitriX}}" class="lbl-ghe">Vị trí ({{item2.vitriX}},{{item.Hang}})</label>
+                                            <input type="text" name="name" ng-model="item2.maghe" class="form-control" placeholder="Mã ghế" />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-md-6 margin-md-bottom">
+                            <table class="table table-bordered table-condensed table-hover">
+                                <thead>
+                                    <tr>
+                                        <th colspan="5" class="text-center">
+                                            <h4>TẦNG 2</h4>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody ng-cloak>
+                                    <tr ng-repeat="item in detail.ghetang2">
+                                        <td class="text-center" ng-repeat="item2 in item.Ghes">
+                                            <input id="ghe_{{item.Tang}}_{{item.Hang}}_{{item2.vitriX}}" ng-model="item2.active" type="checkbox" />
+                                            <label for="ghe_{{item.Tang}}_{{item.Hang}}_{{item2.vitriX}}" class="lbl-ghe">Vị trí ({{item2.vitriX}},{{item.Hang}})</label>
+                                            <input type="text" name="name" ng-model="item2.maghe" class="form-control" placeholder="Mã ghế" />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer text-right">
+                    <button class="btn btn-sm btn-success" ng-click="submit()">Lưu</button>
+                    <button class="btn btn-sm btn-default" data-dismiss="modal">Hủy</button>
+                </div>
             </div>
         </div>
     </div>
 </div>
-
-<script src="~/Scripts/dataTable.js"></script>
 <script>
-    function showModalInfo() {
-        $("#modal").modal();
-    }
+    var urlGet = 'http://localhost:56893/api/xe';
+    var urlDetail = 'http://localhost:56893/api/ghe/get-all';
+    var urlPut = 'http://localhost:56893/api/ghe/put-all';
+    app.controller('controller', ['$scope', '$http', function ($scope, $http) {
+        $scope.filter = {
+            _tukhoa: '',
+            _trang: 1,
+            _sobanghi: 100
+        }
+        $scope.datas = [];
+        $scope.detail = {};
+        $scope.getDanhSachXe = function () {
+            $http({
+                url: urlGet,
+                method: "GET",
+                params: $scope.filter
+            }).then(function success(response) {
+                $scope.datas = response.data;
+            }, function error(response) {
+                alert("Thực hiện không thành công");
+            })
+        };
+        $scope.getThongTinXe = function (_maxe) {
+            $scope.isAdd = false;
+            $http({
+                url: urlDetail,
+                method: "GET",
+                params: {
+                    _maxe
+                }
+            }).then(function success(response) {
+                $scope.detail = response.data;
+                $scope.detail.maxe = _maxe;
+                console.log($scope.detail)
+                $("#modal").modal();
+            }, function error(response) {
+                alert(response.data.Message);
+            })
+        };
+        $scope.submit = function () {
+            if ($scope.maxe == "" || $scope.biensoxe == "") {
+                alert("Vui lòng nhập đủ thông tin")
+                return;
+            }
+            $http({
+                url: urlPut,
+                method: "PUT",
+                data: {
+                    maxe: $scope.detail.maxe,
+                    GheTang1: $scope.detail.ghetang1,
+                    GheTang2: $scope.detail.ghetang2
+                }
+            }).then(function success(response) {
+                $scope.getDanhSachXe();
+                $("#modal").modal("hide");
+            }, function error(response) {
+                alert("Thực hiện không thành công");
+            })
+        }
+        $scope.getDanhSachXe();
+    }]);
 </script>
