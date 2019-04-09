@@ -199,7 +199,6 @@ namespace APIDatVe.API.QuanLy
 
         [Route("ready")]
         [HttpGet]
-        [AcceptAction(ActionName = "Ready", ControllerName = "APITinhThanhController")]
         public IHttpActionResult Ready()
         {
             try

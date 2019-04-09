@@ -15,7 +15,6 @@ namespace APIDatVe.API.QuanLy
     {
         [Route("getlotrinh")]
         [HttpGet]
-        [AcceptAction(ActionName = "GetLoTrinh", ControllerName = "APIDatXeController")]
         public IHttpActionResult GetLoTrinh()
         {
             try
@@ -39,7 +38,6 @@ namespace APIDatVe.API.QuanLy
 
         [Route("getdiemtrungchuyenlotrinh")]
         [HttpGet]
-        [AcceptAction(ActionName = "GetDiemTrungChuyenLoTrinh", ControllerName = "APIDatXeController")]
         public IHttpActionResult GetDiemTrungChuyenLoTrinh(string _malotrinh)
         {
             if (string.IsNullOrEmpty(_malotrinh))
@@ -78,7 +76,6 @@ namespace APIDatVe.API.QuanLy
 
         [Route("gettuyendi")]
         [HttpGet]
-        [AcceptAction(ActionName = "GetTuyenDi", ControllerName = "APIDatXeController")]
         public IHttpActionResult GetTuyenDi()
         {
             try

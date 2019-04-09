@@ -47,7 +47,6 @@ namespace APIDatVe.API.QuanLy
 
         [Route("getall")]
         [HttpGet]
-        [AcceptAction(ActionName = "GetAll", ControllerName = "APIQuyenController")]
         public IHttpActionResult GetAll()
         {
             try
@@ -191,7 +190,6 @@ namespace APIDatVe.API.QuanLy
 
         [Route("ready")]
         [HttpGet]
-        [AcceptAction(ActionName = "Ready", ControllerName = "APIQuyenController")]
         public IHttpActionResult Ready()
         {
             try

@@ -197,7 +197,6 @@ namespace APIDatVe.API.QuanLy
 
         [Route("ready")]
         [HttpGet]
-        [AcceptAction(ActionName = "Ready", ControllerName = "APIChucVuController")]
         public IHttpActionResult Ready()
         {
             try
