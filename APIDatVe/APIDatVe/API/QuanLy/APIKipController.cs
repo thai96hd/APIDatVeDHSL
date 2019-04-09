@@ -1,4 +1,4 @@
-﻿using APIDatVe.API.Quyen;
+﻿using APIDatVe.API.QuyenTruyCap;
 using APIDatVe.Database;
 using APIDatVe.Helper;
 using System;
@@ -129,6 +129,36 @@ namespace APIDatVe.API.QuanLy
                             _kip.tenkip,
                             _kip.trangthai
                         });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [Route("change-status")]
+        [HttpGet]
+        [AcceptAction(ActionName = "ChangeStatus", ControllerName = "APIKipController")]
+        public IHttpActionResult ChangeStatus(string _makip)
+        {
+            try
+            {
+                using (var db = new DB())
+                {
+                    using (var transaction = db.Database.BeginTransaction())
+                    {
+                        Kip kip = db.Kips.FirstOrDefault(x => x.makip == _makip);
+                        if (kip == null)
+                            return BadRequest("Kip không tồn tại");
+                        if (kip.trangthai == (int)Constant.KHOA)
+                            kip.trangthai = (int)Constant.HOATDONG;
+                        else
+                            kip.trangthai = (int)Constant.KHOA;
+                        db.SaveChanges();
+                        transaction.Commit();
+                        return Ok(_makip);
                     }
                 }
             }

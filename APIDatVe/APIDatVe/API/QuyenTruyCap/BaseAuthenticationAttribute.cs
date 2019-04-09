@@ -8,7 +8,7 @@ using System.Threading;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 
-namespace APIDatVe.API.Quyen
+namespace APIDatVe.API.QuyenTruyCap
 {
     public class BaseAuthenticationAttribute : AuthorizationFilterAttribute
     {

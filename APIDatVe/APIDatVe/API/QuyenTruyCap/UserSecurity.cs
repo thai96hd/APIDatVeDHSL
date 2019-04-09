@@ -1,7 +1,7 @@
 ﻿using APIDatVe.Database;
 using APIDatVe.Helper;
 
-namespace APIDatVe.API.Quyen
+namespace APIDatVe.API.QuyenTruyCap
 {
     public class UserSecurity
     {

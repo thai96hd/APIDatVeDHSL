@@ -6,7 +6,7 @@ using System.Threading;
 using System.Web.Http;
 using System.Web.Http.Controllers;
 
-namespace APIDatVe.API.Quyen
+namespace APIDatVe.API.QuyenTruyCap
 {
     public class AcceptAction : AuthorizeAttribute
     {

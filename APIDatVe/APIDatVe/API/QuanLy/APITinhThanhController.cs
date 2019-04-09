@@ -1,4 +1,4 @@
-﻿using APIDatVe.API.Quyen;
+﻿using APIDatVe.API.QuyenTruyCap;
 using APIDatVe.Database;
 using APIDatVe.Helper;
 using System;
