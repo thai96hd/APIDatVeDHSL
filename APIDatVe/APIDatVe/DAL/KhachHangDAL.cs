@@ -22,6 +22,7 @@ namespace APIDatVe.DAL
 				return true;
 			return false;
 		}
+
 		public KhachHangDTO AddCustomer(KhachHangDTO kh)
 		{
 			string makhachhang = "KH" + Guid.NewGuid().ToString();
@@ -38,6 +39,7 @@ namespace APIDatVe.DAL
 				return kh;
 			return null;
 		}
+
 		public KhachHangDTO FindCustomerByUserName(string username)
 		{
 			SqlParameter[] parameters = new SqlParameter[] {
@@ -58,10 +60,28 @@ namespace APIDatVe.DAL
 				kh.email = dr["email"].ToString();
 				kh.diemtichluy = (int)float.Parse(dr["diemtichluy"].ToString());
 				kh.diachi = dr["diachi"].ToString();
-			
+
 				return kh;
 			}
 			else return null;
+		}
+		public List<KhachHangDTO> getKhachHangs() {
+			List<KhachHangDTO> list = new List<KhachHangDTO>();
+			DataTable dt = DataProvider.Instance.GetDataQuerry("select *from KhachHang");
+			foreach(DataRow dr in dt.Rows) {
+				KhachHangDTO kh = new KhachHangDTO();
+				kh.makhachhang = dr["khachhangid"].ToString();
+				kh.hoten = dr["hoten"].ToString();
+				kh.gioitinh = dr["gioitinh"].ToString();
+				kh.sodienthoai = dr["sodienthoai"].ToString();
+				kh.matkhau = dr["matkhau"].ToString();
+				kh.madoituong = dr["madoituong"].ToString();
+				kh.email = dr["email"].ToString();
+				kh.diemtichluy = (int)float.Parse(dr["diemtichluy"].ToString());
+				kh.diachi = dr["diachi"].ToString();
+				list.Add(kh);
+			}
+			return list;
 		}
 		public bool UpdatePassWord(string username, string password)
 		{

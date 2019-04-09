@@ -45,5 +45,35 @@ namespace APIDatVe.Controllers
 			return new KhachHangDAL().FindCustomerByUserName(username);
 		}
 
+		/// <summary>
+		/// api check phone number co ton tai trong co so du lieu chua hoac emal co ton tai chua
+		/// </summary>
+		/// <param name="username">usernam co the la so dien thoai hoac email ham nay kiem tra ca so dien thoai hoac email</param>
+		/// <returns></returns>
+		[Route("checkUsername")]
+		[HttpGet]
+		public IHttpActionResult CheckPhoneNumberAndEmailExist([FromUri] string username)
+		{
+			if (username == "") {
+				return BadRequest("username khong duoc chong");
+			}
+			string _contentMessage = "username is valid";
+			KhachHangDAL khachHangDAL = new KhachHangDAL();
+			List<KhachHangDTO> list = khachHangDAL.getKhachHangs();
+			for (int i = 0; i < list.Count; i++)
+			{
+				if (list[i].sodienthoai.Equals(username))
+				{
+					_contentMessage = "phonenumber duplicate";
+					break;
+				}
+				if (list[i].email.Equals(username))
+				{
+					_contentMessage = "email duplicate";
+					break;
+				}
+			}
+			return Ok(_contentMessage);
+		}
 	}
 }
