@@ -165,6 +165,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\PhuXe\ChuyenXeController.cs" />
+    <Compile Include="API\PhuXe\DiemTrungChuyenController.cs" />
+    <Compile Include="API\PhuXe\GheController.cs" />
+    <Compile Include="API\PhuXe\TaiKhoanController.cs" />
+    <Compile Include="API\PhuXe\TrangThaiGheController.cs" />
     <Compile Include="API\QuanLy\APIBangGiaController.cs" />
     <Compile Include="API\QuanLy\APIChucVuController.cs" />
     <Compile Include="API\QuanLy\APIDiemTrungChuyenController.cs" />
@@ -174,13 +179,16 @@
     <Compile Include="API\QuanLy\APILoTrinhController.cs" />
     <Compile Include="API\QuanLy\APITinhThanhController.cs" />
     <Compile Include="API\QuanLy\APIXeController.cs" />
-    <Compile Include="API\Quyen\AcceptAction.cs" />
-    <Compile Include="API\Quyen\BaseAuthenticationAttribute.cs" />
-    <Compile Include="API\Quyen\UserSecurity.cs" />
+    <Compile Include="API\QuyenTruyCap\AcceptAction.cs" />
+    <Compile Include="API\QuyenTruyCap\BaseAuthenticationAttribute.cs" />
+    <Compile Include="API\QuyenTruyCap\UserSecurity.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig2.cs" />
+    <Compile Include="App_Start\WebApiConfig3.cs" />
+    <Compile Include="App_Start\WebApiConfig4.cs" />
     <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
     <Compile Include="Areas\HelpPage\App_Start\HelpPageConfig.cs" />
     <Compile Include="Areas\HelpPage\Controllers\HelpController.cs" />
@@ -211,8 +219,13 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KhachHangController.cs" />
+    <Compile Include="DAL\ChuyenXeDAL.cs" />
     <Compile Include="DAL\DataProvider.cs" />
+    <Compile Include="DAL\DiemTrungChuyenDAL.cs" />
+    <Compile Include="DAL\GheDAL.cs" />
     <Compile Include="DAL\KhachHangDAL.cs" />
+    <Compile Include="DAL\TaiKhoanDAL.cs" />
+    <Compile Include="DAL\TrangThaiGheDAL.cs" />
     <Compile Include="Database\BangGia.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -306,7 +319,14 @@
     <Compile Include="Database\Xe.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="DTO\ChuyenXeDTO.cs" />
+    <Compile Include="DTO\DiemTrungChuyenDTO.cs" />
+    <Compile Include="DTO\GheDTO.cs" />
     <Compile Include="DTO\KhachHangDTO.cs" />
+    <Compile Include="DTO\LichTrinhPhuXeDTO.cs" />
+    <Compile Include="DTO\NhanVienDTO.cs" />
+    <Compile Include="DTO\TaiKhoanDTO.cs" />
+    <Compile Include="DTO\TrangThaiGheDTO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -315,6 +335,8 @@
     <Compile Include="Helper\Encode.cs" />
     <Compile Include="Helper\MailHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Response\ApiBase.cs" />
+    <Compile Include="Response\ResponseDefault.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
@@ -388,6 +410,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="API\Quyen\" />
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
   </ItemGroup>
