@@ -17,10 +17,6 @@ namespace HeThongQuanLyNhaXe.Controllers
         {
             return View();
         }
-        public ActionResult DanhSachQuyen()
-        {
-            return View();
-        }
         public ActionResult PhanQuyen()
         {
             return View();
