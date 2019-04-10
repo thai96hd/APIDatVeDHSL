@@ -97,6 +97,7 @@ namespace APIDatVe.API.QuanLy
                             return BadRequest("Tài khoản đã tồn tại");
                         _taikhoan.linklaylaitaikhoan = "";
                         _taikhoan.solandangnhapsai = 0;
+                        _taikhoan.matkhau = Encode.MD5(_taikhoan.matkhau);
                         db.TaiKhoans.Add(_taikhoan);
                         db.SaveChanges();
                         transaction.Commit();
@@ -137,7 +138,7 @@ namespace APIDatVe.API.QuanLy
                         taiKhoan.maquyen = _taikhoan.maquyen;
                         taiKhoan.trangthai = _taikhoan.trangthai;
                         if (!string.IsNullOrEmpty(_taikhoan.matkhau))
-                            taiKhoan.matkhau = _taikhoan.matkhau;
+                            taiKhoan.matkhau = Encode.MD5(_taikhoan.matkhau);
                         db.SaveChanges();
                         transaction.Commit();
                         return Ok(new
@@ -186,5 +187,8 @@ namespace APIDatVe.API.QuanLy
                 return BadRequest(ex.Message);
             }
         }
+
+
+
     }
 }

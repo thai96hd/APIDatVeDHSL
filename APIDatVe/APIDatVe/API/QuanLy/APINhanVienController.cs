@@ -138,7 +138,7 @@ namespace APIDatVe.API.QuanLy
                                     hoten = eNhanVien.hoten,
                                     email = eNhanVien.email,
                                     maquyen = eNhanVien.maquyen,
-                                    matkhau = eNhanVien.matkhau,
+                                    matkhau = Encode.MD5(eNhanVien.matkhau),
                                     solandangnhapsai = 0,
                                     tentaikhoan = eNhanVien.tentaikhoan,
                                     trangthai = eNhanVien.trangthai
@@ -165,7 +165,7 @@ namespace APIDatVe.API.QuanLy
                             oldNhanVien.TaiKhoan.tentaikhoan = eNhanVien.tentaikhoan;
                             oldNhanVien.TaiKhoan.trangthai = eNhanVien.trangthai;
                             if (!string.IsNullOrEmpty(eNhanVien.matkhau))
-                                oldNhanVien.TaiKhoan.matkhau = eNhanVien.matkhau;
+                                oldNhanVien.TaiKhoan.matkhau = Encode.MD5(eNhanVien.matkhau);
                         }
 
                         ChiTietLaiXe chiTietLaiXe = db.ChiTietLaiXes.FirstOrDefault(x => x.manhanvien == eNhanVien.manhanvien);

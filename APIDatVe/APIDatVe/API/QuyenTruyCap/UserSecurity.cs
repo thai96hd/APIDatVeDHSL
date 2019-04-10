@@ -1,5 +1,6 @@
 ﻿using APIDatVe.Database;
 using APIDatVe.Helper;
+using System.Linq;
 
 namespace APIDatVe.API.QuyenTruyCap
 {
@@ -10,7 +11,7 @@ namespace APIDatVe.API.QuyenTruyCap
             using (var db = new DB())
             {
                 string passMD5 = Encode.MD5(_passWord);
-                return true;
+                return db.TaiKhoans.FirstOrDefault(x => x.tentaikhoan == _userName && x.matkhau == passMD5) != null;
             }
         }
     }
