@@ -12,9 +12,10 @@
     <link rel="stylesheet" href="~/assets/css/fonts.googleapis.com.css" />
     <link rel="stylesheet" href="~/assets/css/ace.min.css" />
     <link rel="stylesheet" href="~/assets/css/ace-rtl.min.css" />
+    <script src="~/Scripts/angular.min.js"></script>
 </head>
 
-<body class="login-layout light-login">
+<body class="login-layout light-login"  ng-app="app" ng-controller="controller">
     <div class="main-container">
         <div class="main-content">
             <div class="row">
@@ -38,18 +39,18 @@
                                             Vui lòng nhập thông tin
                                         </h4>
                                         <div class="space-6"></div>
-                                        <form method="post" action="/login/DangNhap">
+                                        <div id="login_form">
                                             <fieldset>
                                                 <label class="block clearfix">
                                                     <span class="block input-icon input-icon-right">
-                                                        <input type="text" class="form-control" placeholder="Tên tài khoản" />
+                                                        <input required ng-model="account._userName" type="text" class="form-control" placeholder="Tên tài khoản" />
                                                         <i class="ace-icon fa fa-user"></i>
                                                     </span>
                                                 </label>
 
                                                 <label class="block clearfix">
                                                     <span class="block input-icon input-icon-right">
-                                                        <input type="password" class="form-control" placeholder="Mật khẩu" />
+                                                        <input required ng-model="account._password" type="password" class="form-control" placeholder="Mật khẩu" />
                                                         <i class="ace-icon fa fa-lock"></i>
                                                     </span>
                                                 </label>
@@ -57,13 +58,13 @@
                                                 <div class="space"></div>
 
                                                 <div class="clearfix text-center">
-                                                    <button type="submit" class="btn btn-sm btn-primary">
+                                                    <button ng-click="login()" class="btn btn-sm btn-primary">
                                                         <i class="ace-icon fa fa-key"></i>
                                                         <span class="bigger-110">Đăng nhập</span>
                                                     </button>
                                                 </div>
                                             </fieldset>
-                                        </form>
+                                        </div>
                                     </div>
                                     <div class="toolbar clearfix">
                                         <div>
@@ -130,6 +131,54 @@
                 $(target).addClass('visible');//show target
             });
         });
+        function checkRequired() {
+            var resultCheck = true;
+            $("#login_form").each(function () {
+                var inputs = $(this).find(':input[required]');
+                var i = 0;
+                for (i = 0; i < inputs.length; i++) {
+                    if (inputs[i].value === null || inputs[i].value === '') {
+                        inputs[i].classList.add("border-warning");
+                        resultCheck = false;
+                    }
+                }
+            });
+            return resultCheck;
+        }
+        var app = angular.module('app', []);
+        app.controller('controller', ['$scope', '$http', function ($scope, $http) {
+            $scope.account = {
+                _userName: '',
+                _password: '',
+                _saveLogin: false
+            };
+            $scope.email = "";
+            $scope.login = function () {
+                if (checkRequired()) {
+                    $scope.account._saveLogin = $('#login_page_stay_signed').is(':checked');
+                    $http({
+                        url: 'http://localhost:56893/api/login/check-account',
+                        method: 'POST',
+                        data: $scope.account
+                    }).then(function success(response) {
+                        setCookie('token', response.data,1)
+                        location.href = '/';
+                    }, function error(response) {
+                        alert(response.data.Message);
+                    });
+                }
+                else {
+                    alert("Vui lòng nhập đầy đủ tên tài khoản và mật khẩu")
+                }
+            };
+        }]);
+
+        function setCookie(cname, cvalue, exdays) {
+            var d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            var expires = "expires=" + d.toUTCString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        }
     </script>
 </body>
 </html>
