@@ -1,4 +1,4 @@
-﻿@{ 
+﻿@{
     Layout = null;
 }
 <!DOCTYPE html>
@@ -14,8 +14,7 @@
     <link rel="stylesheet" href="~/assets/css/ace-rtl.min.css" />
     <script src="~/Scripts/angular.min.js"></script>
 </head>
-
-<body class="login-layout light-login"  ng-app="app" ng-controller="controller">
+<body class="login-layout light-login" ng-app="app" ng-controller="controller">
     <div class="main-container">
         <div class="main-content">
             <div class="row">
@@ -27,9 +26,7 @@
                             </h1>
                             <h4 class="blue" id="id-company-text">&copy; Nhà xe Đồng Hương Sông Lam</h4>
                         </div>
-
                         <div class="space-6"></div>
-
                         <div class="position-relative">
                             <div id="login-box" class="login-box visible widget-box no-border">
                                 <div class="widget-body">
@@ -47,16 +44,13 @@
                                                         <i class="ace-icon fa fa-user"></i>
                                                     </span>
                                                 </label>
-
                                                 <label class="block clearfix">
                                                     <span class="block input-icon input-icon-right">
                                                         <input required ng-model="account._password" type="password" class="form-control" placeholder="Mật khẩu" />
                                                         <i class="ace-icon fa fa-lock"></i>
                                                     </span>
                                                 </label>
-
                                                 <div class="space"></div>
-
                                                 <div class="clearfix text-center">
                                                     <button ng-click="login()" class="btn btn-sm btn-primary">
                                                         <i class="ace-icon fa fa-key"></i>
@@ -76,7 +70,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div id="forgot-box" class="forgot-box widget-box no-border">
                                 <div class="widget-body">
                                     <div class="widget-main">
@@ -84,12 +77,10 @@
                                             <i class="ace-icon fa fa-key"></i>
                                             Lấy lại mật khẩu
                                         </h4>
-
                                         <div class="space-6"></div>
                                         <p>
                                             Nhập email của bạn và nhận hướng dẫn
                                         </p>
-
                                         <form>
                                             <fieldset>
                                                 <label class="block clearfix">
@@ -161,7 +152,9 @@
                         method: 'POST',
                         data: $scope.account
                     }).then(function success(response) {
-                        setCookie('token', response.data,1)
+                        var data = response.data;
+                        setCookie('token', data.token, 1)
+                        setCookie('danhsachmanhinh', data.danhsachmanhinh, 1)
                         location.href = '/';
                     }, function error(response) {
                         alert(response.data.Message);
@@ -182,5 +175,4 @@
     </script>
 </body>
 </html>
-
 
