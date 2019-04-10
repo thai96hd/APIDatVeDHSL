@@ -1,4 +1,5 @@
-﻿using System;
+﻿using APIDatVe.Database;
+using System;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -15,26 +16,22 @@ namespace APIDatVe.API.QuyenTruyCap
         public string Namespace { get; set; }
         public override void OnAuthorization(HttpActionContext actionContext)
         {
-            //using (var db = new DB())
-            //{
-            //    var path = db.D_Path
-            //                .FirstOrDefault(x => x.ControllerName == ControllerName.Trim() &&
-            //                                    x.ActionName == ActionName.Trim() &&
-            //                                    (Namespace == null ? true : x.Namespace == Namespace.Trim()));
-            //    if (path is null)
-            //        actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.Unauthorized, new Exception("Bạn không có quyền truy cập tính năng  này"));
-            //    else
-            //    {
-            //        int pathId = path.PathId;
-            //        string userName = Thread.CurrentPrincipal.Identity.Name;
-            //        if (userName != "masteradmin")
-            //        {
-            //            bool accept = db.D_UserPath.Any(x => x.UserName == userName && x.PathId == pathId);
-            //            if (!accept)
-            //                actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.Unauthorized, new Exception("Bạn không có quyền truy cập tính năng  này"));
-            //        }
-            //    }
-            //}
+            using (var db = new DB())
+            {
+                string userName = Thread.CurrentPrincipal.Identity.Name;
+                TaiKhoan taiKhoan = db.TaiKhoans.FirstOrDefault(x => x.tentaikhoan == userName);
+                if (taiKhoan == null)
+                {
+                    actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.Unauthorized, new Exception("Bạn không có quyền truy cập tính năng  này"));
+                }
+                else
+                {
+                    if (db.QuyenAPIQuanLies.FirstOrDefault(x => x.chon && x.maquyen == taiKhoan.maquyen && x.APIQuanLy.actionname == this.ActionName && x.APIQuanLy.controllername == this.ControllerName) == null)
+                    {
+                        actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.Unauthorized, new Exception("Bạn không có quyền truy cập tính năng  này"));
+                    }
+                }
+            }
         }
     }
 }

@@ -34,11 +34,14 @@ namespace APIDatVe.API.QuyenTruyCap
                     if (UserSecurity.CheckLogin(account._userName, account._password))
                     {
                         TaiKhoan taiKhoan = db.TaiKhoans.FirstOrDefault(x => x.tentaikhoan == account._userName);
+                        if(taiKhoan.trangthai == (int)Constant.KHOA)
+                        {
+                            return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Tài khoản đã bị khóa");
+                        }
                         taiKhoan.solandangnhapsai = 0;
                         db.SaveChanges();
-                        string token = "";
                         string danhsachmanhinh = JsonConvert.SerializeObject(db.QuyenManHinhQuanLies
-                            .Where(x => x.maquyen == taiKhoan.maquyen)
+                            .Where(x => x.maquyen == taiKhoan.maquyen && x.chon)
                             .Select(x => x.ManHinhQuanLy.tenmanhinh)
                             .ToList());
                         return Request.CreateResponse(HttpStatusCode.OK, new
@@ -68,6 +71,6 @@ namespace APIDatVe.API.QuyenTruyCap
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
             }
         }
-        
+
     }
 }
