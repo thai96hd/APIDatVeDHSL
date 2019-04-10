@@ -1,4 +1,11 @@
-﻿<!DOCTYPE html>
+﻿@{
+    List<string> acceptScreen = (List<string>)Session["acceptScreen"];
+    if (acceptScreen == null)
+    {
+        acceptScreen = new List<string>();
+    }
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -56,7 +63,7 @@
                             </li>
                             <li class="divider"></li>
                             <li>
-                                <a href="#">
+                                <a href="/Login/DangXuat">
                                     <i class="ace-icon fa fa-power-off"></i>
                                     Đăng xuất
                                 </a>
@@ -78,18 +85,24 @@
                     </a>
                     <b class="arrow"></b>
                 </li>
-                <li class="open">
-                    <a href="/QuanLyDatXe/DatXe">
-                        <i class="menu-icon fa fa-fax"></i>
-                        <span class="menu-text"> Đặt xe </span>
-                    </a>
-                </li>
-                <li class="open">
-                    <a href="/QuanLyDatXe/DanhSachDatXe">
-                        <i class="menu-icon fa fa-list-ol"></i>
-                        <span class="menu-text"> Danh sách đặt xe </span>
-                    </a>
-                </li>
+                @if (acceptScreen.Any(x => x == "DatXe"))
+                {
+                    <li class="open">
+                        <a href="/QuanLyDatXe/DatXe">
+                            <i class="menu-icon fa fa-fax"></i>
+                            <span class="menu-text"> Đặt xe </span>
+                        </a>
+                    </li>
+                }
+                @if (acceptScreen.Any(x => x == "DanhSachDatXe"))
+                {
+                    <li class="open">
+                        <a href="/QuanLyDatXe/DanhSachDatXe">
+                            <i class="menu-icon fa fa-list-ol"></i>
+                            <span class="menu-text"> Danh sách đặt xe </span>
+                        </a>
+                    </li>
+                }
                 <li class="open">
                     <a href="#" class="dropdown-toggle">
                         <i class="menu-icon fa fa-bus"></i>
@@ -100,27 +113,36 @@
                     </a>
                     <b class="arrow"></b>
                     <ul class="submenu">
-                        <li class="open">
-                            <a href="/QuanLyXe/DanhSachXe">
-                                <i class="menu-icon fa fa-caret-right"></i>
-                                Quản lý xe
-                            </a>
-                            <b class="arrow"></b>
-                        </li>
-                        <li class="open">
-                            <a href="/QuanLyGheNgoi/DanhSachGheNgoi">
-                                <i class="menu-icon fa fa-caret-right"></i>
-                                Quản lý ghế ngồi
-                            </a>
-                            <b class="arrow"></b>
-                        </li>
-                        <li class="open">
-                            <a href="/QuanLyGiaGhe/GiaGhe">
-                                <i class="menu-icon fa fa-caret-right"></i>
-                                Quản lý bảng giá
-                            </a>
-                            <b class="arrow"></b>
-                        </li>
+                        @if (acceptScreen.Any(x => x == "DanhSachXe"))
+                        {
+                            <li class="open">
+                                <a href="/QuanLyXe/DanhSachXe">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    Quản lý xe
+                                </a>
+                                <b class="arrow"></b>
+                            </li>
+                        }
+                        @if (acceptScreen.Any(x => x == "DanhSachGheNgoi"))
+                        {
+                            <li class="open">
+                                <a href="/QuanLyGheNgoi/DanhSachGheNgoi">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    Quản lý ghế ngồi
+                                </a>
+                                <b class="arrow"></b>
+                            </li>
+                        }
+                        @if (acceptScreen.Any(x => x == "GiaGhe"))
+                        {
+                            <li class="open">
+                                <a href="/QuanLyGiaGhe/GiaGhe">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    Quản lý bảng giá
+                                </a>
+                                <b class="arrow"></b>
+                            </li>
+                        }
                     </ul>
                 </li>
                 <li class="open">
@@ -133,34 +155,46 @@
                     </a>
                     <b class="arrow"></b>
                     <ul class="submenu">
-                        <li class="open">
-                            <a href="/QuanLyLoTrinh/DanhSachLoTrinh">
-                                <i class="menu-icon fa fa-caret-right"></i>
-                                Quản lý lộ trình
-                            </a>
-                            <b class="arrow"></b>
-                        </li>
-                        <li class="open">
-                            <a href="/QuanLyDiemChungChuyen/DanhSachDiemCC">
-                                <i class="menu-icon fa fa-caret-right"></i>
-                                Quản lý điểm chung chuyển
-                            </a>
-                            <b class="arrow"></b>
-                        </li>
-                        <li class="open">
-                            <a href="/QuanLyTinhThanh/DanhSachTinhThanh">
-                                <i class="menu-icon fa fa-caret-right"></i>
-                                Quản lý tỉnh thành
-                            </a>
-                            <b class="arrow"></b>
-                        </li>
-                        <li class="open">
-                            <a href="/QuanLyKip/DanhSachKip">
-                                <i class="menu-icon fa fa-caret-right"></i>
-                                Quản lý kip
-                            </a>
-                            <b class="arrow"></b>
-                        </li>
+                        @if (acceptScreen.Any(x => x == "DanhSachLoTrinh"))
+                        {
+                            <li class="open">
+                                <a href="/QuanLyLoTrinh/DanhSachLoTrinh">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    Quản lý lộ trình
+                                </a>
+                                <b class="arrow"></b>
+                            </li>
+                        }
+                        @if (acceptScreen.Any(x => x == "DanhSachDiemCC"))
+                        {
+                            <li class="open">
+                                <a href="/QuanLyDiemChungChuyen/DanhSachDiemCC">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    Quản lý điểm chung chuyển
+                                </a>
+                                <b class="arrow"></b>
+                            </li>
+                        }
+                        @if (acceptScreen.Any(x => x == "DanhSachTinhThanh"))
+                        {
+                            <li class="open">
+                                <a href="/QuanLyTinhThanh/DanhSachTinhThanh">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    Quản lý tỉnh thành
+                                </a>
+                                <b class="arrow"></b>
+                            </li>
+                        }
+                        @if (acceptScreen.Any(x => x == "DanhSachKip"))
+                        {
+                            <li class="open">
+                                <a href="/QuanLyKip/DanhSachKip">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    Quản lý kip
+                                </a>
+                                <b class="arrow"></b>
+                            </li>
+                        }
                     </ul>
                 </li>
                 <li class="open">
@@ -173,27 +207,36 @@
                     </a>
                     <b class="arrow"></b>
                     <ul class="submenu">
-                        <li class="open">
-                            <a href="/QuanLyKhachHang/DanhSachKhachHang">
-                                <i class="menu-icon fa fa-caret-right"></i>
-                                DS khách hàng
-                            </a>
-                            <b class="arrow"></b>
-                        </li>
-                        <li class="open">
-                            <a href="#">
-                                <i class="menu-icon fa fa-caret-right"></i>
-                                Tích điểm
-                            </a>
-                            <b class="arrow"></b>
-                        </li>
-                        <li class="open">
-                            <a href="#">
-                                <i class="menu-icon fa fa-caret-right"></i>
-                                Loại khách hàng
-                            </a>
-                            <b class="arrow"></b>
-                        </li>
+                        @if (acceptScreen.Any(x => x == "DanhSachKhachHang"))
+                        {
+                            <li class="open">
+                                <a href="/QuanLyKhachHang/DanhSachKhachHang">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    DS khách hàng
+                                </a>
+                                <b class="arrow"></b>
+                            </li>
+                        }
+                        @if (acceptScreen.Any(x => x == "TichDiem"))
+                        {
+                            <li class="open">
+                                <a href="#">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    Tích điểm
+                                </a>
+                                <b class="arrow"></b>
+                            </li>
+                        }
+                        @if (acceptScreen.Any(x => x == "LoaiKhachHang"))
+                        {
+                            <li class="open">
+                                <a href="#">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    Loại khách hàng
+                                </a>
+                                <b class="arrow"></b>
+                            </li>
+                        }
                     </ul>
                 </li>
 
@@ -214,13 +257,16 @@
                             </a>
                             <b class="arrow"></b>
                         </li>
-                        <li class="open">
-                            <a href="/QuanLyTaiKhoan/DanhSachTaiKhoan">
-                                <i class="menu-icon fa fa-caret-right"></i>
-                                Danh sách tài khoản
-                            </a>
-                            <b class="arrow"></b>
-                        </li>
+                        @if (acceptScreen.Any(x => x == "DanhSachTaiKhoan"))
+                        {
+                            <li class="open">
+                                <a href="/QuanLyTaiKhoan/DanhSachTaiKhoan">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    Danh sách tài khoản
+                                </a>
+                                <b class="arrow"></b>
+                            </li>
+                        }
                     </ul>
                 </li>
 
@@ -234,49 +280,67 @@
                     </a>
                     <b class="arrow"></b>
                     <ul class="submenu">
-                        <li class="open">
-                            <a href="/QuanLyTaiKhoan/PhanQuyen">
-                                <i class="menu-icon fa fa-caret-right"></i>
-                                Cài đặt quyền
-                            </a>
-                            <b class="arrow"></b>
-                        </li>
-                        <li class="open">
-                            <a href="/QuanLyTaiKhoan/DanhSachTaiKhoan">
-                                <i class="menu-icon fa fa-caret-right"></i>
-                                Cấu hình
-                            </a>
-                            <b class="arrow"></b>
-                        </li>
-                        <li class="open">
-                            <a href="/QuanLyChucVu/DanhSachChucVu">
-                                <i class="menu-icon fa fa-caret-right"></i>
-                                Quản lý chức vụ
-                            </a>
-                            <b class="arrow"></b>
-                        </li>
-                        <li class="open">
-                            <a href="/QuanLyNhanVien/DanhSachNhanVien">
-                                <i class="menu-icon fa fa-caret-right"></i>
-                                Quản lý nhân viên
-                            </a>
-                            <b class="arrow"></b>
-                        </li>
-                        <li class="open">
-                            <a href="/QuanLyQuyen/DanhSachQuyen">
-                                <i class="menu-icon fa fa-caret-right"></i>
-                                Quản lý danh sách quyền
-                            </a>
-                            <b class="arrow"></b>
-                        </li>
+                        @if (acceptScreen.Any(x => x == "PhanQuyen"))
+                        {
+                            <li class="open">
+                                <a href="/QuanLyTaiKhoan/PhanQuyen">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    Cài đặt quyền
+                                </a>
+                                <b class="arrow"></b>
+                            </li>
+                        }
+                        @if (acceptScreen.Any(x => x == "DanhSachTaiKhoan"))
+                        {
+                            <li class="open">
+                                <a href="/QuanLyTaiKhoan/DanhSachTaiKhoan">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    Cấu hình
+                                </a>
+                                <b class="arrow"></b>
+                            </li>
+                        }
+                        @if (acceptScreen.Any(x => x == "DanhSachChucVu"))
+                        {
+                            <li class="open">
+                                <a href="/QuanLyChucVu/DanhSachChucVu">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    Quản lý chức vụ
+                                </a>
+                                <b class="arrow"></b>
+                            </li>
+                        }
+                        @if (acceptScreen.Any(x => x == "DanhSachNhanVien"))
+                        {
+                            <li class="open">
+                                <a href="/QuanLyNhanVien/DanhSachNhanVien">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    Quản lý nhân viên
+                                </a>
+                                <b class="arrow"></b>
+                            </li>
+                        }
+                        @if (acceptScreen.Any(x => x == "DanhSachQuyen"))
+                        {
+                            <li class="open">
+                                <a href="/QuanLyQuyen/DanhSachQuyen">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    Quản lý danh sách quyền
+                                </a>
+                                <b class="arrow"></b>
+                            </li>
+                        }
                     </ul>
                 </li>
-                <li class="open">
-                    <a href="/QuanLyNhaXe/ThongTinNhaXe">
-                        <i class="menu-icon fa fa-building"></i>
-                        <span class="menu-text"> Thông tin nhà xe </span>
-                    </a>
-                </li>
+                @if (acceptScreen.Any(x => x == "ThongTinNhaXe"))
+                {
+                    <li class="open">
+                        <a href="/QuanLyNhaXe/ThongTinNhaXe">
+                            <i class="menu-icon fa fa-building"></i>
+                            <span class="menu-text"> Thông tin nhà xe </span>
+                        </a>
+                    </li>
+                }
             </ul><!-- /.nav-list -->
 
             <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">

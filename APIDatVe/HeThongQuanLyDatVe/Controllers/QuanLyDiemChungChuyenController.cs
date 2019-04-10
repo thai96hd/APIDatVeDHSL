@@ -4,13 +4,15 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace HeThongQuanLyNhaXe.Controllers
+namespace HeThongQuanLyDatVe.Controllers
 {
-    public class QuanLyDiemChungChuyenController : Controller
+    public class QuanLyDiemChungChuyenController : BaseController
     {
         // GET: QuanLyDiemChungChuyen
         public ActionResult DanhSachDiemCC()
         {
+            if (!CheckAcceptAction("DanhSachDiemCC"))
+                return Redirect("/Login/DangNhap");
             return View();
         }
     }

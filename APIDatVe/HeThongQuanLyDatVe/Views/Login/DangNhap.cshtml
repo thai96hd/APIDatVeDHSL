@@ -114,6 +114,8 @@
     </div>
     <script src="~/assets/js/jquery-2.1.4.min.js"></script>
     <script type="text/javascript">
+        setCookie('token', '', 1)
+        setCookie('danhsachmanhinh', '', 1)
         jQuery(function ($) {
             $(document).on('click', '.toolbar a[data-target]', function (e) {
                 e.preventDefault();

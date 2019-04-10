@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
-namespace HeThongQuanLyNhaXe.Controllers
+namespace HeThongQuanLyDatVe.Controllers
 {
-    public class TongQuanController : Controller
+    public class TongQuanController : BaseController
     {
         // GET: TongQuan
         public ActionResult ManHinhTongQuan()
         {
+            if (!TryGetRole())
+                return Redirect("/Login/DangNhap");
             return View();
         }
     }

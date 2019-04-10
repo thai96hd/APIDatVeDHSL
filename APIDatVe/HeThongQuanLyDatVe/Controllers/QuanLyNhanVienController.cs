@@ -6,11 +6,13 @@ using System.Web.Mvc;
 
 namespace HeThongQuanLyDatVe.Controllers
 {
-    public class QuanLyNhanVienController : Controller
+    public class QuanLyNhanVienController : BaseController
     {
         // GET: QuanLyNhanVien
         public ActionResult DanhSachNhanVien()
         {
+            if (!CheckAcceptAction("DanhSachNhanVien"))
+                return Redirect("/Login/DangNhap");
             return View();
         }
     }

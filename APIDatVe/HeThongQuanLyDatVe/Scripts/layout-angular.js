@@ -15,7 +15,7 @@ app.directive('convertToNumber', function () {
 app.factory('httpRequestInterceptor', function () {
     return {
         request: function (config) {
-            //config.headers['Authorization'] = 'Bearer ' + getCookie('token');
+            config.headers['Authorization'] = 'Bearer ' + getCookie('token');
             return config;
         }
     };

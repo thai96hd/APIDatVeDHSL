@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
 namespace HeThongQuanLyNhaXe.Controllers
 {
@@ -13,10 +9,10 @@ namespace HeThongQuanLyNhaXe.Controllers
         {
             return View();
         }
-        [HttpPost]
-        public ActionResult DangNhap(string UserName,string Password)
+        public ActionResult DangXuat()
         {
-            return RedirectToAction("ManHinhTongQuan", "TongQuan");
+            Session["acceptScreen"] = null;
+            return RedirectToAction("DangNhap");
         }
     }
 }
