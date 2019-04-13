@@ -28,7 +28,7 @@ namespace APIDatVe.DAL
 
             command.Parameters.AddWithValue("@machucvu", 3);
 
-            SqlDataReader rowsAffected = command.ExecuteReader();// lay dlieu -> ktra dlieu co ton tai hay khong
+            SqlDataReader rowsAffected = command.ExecuteReader();
 
             if (rowsAffected.HasRows)
                 return true;
@@ -48,7 +48,7 @@ namespace APIDatVe.DAL
 
             command.Parameters.AddWithValue("@matkhau", password);
 
-            if (command.ExecuteNonQuery() == 1)// ktra dlieu: update, create, delete hay chuwa
+            if (command.ExecuteNonQuery() == 1)
                 return true;
             return false;
         }

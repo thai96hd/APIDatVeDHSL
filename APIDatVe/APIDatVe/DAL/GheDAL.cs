@@ -13,24 +13,24 @@ namespace APIDatVe.DAL
 
         public DataTable GetGhes(String maxe, String maghe)
         {
-            String sql = "SELECT ttghe.trangthai," +
-                        "  g.*," +
+            String sql = " SELECT ttghe.trangthai," +
+                       "  g.*," +
                          "  i.*" +
-                   " FROM" +
-                     " (SELECT vx.*," +
-                          "    ct.maghe," +
-                          " kh.* " +
-                      " FROM VeXe vx" +
-                      " JOIN ChuyenXe cx ON cx.machuyenxe = vx.machuyenxe" +
-                    "   JOIN Xe xe ON xe.maxe = cx.maxe" +
-                     "  JOIN KhachHang kh ON kh.khachhangId = vx.khachhangId" +
-                     "  JOIN ChiTietVeXe ct ON ct.vexeId = vx.vexeId" +
-                    "   WHERE xe.maxe = @maxe" +
-                    "     AND cx.ngayhoatdong = @ngayhoatdong) AS i" +
+                 "  FROM" +
+                 "     (SELECT vx.vexeId, vx.ghichu," +
+                   "           ct.maghe," +
+                    "      kh.*" +
+                    "   FROM VeXe vx" +
+                    "   JOIN ChuyenXe cx ON cx.machuyenxe = vx.machuyenxe" +
+                   "    JOIN Xe xe ON xe.maxe = cx.maxe" +
+                    "   JOIN KhachHang kh ON kh.khachhangId = vx.khachhangId" +
+                    "   JOIN ChiTietVeXe ct ON ct.vexeId = vx.vexeId" +
+                   "    WHERE xe.maxe = 1" +
+                   "      AND cx.ngayhoatdong =  Convert(datetime, @ngayhoatdong, 103)) AS i" +
                   "  RIGHT JOIN Ghe g ON g.maghe = i.maghe" +
-                 "   JOIN TrangThaiGhe ttghe ON ttghe.maghe = g.maghe" +
+                  "  JOIN TrangThaiGhe ttghe ON ttghe.maghe = g.maghe" +
                  "   WHERE g.active = 1" +
-                 "     AND ttghe.ngay = @ngay";
+                 "    AND ttghe.ngay = Convert(datetime, @ngayhoatdong, 103)";
 
             if (!String.IsNullOrWhiteSpace(maghe))
             {
@@ -43,9 +43,7 @@ namespace APIDatVe.DAL
 
             command.Parameters.AddWithValue("@maxe", maxe);
 
-            command.Parameters.AddWithValue("@ngayhoatdong", dateTime.ToString("dd-mm-yy"));
-
-            command.Parameters.AddWithValue("@ngay", dateTime.ToString("dd-mm-yy"));
+            command.Parameters.AddWithValue("@ngayhoatdong", dateTime.ToString("dd-MM-yyyy"));
 
             if (!String.IsNullOrWhiteSpace(maghe))
             {

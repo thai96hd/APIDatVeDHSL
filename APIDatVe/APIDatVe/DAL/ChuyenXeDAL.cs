@@ -14,8 +14,8 @@ namespace APIDatVe.DAL
             List<ChuyenXeDTO> chuyenXes = new List<ChuyenXeDTO>();
             String sql = "SELECT *" +
                    " FROM ChuyenXe" +
-                    " WHERE ngayhoatdong>= @ngaybatdau" +
-                    " AND ngayhoatdong<= @ngayketthuc" +
+                    " WHERE ngayhoatdong>=Convert(datetime,@ngaybatdau,103) " +
+                    " AND ngayhoatdong<= Convert(datetime,@ngayketthuc,103)" +
                     " AND maphuxe = @maphuxe";
 
             DateTime startDate = DateTime.Now;
@@ -23,14 +23,14 @@ namespace APIDatVe.DAL
 
             SqlCommand command = DataProvider.Instance.getCommand(sql);
 
-            command.Parameters.AddWithValue("@ngaybatdau", startDate.ToString("dd-MM-yy"));
+            command.Parameters.AddWithValue("@ngaybatdau", startDate.ToString("dd-MM-yyyy"));
 
-            command.Parameters.AddWithValue("@ngayketthuc", endDate.ToString("dd-MM-yy"));
+            command.Parameters.AddWithValue("@ngayketthuc", endDate.ToString("dd-MM-yyyy"));
 
             command.Parameters.AddWithValue("@maphuxe", maphuxe);
 
 
-            SqlDataReader rowsAffected = command.ExecuteReader();// lay dlieu -> ktra dlieu co ton tai hay khong
+            SqlDataReader rowsAffected = command.ExecuteReader();
 
             if (rowsAffected.HasRows)
             {
@@ -53,7 +53,6 @@ namespace APIDatVe.DAL
             }
             return chuyenXes;
         }
-
         public List<LichTrinhPhuXeDTO> GetLichTrinhPhuXes(string tentaikhoan, string manhanvien)
         {
             List<LichTrinhPhuXeDTO> lichTrinhPhuXes = new List<LichTrinhPhuXeDTO>();
@@ -66,7 +65,7 @@ namespace APIDatVe.DAL
                            " JOIN Kip kip ON cx.makip = kip.makip" +
                           "  JOIN LoTrinh lt ON cx.malotrinh = lt.malotrinh" +
                           "  JOIN Xe xe ON cx.maxe = xe.maxe" +
-                           " WHERE cx.ngayhoatdong < @ngayhoatdong  ";
+                           " WHERE cx.ngayhoatdong<Convert(datetime,@ngayhoatdong,103)";
 
             if (!String.IsNullOrEmpty(tentaikhoan))
             {
@@ -80,7 +79,7 @@ namespace APIDatVe.DAL
 
             SqlCommand command = DataProvider.Instance.getCommand(sql);
 
-            command.Parameters.AddWithValue("@ngayhoatdong", DateTime.Now.ToString("dd-mm-yy"));
+            command.Parameters.AddWithValue("@ngayhoatdong", DateTime.Now.ToString("dd-MM-yyyy"));
 
             if (!String.IsNullOrEmpty(tentaikhoan))
             {
@@ -93,7 +92,7 @@ namespace APIDatVe.DAL
             }
 
 
-            SqlDataReader rowsAffected = command.ExecuteReader();// lay dlieu -> ktra dlieu co ton tai hay khong
+            SqlDataReader rowsAffected = command.ExecuteReader();
 
             if (rowsAffected.HasRows)
             {

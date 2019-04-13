@@ -11,5 +11,7 @@ namespace APIDatVe.DTO
         public String matinh { get; set; }
         public String tendiemtrungchuyen { get; set; }
         public String diachi { get; set; }
+        public String lat { get; set; }
+        public String longt {get; set; }
     }
 }

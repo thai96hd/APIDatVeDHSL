@@ -30,6 +30,8 @@ namespace APIDatVe.DAL
                     diemTrungChuyen.matinh = rowsAffected.GetString(sl++);
                     diemTrungChuyen.tendiemtrungchuyen = rowsAffected.GetString(sl++);
                     diemTrungChuyen.diachi = rowsAffected.IsDBNull(sl) ? "" : rowsAffected.GetString(sl++);
+                    diemTrungChuyen.lat = rowsAffected.IsDBNull(sl) ? "" : rowsAffected.GetString(sl++);
+                    diemTrungChuyen.longt = rowsAffected.IsDBNull(sl) ? "" : rowsAffected.GetString(sl++);
 
                     diemTrungChuyens.Add(diemTrungChuyen);
                     sl = 0;
