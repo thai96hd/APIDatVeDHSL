@@ -4,31 +4,36 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="2a12a2ee6db14f059f217007847be07e" Name="Diagram1">
-        <EntityTypeShape EntityType="QLDatVe2Model.BangGia" Width="1.5" PointX="13.25" PointY="15.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDatVe2Model.ChiTietLaiXe" Width="1.5" PointX="3" PointY="30.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDatVe2Model.ChiTietLoTrinh" Width="1.5" PointX="11" PointY="11.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDatVe2Model.ChiTietVeXe" Width="1.5" PointX="10.5" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDatVe2Model.ChucVu" Width="1.5" PointX="1.5" PointY="19.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDatVe2Model.ChuyenXe" Width="1.5" PointX="3" PointY="5.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDatVe2Model.DanhGia" Width="1.5" PointX="6" PointY="6.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDatVe2Model.DiemTrungChuyen" Width="1.5" PointX="11" PointY="15.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDatVe2Model.DoiTuong" Width="1.5" PointX="3.75" PointY="3" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDatVe2Model.Ghe" Width="1.5" PointX="3" PointY="13.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDatVe2Model.KhachHang" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDatVe2Model.Kip" Width="1.5" PointX="0.75" PointY="1.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDatVe2Model.LoTrinh" Width="1.5" PointX="0.75" PointY="10.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDatVe2Model.ManHinhQuanLy" Width="1.5" PointX="1.5" PointY="33.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDatVe2Model.NhanVien" Width="1.5" PointX="0.75" PointY="14.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDatVe2Model.Quyen" Width="1.5" PointX="1.5" PointY="26.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDatVe2Model.QuyenManHinhQuanLy" Width="1.5" PointX="3.75" PointY="26.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDatVe2Model.sysdiagram" Width="1.5" PointX="8.75" PointY="1.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDatVe2Model.TaiKhoan" Width="1.5" PointX="1.5" PointY="22.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDatVe2Model.TinhThanh" Width="1.5" PointX="8.75" PointY="12.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDatVe2Model.TrangThaiGhe" Width="1.5" PointX="5.25" PointY="14.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDatVe2Model.TrangThaiVeXe" Width="1.5" PointX="6" PointY="9.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDatVe2Model.VeXe" Width="1.5" PointX="8.25" PointY="5.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDatVe2Model.Xe" Width="1.5" PointX="0.75" PointY="6.125" IsExpanded="true" />
+      <Diagram DiagramId="ddcf05b5a7fc40de8878f470896c6b3a" Name="Diagram1">
+        <EntityTypeShape EntityType="QLDatVe2Model.APIQuanLy" Width="1.5" PointX="0.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDatVe2Model.BangGia" Width="1.5" PointX="17.25" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDatVe2Model.ChiTietLaiXe" Width="1.5" PointX="7.5" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDatVe2Model.ChiTietLoTrinh" Width="1.5" PointX="15" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDatVe2Model.ChiTietVeXe" Width="1.5" PointX="15" PointY="12.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDatVe2Model.ChucVu" Width="1.5" PointX="3" PointY="19.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDatVe2Model.ChuyenXe" Width="1.5" PointX="10.5" PointY="11.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDatVe2Model.DanhGia" Width="1.5" PointX="12.75" PointY="16.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDatVe2Model.DiemTrungChuyen" Width="1.5" PointX="15" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDatVe2Model.DoiTuong" Width="1.5" PointX="8.25" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDatVe2Model.Ghe" Width="1.5" PointX="10.5" PointY="22.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDatVe2Model.KhachHang" Width="1.5" PointX="10.5" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDatVe2Model.Kip" Width="1.5" PointX="8.25" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDatVe2Model.LoTrinh" Width="1.5" PointX="8.25" PointY="16" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDatVe2Model.ManHinhQuanLy" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDatVe2Model.NhanVien" Width="1.5" PointX="5.25" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDatVe2Model.NhomAPI" Width="1.5" PointX="1.5" PointY="17" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDatVe2Model.Quyen" Width="1.5" PointX="0.75" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDatVe2Model.QuyenAPIQuanLy" Width="1.5" PointX="3" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDatVe2Model.QuyenManHinhQuanLy" Width="1.5" PointX="3" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDatVe2Model.sysdiagram" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDatVe2Model.TaiKhoan" Width="1.5" PointX="3" PointY="12.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDatVe2Model.TinhThanh" Width="1.5" PointX="12.75" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDatVe2Model.TrangThaiGhe" Width="1.5" PointX="12.75" PointY="22.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDatVe2Model.TrangThaiVeXe" Width="1.5" PointX="10.5" PointY="17" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDatVe2Model.VeXe" Width="1.5" PointX="12.75" PointY="12" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDatVe2Model.Xe" Width="1.5" PointX="8.25" PointY="19.125" IsExpanded="true" />
+        <AssociationConnector Association="QLDatVe2Model.FK_APIQuanLy_NhomAPI" ManuallyRouted="false" />
+        <AssociationConnector Association="QLDatVe2Model.FK_QuyenAPIQuanLy_APIQuanLy" ManuallyRouted="false" />
         <AssociationConnector Association="QLDatVe2Model.FK_BangGia_DiemChungChuyen" ManuallyRouted="false" />
         <AssociationConnector Association="QLDatVe2Model.FK_BangGia_DiemChungChuyen1" ManuallyRouted="false" />
         <AssociationConnector Association="QLDatVe2Model.FK_ChiTietLaiXe_NhanVien" ManuallyRouted="false" />
@@ -51,6 +56,7 @@
         <AssociationConnector Association="QLDatVe2Model.FK_VeXe_KhachHang1" ManuallyRouted="false" />
         <AssociationConnector Association="QLDatVe2Model.FK_QuyenManHinhQuanLy_ManHinhQuanLy" ManuallyRouted="false" />
         <AssociationConnector Association="QLDatVe2Model.FK_NhanVien_TaiKhoan" ManuallyRouted="false" />
+        <AssociationConnector Association="QLDatVe2Model.FK_QuyenAPIQuanLy_Quyen" ManuallyRouted="false" />
         <AssociationConnector Association="QLDatVe2Model.FK_QuyenManHinhQuanLy_Quyen" ManuallyRouted="false" />
         <AssociationConnector Association="QLDatVe2Model.FK_TaiKhoan_Quyen" ManuallyRouted="false" />
         <AssociationConnector Association="QLDatVe2Model.FK_VeXe_TrangThaiVeXe" ManuallyRouted="false" />

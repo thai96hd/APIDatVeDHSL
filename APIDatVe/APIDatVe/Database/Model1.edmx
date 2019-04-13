@@ -5,6 +5,16 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
       <Schema Namespace="QLDatVe2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="APIQuanLy">
+          <Key>
+            <PropertyRef Name="APIquanlyid" />
+          </Key>
+          <Property Name="APIquanlyid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="manhomapi" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="actionname" Type="varchar" MaxLength="50" />
+          <Property Name="controllername" Type="varchar" MaxLength="50" />
+          <Property Name="mota" Type="nvarchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="BangGia">
           <Key>
             <PropertyRef Name="banggiaId" />
@@ -140,8 +150,9 @@
           <Key>
             <PropertyRef Name="manhinhquanlyId" />
           </Key>
-          <Property Name="manhinhquanlyId" Type="int" Nullable="false" />
+          <Property Name="manhinhquanlyId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="tenmanhinh" Type="varchar" MaxLength="50" />
+          <Property Name="mota" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="NhanVien">
           <Key>
@@ -159,6 +170,14 @@
           <Property Name="tentaikhoan" Type="varchar" MaxLength="50" />
           <Property Name="noicap" Type="nvarchar" MaxLength="200" />
         </EntityType>
+        <EntityType Name="NhomAPI">
+          <Key>
+            <PropertyRef Name="manhomapi" />
+          </Key>
+          <Property Name="manhomapi" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="classname" Type="varchar" MaxLength="50" />
+          <Property Name="tennhom" Type="nvarchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="Quyen">
           <Key>
             <PropertyRef Name="maquyen" />
@@ -166,17 +185,23 @@
           <Property Name="maquyen" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="tenquyen" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="QuyenAPIQuanLy">
+          <Key>
+            <PropertyRef Name="quyenapiquanlyid" />
+          </Key>
+          <Property Name="quyenapiquanlyid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="APIquanlyid" Type="int" Nullable="false" />
+          <Property Name="maquyen" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="chon" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="QuyenManHinhQuanLy">
           <Key>
             <PropertyRef Name="quyenmanhinhquanlyId" />
           </Key>
-          <Property Name="quyenmanhinhquanlyId" Type="int" Nullable="false" />
+          <Property Name="quyenmanhinhquanlyId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="manhinhquanlyId" Type="int" Nullable="false" />
           <Property Name="maquyen" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="quyenxem" Type="bit" Nullable="false" />
-          <Property Name="quyenthem" Type="bit" Nullable="false" />
-          <Property Name="quyensua" Type="bit" Nullable="false" />
-          <Property Name="quyenxoa" Type="bit" Nullable="false" />
+          <Property Name="chon" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -252,6 +277,18 @@
           <Property Name="ghichu" Type="ntext" />
           <Property Name="trangthai" Type="int" Nullable="false" />
         </EntityType>
+        <Association Name="FK_APIQuanLy_NhomAPI">
+          <End Role="NhomAPI" Type="Self.NhomAPI" Multiplicity="1" />
+          <End Role="APIQuanLy" Type="Self.APIQuanLy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NhomAPI">
+              <PropertyRef Name="manhomapi" />
+            </Principal>
+            <Dependent Role="APIQuanLy">
+              <PropertyRef Name="manhomapi" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_BangGia_DiemChungChuyen">
           <End Role="DiemTrungChuyen" Type="Self.DiemTrungChuyen" Multiplicity="0..1" />
           <End Role="BangGia" Type="Self.BangGia" Multiplicity="*" />
@@ -468,6 +505,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_QuyenAPIQuanLy_APIQuanLy">
+          <End Role="APIQuanLy" Type="Self.APIQuanLy" Multiplicity="1" />
+          <End Role="QuyenAPIQuanLy" Type="Self.QuyenAPIQuanLy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="APIQuanLy">
+              <PropertyRef Name="APIquanlyid" />
+            </Principal>
+            <Dependent Role="QuyenAPIQuanLy">
+              <PropertyRef Name="APIquanlyid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QuyenAPIQuanLy_Quyen">
+          <End Role="Quyen" Type="Self.Quyen" Multiplicity="1" />
+          <End Role="QuyenAPIQuanLy" Type="Self.QuyenAPIQuanLy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Quyen">
+              <PropertyRef Name="maquyen" />
+            </Principal>
+            <Dependent Role="QuyenAPIQuanLy">
+              <PropertyRef Name="maquyen" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_QuyenManHinhQuanLy_ManHinhQuanLy">
           <End Role="ManHinhQuanLy" Type="Self.ManHinhQuanLy" Multiplicity="1" />
           <End Role="QuyenManHinhQuanLy" Type="Self.QuyenManHinhQuanLy" Multiplicity="*" />
@@ -584,6 +645,7 @@
         </Function>
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="QLDatVe2ModelStoreContainer">
+          <EntitySet Name="APIQuanLy" EntityType="Self.APIQuanLy" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BangGia" EntityType="Self.BangGia" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ChiTietLaiXe" EntityType="Self.ChiTietLaiXe" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ChiTietLoTrinh" EntityType="Self.ChiTietLoTrinh" Schema="dbo" store:Type="Tables" />
@@ -599,7 +661,9 @@
           <EntitySet Name="LoTrinh" EntityType="Self.LoTrinh" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ManHinhQuanLy" EntityType="Self.ManHinhQuanLy" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NhanVien" EntityType="Self.NhanVien" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NhomAPI" EntityType="Self.NhomAPI" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Quyen" EntityType="Self.Quyen" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QuyenAPIQuanLy" EntityType="Self.QuyenAPIQuanLy" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="QuyenManHinhQuanLy" EntityType="Self.QuyenManHinhQuanLy" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TaiKhoan" EntityType="Self.TaiKhoan" Schema="dbo" store:Type="Tables" />
@@ -608,6 +672,10 @@
           <EntitySet Name="TrangThaiVeXe" EntityType="Self.TrangThaiVeXe" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VeXe" EntityType="Self.VeXe" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Xe" EntityType="Self.Xe" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_APIQuanLy_NhomAPI" Association="Self.FK_APIQuanLy_NhomAPI">
+            <End Role="NhomAPI" EntitySet="NhomAPI" />
+            <End Role="APIQuanLy" EntitySet="APIQuanLy" />
+          </AssociationSet>
           <AssociationSet Name="FK_BangGia_DiemChungChuyen" Association="Self.FK_BangGia_DiemChungChuyen">
             <End Role="DiemTrungChuyen" EntitySet="DiemTrungChuyen" />
             <End Role="BangGia" EntitySet="BangGia" />
@@ -680,6 +748,14 @@
             <End Role="TaiKhoan" EntitySet="TaiKhoan" />
             <End Role="NhanVien" EntitySet="NhanVien" />
           </AssociationSet>
+          <AssociationSet Name="FK_QuyenAPIQuanLy_APIQuanLy" Association="Self.FK_QuyenAPIQuanLy_APIQuanLy">
+            <End Role="APIQuanLy" EntitySet="APIQuanLy" />
+            <End Role="QuyenAPIQuanLy" EntitySet="QuyenAPIQuanLy" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QuyenAPIQuanLy_Quyen" Association="Self.FK_QuyenAPIQuanLy_Quyen">
+            <End Role="Quyen" EntitySet="Quyen" />
+            <End Role="QuyenAPIQuanLy" EntitySet="QuyenAPIQuanLy" />
+          </AssociationSet>
           <AssociationSet Name="FK_QuyenManHinhQuanLy_ManHinhQuanLy" Association="Self.FK_QuyenManHinhQuanLy_ManHinhQuanLy">
             <End Role="ManHinhQuanLy" EntitySet="ManHinhQuanLy" />
             <End Role="QuyenManHinhQuanLy" EntitySet="QuyenManHinhQuanLy" />
@@ -714,6 +790,18 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="QLDatVe2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="APIQuanLy">
+          <Key>
+            <PropertyRef Name="APIquanlyid" />
+          </Key>
+          <Property Name="APIquanlyid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="manhomapi" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="actionname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="controllername" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="mota" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="NhomAPI" Relationship="Self.FK_APIQuanLy_NhomAPI" FromRole="APIQuanLy" ToRole="NhomAPI" />
+          <NavigationProperty Name="QuyenAPIQuanLies" Relationship="Self.FK_QuyenAPIQuanLy_APIQuanLy" FromRole="APIQuanLy" ToRole="QuyenAPIQuanLy" />
+        </EntityType>
         <EntityType Name="BangGia">
           <Key>
             <PropertyRef Name="banggiaId" />
@@ -876,8 +964,9 @@
           <Key>
             <PropertyRef Name="manhinhquanlyId" />
           </Key>
-          <Property Name="manhinhquanlyId" Type="Int32" Nullable="false" />
+          <Property Name="manhinhquanlyId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="tenmanhinh" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="mota" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="QuyenManHinhQuanLies" Relationship="Self.FK_QuyenManHinhQuanLy_ManHinhQuanLy" FromRole="ManHinhQuanLy" ToRole="QuyenManHinhQuanLy" />
         </EntityType>
         <EntityType Name="NhanVien">
@@ -901,26 +990,44 @@
           <NavigationProperty Name="ChuyenXes1" Relationship="Self.FK_ChiTietHoatDongXe_NhanVien1" FromRole="NhanVien" ToRole="ChuyenXe" />
           <NavigationProperty Name="TaiKhoan" Relationship="Self.FK_NhanVien_TaiKhoan" FromRole="NhanVien" ToRole="TaiKhoan" />
         </EntityType>
+        <EntityType Name="NhomAPI">
+          <Key>
+            <PropertyRef Name="manhomapi" />
+          </Key>
+          <Property Name="manhomapi" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="classname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="tennhom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="APIQuanLies" Relationship="Self.FK_APIQuanLy_NhomAPI" FromRole="NhomAPI" ToRole="APIQuanLy" />
+        </EntityType>
         <EntityType Name="Quyen">
           <Key>
             <PropertyRef Name="maquyen" />
           </Key>
           <Property Name="maquyen" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="tenquyen" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="QuyenAPIQuanLies" Relationship="Self.FK_QuyenAPIQuanLy_Quyen" FromRole="Quyen" ToRole="QuyenAPIQuanLy" />
           <NavigationProperty Name="QuyenManHinhQuanLies" Relationship="Self.FK_QuyenManHinhQuanLy_Quyen" FromRole="Quyen" ToRole="QuyenManHinhQuanLy" />
           <NavigationProperty Name="TaiKhoans" Relationship="Self.FK_TaiKhoan_Quyen" FromRole="Quyen" ToRole="TaiKhoan" />
+        </EntityType>
+        <EntityType Name="QuyenAPIQuanLy">
+          <Key>
+            <PropertyRef Name="quyenapiquanlyid" />
+          </Key>
+          <Property Name="quyenapiquanlyid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="APIquanlyid" Type="Int32" Nullable="false" />
+          <Property Name="maquyen" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="chon" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="APIQuanLy" Relationship="Self.FK_QuyenAPIQuanLy_APIQuanLy" FromRole="QuyenAPIQuanLy" ToRole="APIQuanLy" />
+          <NavigationProperty Name="Quyen" Relationship="Self.FK_QuyenAPIQuanLy_Quyen" FromRole="QuyenAPIQuanLy" ToRole="Quyen" />
         </EntityType>
         <EntityType Name="QuyenManHinhQuanLy">
           <Key>
             <PropertyRef Name="quyenmanhinhquanlyId" />
           </Key>
-          <Property Name="quyenmanhinhquanlyId" Type="Int32" Nullable="false" />
+          <Property Name="quyenmanhinhquanlyId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="manhinhquanlyId" Type="Int32" Nullable="false" />
           <Property Name="maquyen" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="quyenxem" Type="Boolean" Nullable="false" />
-          <Property Name="quyenthem" Type="Boolean" Nullable="false" />
-          <Property Name="quyensua" Type="Boolean" Nullable="false" />
-          <Property Name="quyenxoa" Type="Boolean" Nullable="false" />
+          <Property Name="chon" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="ManHinhQuanLy" Relationship="Self.FK_QuyenManHinhQuanLy_ManHinhQuanLy" FromRole="QuyenManHinhQuanLy" ToRole="ManHinhQuanLy" />
           <NavigationProperty Name="Quyen" Relationship="Self.FK_QuyenManHinhQuanLy_Quyen" FromRole="QuyenManHinhQuanLy" ToRole="Quyen" />
         </EntityType>
@@ -1011,6 +1118,30 @@
           <NavigationProperty Name="DanhGias" Relationship="Self.FK_DanhGia_Xe" FromRole="Xe" ToRole="DanhGia" />
           <NavigationProperty Name="Ghes" Relationship="Self.FK_Ghe_Xe" FromRole="Xe" ToRole="Ghe" />
         </EntityType>
+        <Association Name="FK_APIQuanLy_NhomAPI">
+          <End Role="NhomAPI" Type="Self.NhomAPI" Multiplicity="1" />
+          <End Role="APIQuanLy" Type="Self.APIQuanLy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NhomAPI">
+              <PropertyRef Name="manhomapi" />
+            </Principal>
+            <Dependent Role="APIQuanLy">
+              <PropertyRef Name="manhomapi" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QuyenAPIQuanLy_APIQuanLy">
+          <End Role="APIQuanLy" Type="Self.APIQuanLy" Multiplicity="1" />
+          <End Role="QuyenAPIQuanLy" Type="Self.QuyenAPIQuanLy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="APIQuanLy">
+              <PropertyRef Name="APIquanlyid" />
+            </Principal>
+            <Dependent Role="QuyenAPIQuanLy">
+              <PropertyRef Name="APIquanlyid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_BangGia_DiemChungChuyen">
           <End Role="DiemTrungChuyen" Type="Self.DiemTrungChuyen" Multiplicity="0..1" />
           <End Role="BangGia" Type="Self.BangGia" Multiplicity="*" />
@@ -1275,6 +1406,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_QuyenAPIQuanLy_Quyen">
+          <End Role="Quyen" Type="Self.Quyen" Multiplicity="1" />
+          <End Role="QuyenAPIQuanLy" Type="Self.QuyenAPIQuanLy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Quyen">
+              <PropertyRef Name="maquyen" />
+            </Principal>
+            <Dependent Role="QuyenAPIQuanLy">
+              <PropertyRef Name="maquyen" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_QuyenManHinhQuanLy_Quyen">
           <End Role="Quyen" Type="Self.Quyen" Multiplicity="1" />
           <End Role="QuyenManHinhQuanLy" Type="Self.QuyenManHinhQuanLy" Multiplicity="*" />
@@ -1312,6 +1455,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="DB" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="APIQuanLies" EntityType="Self.APIQuanLy" />
           <EntitySet Name="BangGias" EntityType="Self.BangGia" />
           <EntitySet Name="ChiTietLaiXes" EntityType="Self.ChiTietLaiXe" />
           <EntitySet Name="ChiTietLoTrinhs" EntityType="Self.ChiTietLoTrinh" />
@@ -1327,7 +1471,9 @@
           <EntitySet Name="LoTrinhs" EntityType="Self.LoTrinh" />
           <EntitySet Name="ManHinhQuanLies" EntityType="Self.ManHinhQuanLy" />
           <EntitySet Name="NhanViens" EntityType="Self.NhanVien" />
+          <EntitySet Name="NhomAPIs" EntityType="Self.NhomAPI" />
           <EntitySet Name="Quyens" EntityType="Self.Quyen" />
+          <EntitySet Name="QuyenAPIQuanLies" EntityType="Self.QuyenAPIQuanLy" />
           <EntitySet Name="QuyenManHinhQuanLies" EntityType="Self.QuyenManHinhQuanLy" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="TaiKhoans" EntityType="Self.TaiKhoan" />
@@ -1336,6 +1482,14 @@
           <EntitySet Name="TrangThaiVeXes" EntityType="Self.TrangThaiVeXe" />
           <EntitySet Name="VeXes" EntityType="Self.VeXe" />
           <EntitySet Name="Xes" EntityType="Self.Xe" />
+          <AssociationSet Name="FK_APIQuanLy_NhomAPI" Association="Self.FK_APIQuanLy_NhomAPI">
+            <End Role="NhomAPI" EntitySet="NhomAPIs" />
+            <End Role="APIQuanLy" EntitySet="APIQuanLies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QuyenAPIQuanLy_APIQuanLy" Association="Self.FK_QuyenAPIQuanLy_APIQuanLy">
+            <End Role="APIQuanLy" EntitySet="APIQuanLies" />
+            <End Role="QuyenAPIQuanLy" EntitySet="QuyenAPIQuanLies" />
+          </AssociationSet>
           <AssociationSet Name="FK_BangGia_DiemChungChuyen" Association="Self.FK_BangGia_DiemChungChuyen">
             <End Role="DiemTrungChuyen" EntitySet="DiemTrungChuyens" />
             <End Role="BangGia" EntitySet="BangGias" />
@@ -1424,6 +1578,10 @@
             <End Role="TaiKhoan" EntitySet="TaiKhoans" />
             <End Role="NhanVien" EntitySet="NhanViens" />
           </AssociationSet>
+          <AssociationSet Name="FK_QuyenAPIQuanLy_Quyen" Association="Self.FK_QuyenAPIQuanLy_Quyen">
+            <End Role="Quyen" EntitySet="Quyens" />
+            <End Role="QuyenAPIQuanLy" EntitySet="QuyenAPIQuanLies" />
+          </AssociationSet>
           <AssociationSet Name="FK_QuyenManHinhQuanLy_Quyen" Association="Self.FK_QuyenManHinhQuanLy_Quyen">
             <End Role="Quyen" EntitySet="Quyens" />
             <End Role="QuyenManHinhQuanLy" EntitySet="QuyenManHinhQuanLies" />
@@ -1484,6 +1642,17 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="QLDatVe2ModelStoreContainer" CdmEntityContainer="DB">
+          <EntitySetMapping Name="APIQuanLies">
+            <EntityTypeMapping TypeName="QLDatVe2Model.APIQuanLy">
+              <MappingFragment StoreEntitySet="APIQuanLy">
+                <ScalarProperty Name="APIquanlyid" ColumnName="APIquanlyid" />
+                <ScalarProperty Name="manhomapi" ColumnName="manhomapi" />
+                <ScalarProperty Name="actionname" ColumnName="actionname" />
+                <ScalarProperty Name="controllername" ColumnName="controllername" />
+                <ScalarProperty Name="mota" ColumnName="mota" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="BangGias">
             <EntityTypeMapping TypeName="QLDatVe2Model.BangGia">
               <MappingFragment StoreEntitySet="BangGia">
@@ -1633,6 +1802,7 @@
               <MappingFragment StoreEntitySet="ManHinhQuanLy">
                 <ScalarProperty Name="manhinhquanlyId" ColumnName="manhinhquanlyId" />
                 <ScalarProperty Name="tenmanhinh" ColumnName="tenmanhinh" />
+                <ScalarProperty Name="mota" ColumnName="mota" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1653,11 +1823,30 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="NhomAPIs">
+            <EntityTypeMapping TypeName="QLDatVe2Model.NhomAPI">
+              <MappingFragment StoreEntitySet="NhomAPI">
+                <ScalarProperty Name="manhomapi" ColumnName="manhomapi" />
+                <ScalarProperty Name="classname" ColumnName="classname" />
+                <ScalarProperty Name="tennhom" ColumnName="tennhom" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Quyens">
             <EntityTypeMapping TypeName="QLDatVe2Model.Quyen">
               <MappingFragment StoreEntitySet="Quyen">
                 <ScalarProperty Name="maquyen" ColumnName="maquyen" />
                 <ScalarProperty Name="tenquyen" ColumnName="tenquyen" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QuyenAPIQuanLies">
+            <EntityTypeMapping TypeName="QLDatVe2Model.QuyenAPIQuanLy">
+              <MappingFragment StoreEntitySet="QuyenAPIQuanLy">
+                <ScalarProperty Name="quyenapiquanlyid" ColumnName="quyenapiquanlyid" />
+                <ScalarProperty Name="APIquanlyid" ColumnName="APIquanlyid" />
+                <ScalarProperty Name="maquyen" ColumnName="maquyen" />
+                <ScalarProperty Name="chon" ColumnName="chon" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1667,10 +1856,7 @@
                 <ScalarProperty Name="quyenmanhinhquanlyId" ColumnName="quyenmanhinhquanlyId" />
                 <ScalarProperty Name="manhinhquanlyId" ColumnName="manhinhquanlyId" />
                 <ScalarProperty Name="maquyen" ColumnName="maquyen" />
-                <ScalarProperty Name="quyenxem" ColumnName="quyenxem" />
-                <ScalarProperty Name="quyenthem" ColumnName="quyenthem" />
-                <ScalarProperty Name="quyensua" ColumnName="quyensua" />
-                <ScalarProperty Name="quyenxoa" ColumnName="quyenxoa" />
+                <ScalarProperty Name="chon" ColumnName="chon" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

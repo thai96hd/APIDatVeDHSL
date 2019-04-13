@@ -22,6 +22,7 @@ namespace APIDatVe.Database
     
         public int manhinhquanlyId { get; set; }
         public string tenmanhinh { get; set; }
+        public string mota { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<QuyenManHinhQuanLy> QuyenManHinhQuanLies { get; set; }

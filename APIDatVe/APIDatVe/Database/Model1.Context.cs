@@ -27,6 +27,7 @@ namespace APIDatVe.Database
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<APIQuanLy> APIQuanLies { get; set; }
         public virtual DbSet<BangGia> BangGias { get; set; }
         public virtual DbSet<ChiTietLaiXe> ChiTietLaiXes { get; set; }
         public virtual DbSet<ChiTietLoTrinh> ChiTietLoTrinhs { get; set; }
@@ -42,7 +43,9 @@ namespace APIDatVe.Database
         public virtual DbSet<LoTrinh> LoTrinhs { get; set; }
         public virtual DbSet<ManHinhQuanLy> ManHinhQuanLies { get; set; }
         public virtual DbSet<NhanVien> NhanViens { get; set; }
+        public virtual DbSet<NhomAPI> NhomAPIs { get; set; }
         public virtual DbSet<Quyen> Quyens { get; set; }
+        public virtual DbSet<QuyenAPIQuanLy> QuyenAPIQuanLies { get; set; }
         public virtual DbSet<QuyenManHinhQuanLy> QuyenManHinhQuanLies { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<TaiKhoan> TaiKhoans { get; set; }

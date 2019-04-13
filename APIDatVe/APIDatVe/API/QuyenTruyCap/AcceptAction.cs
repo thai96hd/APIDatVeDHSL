@@ -30,6 +30,7 @@ namespace APIDatVe.API.QuyenTruyCap
                     {
                         actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.Unauthorized, new Exception("Bạn không có quyền truy cập tính năng  này"));
                     }
+
                 }
             }
         }

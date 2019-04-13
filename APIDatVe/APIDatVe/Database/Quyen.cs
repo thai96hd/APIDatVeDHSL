@@ -17,6 +17,7 @@ namespace APIDatVe.Database
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Quyen()
         {
+            this.QuyenAPIQuanLies = new HashSet<QuyenAPIQuanLy>();
             this.QuyenManHinhQuanLies = new HashSet<QuyenManHinhQuanLy>();
             this.TaiKhoans = new HashSet<TaiKhoan>();
         }
@@ -24,6 +25,8 @@ namespace APIDatVe.Database
         public string maquyen { get; set; }
         public string tenquyen { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<QuyenAPIQuanLy> QuyenAPIQuanLies { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<QuyenManHinhQuanLy> QuyenManHinhQuanLies { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

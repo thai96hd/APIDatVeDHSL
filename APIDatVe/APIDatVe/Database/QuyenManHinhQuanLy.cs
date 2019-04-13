@@ -17,10 +17,7 @@ namespace APIDatVe.Database
         public int quyenmanhinhquanlyId { get; set; }
         public int manhinhquanlyId { get; set; }
         public string maquyen { get; set; }
-        public bool quyenxem { get; set; }
-        public bool quyenthem { get; set; }
-        public bool quyensua { get; set; }
-        public bool quyenxoa { get; set; }
+        public bool chon { get; set; }
     
         public virtual ManHinhQuanLy ManHinhQuanLy { get; set; }
         public virtual Quyen Quyen { get; set; }
