@@ -1,13 +1,13 @@
-﻿using APIDatVe.DAL;
-using APIDatVe.DTO;
+﻿
+using APIDatVe.DAL.DatVe;
+using APIDatVe.DTO.DatVe;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 
-namespace APIDatVe.Controllers
+namespace APIDatVe.API.DatVe
 {
 	/// <summary>
 	/// API for KhachHang 

@@ -165,6 +165,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\DatVe\DiemTrungChuyen1Controller.cs" />
+    <Compile Include="API\DatVe\KhachHangController.cs" />
+    <Compile Include="API\DatVe\ChuyenXe1Controller.cs" />
     <Compile Include="API\PhuXe\ChuyenXeController.cs" />
     <Compile Include="API\PhuXe\DiemTrungChuyenController.cs" />
     <Compile Include="API\PhuXe\GheController.cs" />
@@ -218,14 +221,16 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\KhachHangController.cs" />
-    <Compile Include="DAL\ChuyenXeDAL.cs" />
     <Compile Include="DAL\DataProvider.cs" />
-    <Compile Include="DAL\DiemTrungChuyenDAL.cs" />
-    <Compile Include="DAL\GheDAL.cs" />
-    <Compile Include="DAL\KhachHangDAL.cs" />
-    <Compile Include="DAL\TaiKhoanDAL.cs" />
-    <Compile Include="DAL\TrangThaiGheDAL.cs" />
+    <Compile Include="DAL\DatVe\DiemTrungChuyenDAL.cs" />
+    <Compile Include="DAL\DatVe\KhachHangDAL.cs" />
+    <Compile Include="DAL\DatVe\ChuyenXeDAL.cs" />
+    <Compile Include="DAL\PhuXe\ChuyenXeDAL.cs" />
+    <Compile Include="DAL\PhuXe\DiemTrungChuyenDAL.cs" />
+    <Compile Include="DAL\PhuXe\GheDAL.cs" />
+    <Compile Include="DAL\PhuXe\KhachHangDAL.cs" />
+    <Compile Include="DAL\PhuXe\TaiKhoanDAL.cs" />
+    <Compile Include="DAL\PhuXe\TrangThaiGheDAL.cs" />
     <Compile Include="Database\APIQuanLy.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -328,14 +333,18 @@
     <Compile Include="Database\Xe.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="DTO\ChuyenXeDTO.cs" />
-    <Compile Include="DTO\DiemTrungChuyenDTO.cs" />
-    <Compile Include="DTO\GheDTO.cs" />
-    <Compile Include="DTO\KhachHangDTO.cs" />
-    <Compile Include="DTO\LichTrinhPhuXeDTO.cs" />
-    <Compile Include="DTO\NhanVienDTO.cs" />
-    <Compile Include="DTO\TaiKhoanDTO.cs" />
-    <Compile Include="DTO\TrangThaiGheDTO.cs" />
+    <Compile Include="DTO\DatVe\ChuyenXeDTO.cs" />
+    <Compile Include="DTO\DatVe\DiemTrungChuyenDTO.cs" />
+    <Compile Include="DTO\DatVe\KhachHangDTO.cs" />
+    <Compile Include="DTO\DatVe\LoTrinhDTO.cs" />
+    <Compile Include="DTO\PhuXe\ChuyenXeDTO.cs" />
+    <Compile Include="DTO\PhuXe\DiemTrungChuyenDTO.cs" />
+    <Compile Include="DTO\PhuXe\GheDTO.cs" />
+    <Compile Include="DTO\PhuXe\KhachHangDTO.cs" />
+    <Compile Include="DTO\PhuXe\LichTrinhPhuXeDTO.cs" />
+    <Compile Include="DTO\PhuXe\NhanVienDTO.cs" />
+    <Compile Include="DTO\PhuXe\TaiKhoanDTO.cs" />
+    <Compile Include="DTO\PhuXe\TrangThaiGheDTO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

@@ -1,5 +1,6 @@
-﻿using APIDatVe.DAL;
-using APIDatVe.DTO;
+﻿
+using APIDatVe.DAL.PhuXe;
+using APIDatVe.DTO.PhuXe;
 using APIDatVe.Response;
 using System;
 using System.Collections.Generic;

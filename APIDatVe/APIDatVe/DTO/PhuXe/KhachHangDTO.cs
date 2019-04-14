@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace APIDatVe.DTO
+namespace APIDatVe.DTO.PhuXe
 {
 	public class KhachHangDTO
 	{
-		public string makhachhang{ get; set; }
+		public string makhachhang { get; set; }
 		public string hoten { get; set; }
 		public string diachi { get; set; }
 		public string sodienthoai { get; set; }

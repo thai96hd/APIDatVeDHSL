@@ -1,5 +1,4 @@
-﻿
-using APIDatVe.DTO;
+﻿using APIDatVe.DTO.PhuXe;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -7,8 +6,9 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 
-namespace APIDatVe.DAL
+namespace APIDatVe.DAL.PhuXe
 {
+
 	public class KhachHangDAL
 	{
 		public bool checkLogin(string phonenumber, string password)
@@ -58,7 +58,7 @@ namespace APIDatVe.DAL
 				kh.email = dr["email"].ToString();
 				kh.diemtichluy = (int)float.Parse(dr["diemtichluy"].ToString());
 				kh.diachi = dr["diachi"].ToString();
-			
+
 				return kh;
 			}
 			else return null;
