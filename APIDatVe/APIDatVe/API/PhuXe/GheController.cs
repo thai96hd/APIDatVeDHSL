@@ -31,6 +31,18 @@ namespace APIDatVe.API.PhuXe
             return ResponseToOk(gheDAL.GetGhes(maxe, maghe));
         }
 
+        /// <summary>
+        /// get so do xe
+        /// </summary>
+        /// <param name="maxe"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("getsodoxe")]
+        public IHttpActionResult getSoDoXe(string maxe)
+        {
+            GheDAL gheDAL = new GheDAL();
+            return ResponseToOk(gheDAL.GetSoDoXe(maxe));
+        }
 
 
     }

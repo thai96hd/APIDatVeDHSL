@@ -47,6 +47,20 @@ namespace APIDatVe.API.PhuXe
             }
             return ResponseToOk(null, "Can not updated data", HttpStatusCode.NotImplemented);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="tentaikhoan"></param>
+        /// <param name="machucvu"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("getthongtinphuxe")]
+        public IHttpActionResult getthongtinphuxe(string tentaikhoan, Int32 machucvu)
+        {
+            TaiKhoanDAL taiKhoanDAL = new TaiKhoanDAL();
+            return ResponseToOk(taiKhoanDAL.GetThongTinPhuXe(tentaikhoan, 3));
+        }
     }
 }
 

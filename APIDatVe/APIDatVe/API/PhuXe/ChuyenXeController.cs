@@ -42,5 +42,19 @@ namespace APIDatVe.API.PhuXe
             ChuyenXeDAL chuyenXeDAL = new ChuyenXeDAL();
             return ResponseToOk(chuyenXeDAL.GetLichTrinhPhuXes(tentaikhoan, manhanvien));
         }
+
+        /// <summary>
+        ///  
+        /// </summary>
+        /// <param name="tentaikhoan"></param>
+        /// <param name="manhanvien"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("getlichtrinhdatenow")]
+        public IHttpActionResult getLichTrinhDateNow(string tentaikhoan, string manhanvien)
+        {
+            ChuyenXeDAL chuyenXeDAL = new ChuyenXeDAL();
+            return ResponseToOk(chuyenXeDAL.GetLichTrinhDateNow(tentaikhoan, manhanvien));
+        }
     }
 }

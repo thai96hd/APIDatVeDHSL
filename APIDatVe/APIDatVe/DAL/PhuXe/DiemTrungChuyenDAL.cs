@@ -10,66 +10,73 @@ namespace APIDatVe.DAL.PhuXe
 {
 	public class DiemTrungChuyenDAL
 	{
-		public List<DiemTrungChuyenDTO> GetDiemTrungChuyens()
-		{
-			List<DiemTrungChuyenDTO> diemTrungChuyens = new List<DiemTrungChuyenDTO>();
-			String sql = "SELECT *" +
-				   " FROM diemtrungchuyen";
+        public List<DiemTrungChuyenDTO> GetDiemTrungChuyens()
+        {
+            List<DiemTrungChuyenDTO> diemTrungChuyens = new List<DiemTrungChuyenDTO>();
+            String sql = " select * from DiemTrungChuyen ";
 
-			SqlCommand command = DataProvider.Instance.getCommand(sql);
+            SqlCommand command = DataProvider.Instance.getCommand(sql);
 
-			SqlDataReader rowsAffected = command.ExecuteReader();// lay dlieu -> ktra dlieu co ton tai hay khong
+            SqlDataReader rowsAffected = command.ExecuteReader();
 
-			if (rowsAffected.HasRows)
-			{
-				int sl = 0;
-				while (rowsAffected.Read())
-				{
-					DiemTrungChuyenDTO diemTrungChuyen = new DiemTrungChuyenDTO();
-					diemTrungChuyen.madiemtrungchuyen = rowsAffected.GetString(sl++);
-					diemTrungChuyen.matinh = rowsAffected.GetString(sl++);
-					diemTrungChuyen.tendiemtrungchuyen = rowsAffected.GetString(sl++);
-					diemTrungChuyen.diachi = rowsAffected.IsDBNull(sl) ? "" : rowsAffected.GetString(sl++);
-					diemTrungChuyen.lat = rowsAffected.IsDBNull(sl) ? "" : rowsAffected.GetString(sl++);
-					diemTrungChuyen.longt = rowsAffected.IsDBNull(sl) ? "" : rowsAffected.GetString(sl++);
+            int indexMadiemtrungchuyen = rowsAffected.GetOrdinal("madiemtrungchuyen");
+            int indexDiaChi = rowsAffected.GetOrdinal("diachi");
+            int indexMaTinh = rowsAffected.GetOrdinal("matinh");
+            int indextenDiemTrungChuyen = rowsAffected.GetOrdinal("tendiemtrungchuyen");
+            int indexLat = rowsAffected.GetOrdinal("lat");
+            int indexLong = rowsAffected.GetOrdinal("long");
 
-					diemTrungChuyens.Add(diemTrungChuyen);
-					sl = 0;
-				}
-			}
 
-			return diemTrungChuyens;
-		}
+            if (rowsAffected.HasRows)
+            {
 
-		//lay ttin khach xg tai diem trung chuyen
+                while (rowsAffected.Read())
+                {
+                    DiemTrungChuyenDTO diemTrungChuyen = new DiemTrungChuyenDTO();
+                    diemTrungChuyen.madiemtrungchuyen = rowsAffected.GetString(indexMadiemtrungchuyen);
+                    diemTrungChuyen.matinh = rowsAffected.IsDBNull(indexMaTinh) ? "" : rowsAffected.GetString(indexMaTinh);
+                    diemTrungChuyen.tendiemtrungchuyen = rowsAffected.IsDBNull(indextenDiemTrungChuyen) ? "" : rowsAffected.GetString(indextenDiemTrungChuyen);
+                    diemTrungChuyen.diachi = rowsAffected.IsDBNull(indexDiaChi) ? "" : rowsAffected.GetString(indexDiaChi);
+                    diemTrungChuyen.lat = rowsAffected.IsDBNull(indexLat) ? "" : rowsAffected.GetString(indexLat);
+                    diemTrungChuyen.longt = rowsAffected.IsDBNull(indexLong) ? "" : rowsAffected.GetString(indexLong);
 
-		public DataTable GetKhachHangByDiemXuong(string madiemtrungchuyen, string machuyenxe)
-		{
+                    diemTrungChuyens.Add(diemTrungChuyen);
 
-			String sql = "SELECT *" +
-					   " FROM KhachHang kh" +
-					  "  JOIN VeXe vx ON kh.khachhangId = vx.khachhangId" +
-					   " JOIN DiemTrungChuyen dtc ON vx.madiemtrungchuyentra = dtc.madiemtrungchuyen" +
-					   " JOIN ChuyenXe cx ON vx.machuyenxe = cx.machuyenxe" +
-					  "  WHERE dtc.madiemtrungchuyen = @madiemtrungchuyen" +
-					   "   AND cx.machuyenxe = @machuyenxe";
-			SqlCommand command = DataProvider.Instance.getCommand(sql);
+                }
+            }
 
-			command.Parameters.AddWithValue("@madiemtrungchuyen", madiemtrungchuyen);
+            return diemTrungChuyens;
+        }
 
-			command.Parameters.AddWithValue("@machuyenxe", machuyenxe);
+        //lay ttin khach xg tai diem trung chuyen
 
-			SqlDataReader rowsAffected = command.ExecuteReader();
+        public DataTable GetKhachHangByDiemXuong(string madiemtrungchuyen, string machuyenxe)
+        {
 
-			var dataTable = new DataTable();
-			if (rowsAffected.HasRows)
-			{
-				dataTable.Load(rowsAffected);
-			}
+            String sql = "SELECT *" +
+                       " FROM KhachHang kh" +
+                      "  JOIN VeXe vx ON kh.khachhangId = vx.khachhangId" +
+                       " JOIN DiemTrungChuyen dtc ON vx.madiemtrungchuyentra = dtc.madiemtrungchuyen" +
+                       " JOIN ChuyenXe cx ON vx.machuyenxe = cx.machuyenxe" +
+                      "  WHERE dtc.madiemtrungchuyen = @madiemtrungchuyen" +
+                       "   AND cx.machuyenxe = @machuyenxe";
+            SqlCommand command = DataProvider.Instance.getCommand(sql);
 
-			return dataTable;
+            command.Parameters.AddWithValue("@madiemtrungchuyen", madiemtrungchuyen);
 
-		}
+            command.Parameters.AddWithValue("@machuyenxe", machuyenxe);
 
-	}
+            SqlDataReader rowsAffected = command.ExecuteReader();
+
+            var dataTable = new DataTable();
+            if (rowsAffected.HasRows)
+            {
+                dataTable.Load(rowsAffected);
+            }
+
+            return dataTable;
+
+        }
+
+    }
 }

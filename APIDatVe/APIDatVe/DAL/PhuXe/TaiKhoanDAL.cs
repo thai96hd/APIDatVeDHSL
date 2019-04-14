@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using APIDatVe.DTO.PhuXe;
 
 namespace APIDatVe.DAL.PhuXe
 {
@@ -51,5 +53,33 @@ namespace APIDatVe.DAL.PhuXe
 				return true;
 			return false;
 		}
-	}
+
+        public DataTable GetThongTinPhuXe(string tentaikhoan, Int32 machucvu)
+        {
+
+            String sql = "SELECT *" +
+                      "  FROM NhanVien nv" +
+                     "   JOIN ChucVu cv ON nv.machucvu = cv.machucvu" +
+                     "   WHERE cv.machucvu = @machucvu" +
+                      "    AND nv.tentaikhoan = @tentaikhoan";
+
+            SqlCommand command = DataProvider.Instance.getCommand(sql);
+
+
+            command.Parameters.AddWithValue("@tentaikhoan", tentaikhoan);
+
+            command.Parameters.AddWithValue("@machucvu", 3);
+
+            SqlDataReader rowsAffected = command.ExecuteReader();
+
+            var dataTable = new DataTable();
+            if (rowsAffected.HasRows)
+            {
+                dataTable.Load(rowsAffected);
+            }
+
+            return dataTable;
+
+        }
+    }
 }
