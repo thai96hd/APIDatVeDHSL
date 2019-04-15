@@ -84,14 +84,18 @@ namespace APIDatVe.DAL.DatVe
 			}
 			return list;
 		}
-		public bool UpdatePassWord(string username, string password)
+		public bool UpdateCustomerInfo(string username,KhachHangDTO khachHangDTO)
 		{
-
 			SqlParameter[] parameters = new SqlParameter[] {
-				new SqlParameter("@username",username),
-				new SqlParameter("@password",password)
+				new SqlParameter("@sodienthoai",khachHangDTO.sodienthoai),
+				new SqlParameter("@gioitinh",khachHangDTO.gioitinh),
+				new SqlParameter("@diachi",khachHangDTO.diachi),
+				new SqlParameter("@tenkhachhang",khachHangDTO.hoten),
+				new SqlParameter("@makhachhang",khachHangDTO.makhachhang),
+				new SqlParameter("@matkhau",khachHangDTO.matkhau)
+
 			};
-			if (DataProvider.Instance.ExecuteNonQuery("sp_update_password_customer", parameters) > 0)
+			if (DataProvider.Instance.ExecuteNonQuery("sp_updateCustomeInfo", parameters) > 0)
 				return true;
 			return false;
 		}

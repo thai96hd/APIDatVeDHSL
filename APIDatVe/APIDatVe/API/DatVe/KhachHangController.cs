@@ -4,6 +4,7 @@ using APIDatVe.DTO.DatVe;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 
@@ -23,10 +24,18 @@ namespace APIDatVe.API.DatVe
 		/// <returns></returns>
 		[HttpPost]
 		[Route("check_login")]
-		public bool Login(string username, string password)
+		public KhachHangDTO Login(string username, string password)
 		{
 			KhachHangDAL khachHangDAL = new KhachHangDAL();
-			return khachHangDAL.checkLogin(username, password);
+			bool check = khachHangDAL.checkLogin(username, password);
+			KhachHangDTO khach = new KhachHangDTO();
+			if (check)
+			{
+				khach = khachHangDAL.FindCustomerByUserName(username);
+				return khach;
+			}
+			else
+				return null;
 		}
 		[HttpPost]
 		[Route("add_customer")]
@@ -75,6 +84,27 @@ namespace APIDatVe.API.DatVe
 				}
 			}
 			return Ok(_contentMessage);
+		}
+		/// <summary>
+		///  Cập nhật thông tin khách hàng
+		/// </summary>
+		/// <param name="customerid"></param>
+		/// <param name="khachHangDTO">body requet khachhang</param>
+		/// <returns></returns>
+		[Route("update_customer/{customerid}")]
+		[HttpPost]
+		public IHttpActionResult UpdateCustomerInfo(string customerid, [FromBody]KhachHangDTO khachHangDTO)
+		{
+			KhachHangDAL khachHangDAL = new KhachHangDAL();
+			bool check = khachHangDAL.UpdateCustomerInfo(customerid, khachHangDTO);
+			if (check)
+			{
+				KhachHangDTO khachHangDTO1 = khachHangDAL.FindCustomerByUserName(khachHangDTO.sodienthoai);
+				return Ok(khachHangDTO1);
+			}
+			else
+				return BadRequest("update not success");
+
 		}
 	}
 }
