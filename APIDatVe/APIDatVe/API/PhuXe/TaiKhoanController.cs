@@ -1,4 +1,4 @@
-﻿
+﻿using APIDatVe.DTO.PhuXe;
 using APIDatVe.DAL.PhuXe;
 using APIDatVe.Response;
 using System;
@@ -21,11 +21,11 @@ namespace APIDatVe.API.PhuXe
         /// <param name="password"></param>
         /// <returns></returns>
         [HttpPost]
-        [Route("check_login")]
-        public IHttpActionResult Login(string username, string password)
+        [Route("checklogin")]
+        public IHttpActionResult Login([FromBody] TaiKhoanDTO taiKhoanDTO)
         {
             TaiKhoanDAL taiKhoanDAL = new TaiKhoanDAL();
-            if (taiKhoanDAL.checkLogin(username, password, 3))
+            if (taiKhoanDAL.checkLogin(taiKhoanDTO, 3))
             {
                 return ResponseToOk(null);
             }
@@ -37,11 +37,12 @@ namespace APIDatVe.API.PhuXe
         /// update pass
         /// </summary>
         [HttpPost]
-        public IHttpActionResult updatePassWord(string username, string password)
+        [Route("updatepassword")]
+        public IHttpActionResult updatePassWord([FromBody]TaiKhoanDTO taiKhoanDTO)
         {
 
             TaiKhoanDAL taiKhoanDAL = new TaiKhoanDAL();
-            if (taiKhoanDAL.updatePass(username, password))
+            if (taiKhoanDAL.updatePass(taiKhoanDTO))
             {
                 return ResponseToOk(null);
             }

@@ -69,6 +69,7 @@ namespace APIDatVe.DAL.PhuXe
                           "  JOIN LoTrinh lt ON cx.malotrinh = lt.malotrinh" +
                           "  JOIN Xe xe ON cx.maxe = xe.maxe" +
                            " WHERE cx.ngayhoatdong<Convert(datetime,@ngayhoatdong,103)";
+                           
 
             if (!String.IsNullOrEmpty(tentaikhoan))
             {
@@ -79,6 +80,7 @@ namespace APIDatVe.DAL.PhuXe
                 sql += " AND nv.manhanvien = @manhanvien";
             }
 
+        sql +=    " order by cx.ngayhoatdong desc";
 
             SqlCommand command = DataProvider.Instance.getCommand(sql);
 

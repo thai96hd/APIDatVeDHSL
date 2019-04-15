@@ -10,7 +10,7 @@ namespace APIDatVe.DAL.PhuXe
 {
 	public class TaiKhoanDAL
 	{
-		public bool checkLogin(string username, string password, Int32 maChucVu)
+		public bool checkLogin(TaiKhoanDTO taiKhoanDTO, Int32 maChucVu)
 		{
 
 			String sql = "SELECT 1" +
@@ -23,9 +23,9 @@ namespace APIDatVe.DAL.PhuXe
 
 			SqlCommand command = DataProvider.Instance.getCommand(sql);
 
-			command.Parameters.AddWithValue("@taikhoan", username);
+			command.Parameters.AddWithValue("@taikhoan", taiKhoanDTO.tentaikhoan);
 
-			command.Parameters.AddWithValue("@matkhau", password);
+			command.Parameters.AddWithValue("@matkhau", taiKhoanDTO.matkhau);
 
 			command.Parameters.AddWithValue("@machucvu", 3);
 
@@ -36,7 +36,7 @@ namespace APIDatVe.DAL.PhuXe
 			return false;
 		}
 
-		public bool updatePass(string username, string password)
+		public bool updatePass(TaiKhoanDTO taiKhoanDTO)
 		{
 
 			String sql = "UPDATE TaiKhoan" +
@@ -45,9 +45,9 @@ namespace APIDatVe.DAL.PhuXe
 
 			SqlCommand command = DataProvider.Instance.getCommand(sql);
 
-			command.Parameters.AddWithValue("@taikhoan", username);
+			command.Parameters.AddWithValue("@taikhoan", taiKhoanDTO.tentaikhoan);
 
-			command.Parameters.AddWithValue("@matkhau", password);
+			command.Parameters.AddWithValue("@matkhau", taiKhoanDTO.matkhau);
 
 			if (command.ExecuteNonQuery() == 1)
 				return true;
