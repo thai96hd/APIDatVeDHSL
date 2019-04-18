@@ -1,7 +1,128 @@
-﻿<div>
+﻿<style>
+    .box-ghe {
+        padding: 10px;
+    }
+        .box-ghe.box-ghe-active {
+            background: #60ea57;
+        }
+</style>
+<div>
     <div class="row">
-       <div class="col-md-12 margin-md-bottom">
-           bước 3
+        <div class="col-md-12 margin-md-bottom">
+            <div class="row">
+                <div class="col-md-8">
+                    <h3>Chọn ghế</h3>
+                    <div class="row">
+                        <div class="col-md-6 margin-md-bottom">
+                            <table class="table table-bordered table-condensed table-hover">
+                                <thead>
+                                    <tr>
+                                        <th colspan="5" class="text-center">
+                                            <h4>TẦNG 1</h4>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody ng-cloak>
+                                    <tr ng-repeat="item in dsghexe.ghetang1">
+                                        <td class="text-center" ng-repeat="item2 in item.Ghes">
+                                            <div class="box-ghe {{item2.active?'box-ghe-active':''}}">
+                                                <h3 ng-if="item2.active">{{item2.maghe}}</h3>
+                                                <h3 ng-if="!item2.active">#</h3>
+                                                <button class="btn btn-primary btn-sm" ng-if="item2.active">Chọn</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-md-6 margin-md-bottom">
+                            <table class="table table-bordered table-condensed table-hover">
+                                <thead>
+                                    <tr>
+                                        <th colspan="5" class="text-center">
+                                            <h4>TẦNG 2</h4>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody ng-cloak>
+                                    <tr ng-repeat="item in dsghexe.ghetang2">
+                                        <td class="text-center" ng-repeat="item2 in item.Ghes">
+                                            <input id="ghe_{{item.Tang}}_{{item.Hang}}_{{item2.vitriX}}" ng-model="item2.active" type="checkbox" />
+                                            <label for="ghe_{{item.Tang}}_{{item.Hang}}_{{item2.vitriX}}" class="lbl-ghe">Vị trí ({{item2.vitriX}},{{item.Hang}})</label>
+                                            <input type="text" name="name" ng-model="item2.maghe" class="form-control" placeholder="Mã ghế" />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div>
+                        <h3>Thông tin chuyến xe</h3>
+                        <h4>
+                            Chuyến xe: <b style="color:#d00707">{{tenlotrinh}}</b>
+                        </h4>
+                        <h5>Ngày đi: <b>{{ngaydi | date:'dd/MM/yyyy'}}</b></h5>
+                        <h5>Điểm đón: <b>{{tendiemdon}}</b></h5>
+                        <h5>Điểm trả: <b>{{tendiemtra}}</b></h5>
+                        <h5>Xe: <b>{{xechon.maxe}}/{{xechon.biensoxe}}</b></h5>
+                        <h5>Kip: <b>{{xechon.tenkip}}</b></h5>
+                        <h5>Giờ chạy: <b>{{xechon.thoigian}}</b></h5>
+                        <h5>Giá vé/người: <b>{{xechon.giave | currency:'':''}}</b></h5>
+                        <hr />
+                        <h5>Số lượng khách: <b>1</b></h5>
+                        <h4><b>THÀNH TIỀN: {{xechon.giave | currency:'':''}}</b></h4>
+                    </div>
+                    <hr />
+                    <div>
+                        <h3>Thông tin khách hàng</h3>
+                        <div class="form-group">
+                            <label class="control-label no-padding-right">Tên khách hàng <span class="require">(*)</span></label>
+                            <div>
+                                <input type="text" class="form-control" ng-model="khachhang.hoten" name="name" value="" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label no-padding-right">Giới tính <span class="require">(*)</span></label>
+                            <div>
+                                <select ng-model="detail.gioitinh" class="col-xs-12">
+                                    <option value="Nam">Nam</option>
+                                    <option value="Nữ">Nữ</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label no-padding-right">Số điện thoại <span class="require">(*)</span></label>
+                            <div>
+                                <input type="text" class="form-control" ng-model="khachhang.sodienthoai" name="name" value="" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label no-padding-right">Email <span class="require">(*)</span></label>
+                            <div>
+                                <input type="text" class="form-control" ng-model="khachhang.email" name="name" value="" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label no-padding-right">Địa chỉ <span class="require">(*)</span></label>
+                            <div>
+                                <input type="text" class="form-control" ng-model="khachhang.diachi" name="name" value="" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> 
+        <div class="col-md-12 text-center" style="margin-top:50px">
+            <button class="btn btn-sm" ng-click="gotoStep(-1)">
+                <i class="ace-icon fa fa-arrow-left"></i>
+                Quay lại
+            </button>
+            <button class="btn btn-success btn-sm" ng-click="submit()">
+                Hoàn thành
+                <i class="ace-icon fa fa-arrow-right icon-on-right"></i>
+            </button>
         </div>
     </div>
 </div>

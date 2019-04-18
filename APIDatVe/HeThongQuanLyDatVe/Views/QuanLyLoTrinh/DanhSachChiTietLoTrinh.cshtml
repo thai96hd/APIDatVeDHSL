@@ -1,6 +1,5 @@
-﻿
-@{
-    ViewBag.Title = "Quản lý kip";
+﻿@{
+    ViewBag.Title = "Quản lý lộ trình";
 }
 <div class="page-content" ng-controller="controller">
     <div class="page-header">
@@ -8,14 +7,14 @@
             Lộ trình & DTC
             <small>
                 <i class="ace-icon fa fa-angle-double-right"></i>
-                Quản lý kip
+                Quản lý chi tiết lộ trình
             </small>
         </h1>
     </div>
     <div class="row">
         <div class="col-xs-12">
             <div class="table-header">
-                Quản lý kip
+                Quản lý chi tiết lộ trình
                 <div class="pull-right tableTools-container"></div>
                 <button class="btn btn-success pull-right btn-sm" style="margin: 4px;" ng-click="add()">Thêm mới</button>
             </div>
@@ -24,39 +23,29 @@
                     <thead>
                         <tr>
                             <th class="center">#</th>
-                            <th>Mã kip</th>
-                            <th>Tên kip</th>
-                            <th>Giờ chạy</th>
-                            <th class="center">Trạng thái</th>
+                            <th>Tên lộ trình</th>
+                            <th>Tỉnh thành đi qua</th>
                             <th class="center">Thao tác</th>
                         </tr>
                     </thead>
                     <tbody ng-cloak>
-                        <tr ng-repeat="item in datas.kips">
+                        <tr ng-repeat="item in datas.chiTietLoTrinhs">
                             <td class="center">
                                 <label class="pos-rel">{{$index + 1}}</label>
                             </td>
                             <td>
-                                {{item.makip}}
+                                {{item.tenlotrinh}}
                             </td>
                             <td>
-                                {{item.tenkip}}
-                            </td>
-                            <td>
-                                {{item.gio}}:{{item.phut}}
-                            </td>
-                            <td class="center">
-                                <span ng-if="item.trangthai == 1">Hoạt động</span>
-                                <span ng-if="item.trangthai != 1">Ngưng hoạt động</span>
+                                {{item.tentinh}}
                             </td>
                             <td class="center">
                                 <div class="action-buttons">
-                                    <a class="green" ng-click="getThongTinKip(item.makip)">
+                                    <a class="green" ng-click="getThongTinLoTrinh(item.machitietlotrinh)">
                                         Chi tiết
                                     </a>
-                                    <a class="red" ng-click="confirmChangeStatus(item.makip)">
-                                        <span ng-if="item.trangthai != 1">Hoạt động</span>
-                                        <span ng-if="item.trangthai == 1">Ngưng hoạt động</span>
+                                    <a class="red" ng-click="confirmDelete(item.machitietlotrinh)">
+                                        <span>Xóa</span>
                                     </a>
                                 </div>
                             </td>
@@ -68,7 +57,7 @@
         <div class="col-md-12">
             <div class="row">
                 <div class="col-xs-6">
-                    <select ng-model="filter._sobanghi" class="col-xs-2" convert-to-number ng-change="getDanhSachKip()">
+                    <select ng-model="filter._sobanghi" class="col-xs-2" convert-to-number ng-change="getDanhSachChiTietLoTrinh()">
                         <option value="10">10</option>
                         <option value="20">20</option>
                         <option value="50">50</option>
@@ -77,7 +66,7 @@
                 </div>
                 <div class="col-xs-6">
                     <span style="float:right;margin-top: 3px;"> {{datas.sobanghi}} bản ghi</span>
-                    <input type="number" min="1" max="{{datas.sobanghi % filter._sobanghi == 0?datas.sobanghi / filter._sobanghi:datas.sobanghi / filter._sobanghi + 1}}" name="name" ng-model="filter._trang" ng-change="getDanhSachKip()" class="col-xs-2" style="float:right;margin-right:50px;height: 27px;margin-right:15px" />
+                    <input type="number" min="1" max="{{datas.sobanghi % filter._sobanghi == 0?datas.sobanghi / filter._sobanghi:datas.sobanghi / filter._sobanghi + 1}}" name="name" ng-model="filter._trang" ng-change="getDanhSachChiTietLoTrinh()" class="col-xs-2" style="float:right;margin-right:50px;height: 27px;margin-right:15px" />
                     <label style="float:right;margin-right:10px;margin-top: 3px;">Trang</label>
                 </div>
             </div>
@@ -89,51 +78,29 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h3 class="smaller lighter blue no-margin">Thông tin kip</h3>
+                    <h3 class="smaller lighter blue no-margin">Thông tin chi tiết lộ trình</h3>
                 </div>
                 <div class="modal-body">
                     <p><span class="require">(*)</span> Thông tin trường bắt buộc</p>
                     <div class="row">
                         <div class="col-md-12 margin-md-bottom">
                             <div class="form-group">
-                                <label class="control-label no-padding-right">Mã kip <span class="require">(*)</span> </label>
+                                <label class="control-label no-padding-right">Lộ trình <span class="require">(*)</span> </label>
                                 <div>
-                                    <input type="text" ng-disabled="!isAdd" ng-model="detail.makip" class="col-xs-12" />
+                                    <select ng-model="detail.malotrinh" class="col-xs-12">
+                                        <option value="">Chọn...</option>
+                                        <option ng-repeat="item in lotrinhs" value="{{item.malotrinh}}">{{item.tenlotrinh}}</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-12 margin-md-bottom">
                             <div class="form-group">
-                                <label class="control-label no-padding-right">Tên kip <span class="require">(*)</span></label>
+                                <label class="control-label no-padding-right">Tỉnh thành đi qua <span class="require">(*)</span> </label>
                                 <div>
-                                    <input type="text" ng-model="detail.tenkip" class="col-xs-12" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-12 margin-md-bottom">
-                            <div class="form-group">
-                                <label class="control-label no-padding-right">Giờ chạy <span class="require">(*)</span></label>
-                                <div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label class="control-label no-padding-right">Giờ <span class="require">(*)</span></label>
-                                            <input type="number" min="0" max="24" ng-model="detail.gio" class="col-xs-12" />
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="control-label no-padding-right">Phút <span class="require">(*)</span></label>
-                                            <input type="number" min="0" max="59" ng-model="detail.phut" class="col-xs-12" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-12 margin-md-bottom">
-                            <div class="form-group">
-                                <label class="control-label no-padding-right">Trạng thái</label>
-                                <div>
-                                    <select ng-model="detail.trangthai" convert-to-number class="col-xs-12">
-                                        <option value="1">Hoạt động</option>
-                                        <option value="-1">Ngưng hoạt động</option>
+                                    <select ng-model="detail.idtinhthanh" class="col-xs-12">
+                                        <option value="">Chọn...</option>
+                                        <option ng-repeat="item in tinhthanhs" value="{{item.matinh}}">{{item.tentinh}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -166,22 +133,23 @@
     </div>
 </div>
 <script>
-    var urlGet = 'http://localhost:56893/api/kip';
-    var urlDetail = 'http://localhost:56893/api/kip/detail';
-    var urlPost = 'http://localhost:56893/api/kip/post';
-    var urlPut = 'http://localhost:56893/api/kip/put';
-    var urlDelete = 'http://localhost:56893/api/kip/change-status';
+    var urlGetTinhThanh = 'http://localhost:56893/api/tinhthanh/ready';
+    var urlGetLoTrinh = 'http://localhost:56893/api/lotrinh/ready';
+    var urlGet = 'http://localhost:56893/api/chitietlotrinh';
+    var urlDetail = 'http://localhost:56893/api/chitietlotrinh/detail';
+    var urlPost = 'http://localhost:56893/api/chitietlotrinh/post';
+    var urlDelete = 'http://localhost:56893/api/chitietlotrinh/delete';
     app.controller('controller', ['$scope', '$http', function ($scope, $http) {
         $scope.filter = {
             _tukhoa: '',
+            _malotrinh: '',
             _trang: 1,
             _sobanghi: 100
         }
         $scope.datas = [];
-        $scope.makip = "";
-        $scope.isAdd = true;
+        $scope.machitietlotrinh = "";
         $scope.detail = {};
-        $scope.getDanhSachKip = function () {
+        $scope.getDanhSachChiTietLoTrinh = function () {
             $http({
                 url: urlGet,
                 method: "GET",
@@ -192,24 +160,40 @@
                 alert("Thực hiện không thành công");
             })
         };
+        $scope.getDanhSachLoTrinh = function () {
+            $http({
+                url: urlGetLoTrinh,
+                method: "GET"
+            }).then(function success(response) {
+                $scope.lotrinhs = response.data;
+            }, function error(response) {
+                alert("Thực hiện không thành công");
+            })
+        };
+        $scope.getDanhSachTinhThanh = function () {
+            $http({
+                url: urlGetTinhThanh,
+                method: "GET"
+            }).then(function success(response) {
+                $scope.tinhthanhs = response.data;
+            }, function error(response) {
+                alert("Thực hiện không thành công");
+            })
+        };
         $scope.add = function () {
-            $scope.isAdd = true;
             $scope.detail = {
-                makip: '',
-                tenkip: '',
-                trangthai: 1,
-                gio: 7,
-                phut: 0
+                machitietlotrinh: 0,
+                malotrinh: '',
+                idtinhthanh: ''
             }
             $("#modal").modal();
         }
-        $scope.getThongTinKip = function (_makip) {
-            $scope.isAdd = false;
+        $scope.getThongTinLoTrinh = function (_machitietlotrinh) {
             $http({
                 url: urlDetail,
                 method: "GET",
                 params: {
-                    _makip
+                    _machitietlotrinh
                 }
             }).then(function success(response) {
                 $scope.detail = response.data;
@@ -220,54 +204,42 @@
             })
         };
         $scope.submit = function () {
-            if ($scope.detail.makip == "" || $scope.detail.tenkip == "" || $scope.detail.gio.toString() == "" || $scope.detail.phut.toString() == "") {
+            if ($scope.detail.malotrinh == "" || $scope.detail.idtinhthanh == "") {
                 alert("Vui lòng nhập đủ thông tin")
                 return;
             }
-            if ($scope.isAdd) {
-                $http({
-                    url: urlPost,
-                    method: "POST",
-                    data: $scope.detail
-                }).then(function success(response) {
-                    $scope.getDanhSachKip();
-                    $("#modal").modal("hide");
-                }, function error(response) {
-                    alert("Thực hiện không thành công");
-                })
-            }
-            else {
-                $http({
-                    url: urlPut,
-                    method: "PUT",
-                    data: $scope.detail
-                }).then(function success(response) {
-                    $scope.getDanhSachKip();
-                    $("#modal").modal("hide");
-                }, function error(response) {
-                    alert("Thực hiện không thành công");
-                })
-            }
+            $http({
+                url: urlPost,
+                method: "POST",
+                data: $scope.detail
+            }).then(function success(response) {
+                $scope.getDanhSachChiTietLoTrinh();
+                $("#modal").modal("hide");
+            }, function error(response) {
+                alert("Thực hiện không thành công");
+            })
         }
-        $scope.confirmChangeStatus = function (_makip) {
-            $scope.makip = _makip;
+        $scope.confirmDelete = function (_machitietlotrinh) {
+            $scope.machitietlotrinh = _machitietlotrinh;
             $("#modalDelete").modal();
         }
         $scope.changeStatus = function () {
             $http({
                 url: urlDelete,
-                method: "GET",
+                method: "DELETE",
                 params: {
-                    _makip: $scope.makip
+                    _machitietlotrinh: $scope.machitietlotrinh
                 }
             }).then(function success(response) {
                 $("#modalDelete").modal("hide");
-                $scope.getDanhSachKip();
+                $scope.getDanhSachChiTietLoTrinh();
             }, function error(response) {
                 alert("Thực hiện không thành công");
                 $("#modalDelete").modal("hide");
             })
         }
-        $scope.getDanhSachKip();
+        $scope.getDanhSachTinhThanh();
+        $scope.getDanhSachLoTrinh();
+        $scope.getDanhSachChiTietLoTrinh();
     }]);
 </script>

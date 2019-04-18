@@ -2,6 +2,11 @@
 @{
     ViewBag.Title = "Đặt xe";
 }
+<style>
+    #content_step_2 td {
+        vertical-align: middle !important
+    }
+</style>
 <div class="page-content" ng-controller="controller">
     <div class="page-header">
         <h1>
@@ -49,14 +54,6 @@
                         <hr />
                         <div class="wizard-actions" style="text-align: center !important">
                             <p class="text-left"><span class="require">(*)</span> Thông tin trường bắt buộc</p>
-                            <button class="btn btn-sm" ng-click="gotoStep(-1)">
-                                <i class="ace-icon fa fa-arrow-left"></i>
-                                Quay lại
-                            </button>
-                            <button class="btn btn-success btn-sm" ng-click="gotoStep(1)">
-                                Tiếp theo
-                                <i class="ace-icon fa fa-arrow-right icon-on-right"></i>
-                            </button>
                         </div>
                     </div>
                 </div>
@@ -69,6 +66,7 @@
     var urlDiemTrungChuyenTheoLoTrinh = 'http://localhost:56893/api/datxe/getdiemtrungchuyenlotrinh';
     var urlGetTuyenDi = 'http://localhost:56893/api/datxe/gettuyendi';
     var urlPost = 'http://localhost:56893/api/datxe/post';
+    var urlGetGheXe = 'http://localhost:56893/api/datxe/getghexe';
     app.controller('controller', ['$scope', '$http', function ($scope, $http) {
         $scope.lotrinhs = [];
         $scope.diemtrungchuyens = {};
@@ -81,7 +79,7 @@
         $scope.malotrinh = '';
         $scope.ngaydi = new Date('@DateTime.Now.ToString("yyyy-MM-dd")');
         $scope.currentStep = 1;
-        
+
         $scope.getLoTrinh = function () {
             $http({
                 url: urlGetLoTrinh,
@@ -103,6 +101,8 @@
                 }
             }).then(function success(response) {
                 $scope.diemtrungchuyens = response.data;
+                $scope.detail.madiemtrungchuyendon = '';
+                $scope.detail.madiemtrungchuyentra = '';
                 console.log($scope.diemtrungchuyens)
             }, function error(response) {
                 alert("Thực hiện không thành công");
@@ -132,6 +132,26 @@
                     alert("Vui lòng nhập đầy đủ thông tin");
                     return;
                 }
+                else {
+                    $scope.tenlotrinh = $scope.lotrinhs.find(x => x.malotrinh == $scope.malotrinh).tenlotrinh
+                    $scope.tendiemdon = $scope.diemtrungchuyens.diemTrungChuyensDon.find(x => x.madiemtrungchuyen == $scope.detail.madiemtrungchuyendon).tendiemtrungchuyen
+                    $scope.tendiemtra = $scope.diemtrungchuyens.diemTrungChuyensTra.find(x => x.madiemtrungchuyen == $scope.detail.madiemtrungchuyentra).tendiemtrungchuyen
+                    $http({
+                        url: urlGetTuyenDi,
+                        method: "GET",
+                        params: {
+                            malotrinh: $scope.malotrinh,
+                            ngaydi: $scope.ngaydi,
+                            madiemtrungchuyendon: $scope.detail.madiemtrungchuyendon,
+                            madiemtrungchuyentra: $scope.detail.madiemtrungchuyentra
+                        }
+                    }).then(function success(response) {
+                        $scope.dstuyendi = JSON.parse(response.data.chuyenXes)
+                        console.log($scope.dstuyendi)
+                    }, function error(response) {
+                        alert("Thực hiện không thành công");
+                    })
+                }
             }
             $(".steps > li").removeClass('active');
             $(".steps > li").removeClass('complete');
@@ -143,7 +163,24 @@
             $("#content_step_" + newStep).addClass('active');
             $scope.currentStep = newStep;
         }
-
+        $scope.chonxe = function (xe) {
+            console.log(xe)
+            $scope.gotoStep(1);
+            $scope.xechon = xe;
+            $http({
+                url: urlGetGheXe,
+                method: "GET",
+                params: {
+                    maxe: xe.maxe,
+                    ngaydi: $scope.ngaydi
+                }
+            }).then(function success(response) {
+                $scope.dsghexe = response.data
+                console.log($scope.dstuyendi)
+            }, function error(response) {
+                alert("Thực hiện không thành công");
+            })
+        }
         $scope.submit = function () {
             if ($scope.detail.matinh == "" || $scope.detail.tentinh == "") {
                 alert("Vui lòng nhập đủ thông tin")

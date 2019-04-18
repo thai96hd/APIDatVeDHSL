@@ -2,24 +2,47 @@
     <div class="row">
         <div class="col-md-12 margin-md-bottom">
             <h4>
-                <b style="color:#d00707">Hà Nội</b> tới <b style="color:#d00707">Nghệ An</b>
+                Chuyến xe: <b style="color:#d00707">{{tenlotrinh}}</b>
             </h4>
-            <h5>Ngày đi: <b>@DateTime.Now.ToString("dd/MM/yyyy")</b></h5>
+            <h5>Ngày đi: <b>{{ngaydi | date:'dd/MM/yyyy'}}</b></h5>
         </div>
-       <div class="col-md-12 margin-md-bottom">
-           <div>
-               <table class="table table-bordered table-condensed table-striped  table-hover">
-                   <thead>
-                       <tr>
-                           <th>Chuyến xe</th>
-                           <th>Khởi hành</th>
-                           <th>Đến</th>
-                           <th>Ghế trống</th>
-                           <th>Giá vé</th>
-                       </tr>
-                   </thead>
-               </table>
-           </div>
+        <div class="col-md-12 margin-md-bottom">
+            <div>
+                <table class="table table-bordered table-condensed table-striped  table-hover">
+                    <thead>
+                        <tr>
+                            <th>Mã chuyến xe</th>
+                            <th>Tên lộ trình</th>
+                            <th>Kip</th>
+                            <th>Xe</th>
+                            <th>Giờ chạy</th>
+                            <th>Giá vé</th>
+                            <th>Số ghế trống</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in dstuyendi">
+                            <td>{{item.machuyenxe}}</td>
+                            <td>{{item.tenlotrinh}}</td>
+                            <td>{{item.tenkip}}</td>
+                            <td>{{item.maxe}}/{{item.biensoxe}}</td>
+                            <td>{{item.thoigian}}</td>
+                            <td>{{item.giave | currency:'':''}}</td>
+                            <td>{{item.soghetrong}}</td>
+                            <td class="text-center">
+                                <button class="btn btn-primary btn-sm" ng-click="chonxe(item)">Chọn</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-md-12 text-center" style="margin-top:50px">
+            <button class="btn btn-sm" ng-click="gotoStep(-1)">
+                <i class="ace-icon fa fa-arrow-left"></i>
+                Quay lại
+            </button>
         </div>
     </div>
 </div>
