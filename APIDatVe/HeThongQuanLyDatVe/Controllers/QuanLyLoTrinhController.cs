@@ -15,5 +15,12 @@ namespace HeThongQuanLyDatVe.Controllers
                 return Redirect("/Login/DangNhap");
             return View();
         }
+
+        public ActionResult DanhSachChiTietLoTrinh()
+        {
+            //if (!CheckAcceptAction("DanhSachChiTietLoTrinh"))
+            //    return Redirect("/Login/DangNhap");
+            return View();
+        }
     }
 }

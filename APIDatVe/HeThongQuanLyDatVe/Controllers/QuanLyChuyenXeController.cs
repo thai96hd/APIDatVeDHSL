@@ -11,8 +11,8 @@ namespace HeThongQuanLyDatVe.Controllers
         // GET: QuanLyChuyenXe
         public ActionResult DanhSachChuyenXe()
         {
-            if (!CheckAcceptAction("DanhSachChuyenXe"))
-                return Redirect("/Login/DangNhap");
+            //if (!CheckAcceptAction("DanhSachChuyenXe"))
+            //    return Redirect("/Login/DangNhap");
             return View();
         }
     }
