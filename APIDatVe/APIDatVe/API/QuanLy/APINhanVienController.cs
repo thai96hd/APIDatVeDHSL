@@ -231,5 +231,30 @@ namespace APIDatVe.API.QuanLy
                 return BadRequest(ex.Message);
             }
         }
+
+        [Route("ready")]
+        [HttpGet]
+        public IHttpActionResult Ready()
+        {
+            try
+            {
+                using (var db = new DB())
+                {
+                    List<NhanVien> nhanViens = db.NhanViens
+                            .Where(x => x.TaiKhoan.trangthai.Value == (int)Constant.HOATDONG)
+                            .ToList();
+                    int sobanghi = nhanViens.Count;
+                    return Ok(nhanViens.Select(x => new
+                    {
+                        x.manhanvien,
+                        x.hoten,
+                    }).ToList());
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

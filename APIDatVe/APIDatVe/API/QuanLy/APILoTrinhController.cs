@@ -15,7 +15,7 @@ namespace APIDatVe.API.QuanLy
     {
         [Route()]
         [HttpGet]
-        [AcceptAction(ActionName = "Get", ControllerName = "APITinhThanhController")]
+        [AcceptAction(ActionName = "Get", ControllerName = "APILoTrinhController")]
         public IHttpActionResult Get(string _tukhoa = "", string _matinh = "", int _trang = 1, int _sobanghi = 100)
         {
             try
@@ -51,7 +51,7 @@ namespace APIDatVe.API.QuanLy
 
         [Route("detail")]
         [HttpGet]
-        [AcceptAction(ActionName = "Detail", ControllerName = "APITinhThanhController")]
+        [AcceptAction(ActionName = "Detail", ControllerName = "APILoTrinhController")]
         public IHttpActionResult Detail(string _malotrinh)
         {
             try
@@ -79,7 +79,7 @@ namespace APIDatVe.API.QuanLy
 
         [Route("post")]
         [HttpPost]
-        [AcceptAction(ActionName = "Post", ControllerName = "APITinhThanhController")]
+        [AcceptAction(ActionName = "Post", ControllerName = "APILoTrinhController")]
         public IHttpActionResult Post(LoTrinh _loTrinh)
         {
             try
@@ -114,7 +114,7 @@ namespace APIDatVe.API.QuanLy
 
         [Route("put")]
         [HttpPut]
-        [AcceptAction(ActionName = "Put", ControllerName = "APITinhThanhController")]
+        [AcceptAction(ActionName = "Put", ControllerName = "APILoTrinhController")]
         public IHttpActionResult Put(LoTrinh _loTrinh)
         {
             try
@@ -151,7 +151,7 @@ namespace APIDatVe.API.QuanLy
 
         [Route("delete")]
         [HttpDelete]
-        [AcceptAction(ActionName = "Delete", ControllerName = "APITinhThanhController")]
+        [AcceptAction(ActionName = "Delete", ControllerName = "APILoTrinhController")]
         public IHttpActionResult Delete(string _malotrinh)
         {
             try
@@ -176,5 +176,28 @@ namespace APIDatVe.API.QuanLy
                 return BadRequest(ex.Message);
             }
         }
+
+        [Route("ready")]
+        [HttpGet]
+        public IHttpActionResult Ready()
+        {
+            try
+            {
+                using (var db = new DB())
+                {
+                    List<LoTrinh> loTrinhs = db.LoTrinhs.ToList();
+                    return Ok(loTrinhs.Select(x => new
+                    {
+                        x.malotrinh,
+                        x.tenlotrinh
+                    }).ToList());
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
     }
 }

@@ -34,7 +34,9 @@ namespace APIDatVe.API.QuanLy
                             {
                                 x.makip,
                                 x.tenkip,
-                                x.trangthai
+                                x.trangthai,
+                                x.gio,
+                                x.phut
                             }).Skip((_trang - 1) * _sobanghi).Take(_sobanghi),
                         sobanghi = sobanghi
                     });
@@ -62,7 +64,9 @@ namespace APIDatVe.API.QuanLy
                     {
                         kip.makip,
                         kip.tenkip,
-                        kip.trangthai
+                        kip.trangthai,
+                        kip.gio,
+                        kip.phut
                     });
                 }
             }
@@ -93,7 +97,9 @@ namespace APIDatVe.API.QuanLy
                         {
                             _kip.makip,
                             _kip.tenkip,
-                            _kip.trangthai
+                            _kip.trangthai,
+                            _kip.gio,
+                            _kip.phut
                         });
                     }
 
@@ -121,6 +127,8 @@ namespace APIDatVe.API.QuanLy
                             return BadRequest("Mã kip không tồn tại");
                         oldKip.tenkip = _kip.tenkip;
                         oldKip.trangthai = _kip.trangthai;
+                        oldKip.gio = _kip.gio;
+                        oldKip.phut = _kip.phut;
                         db.SaveChanges();
                         transaction.Commit();
                         return Ok(new
@@ -194,5 +202,30 @@ namespace APIDatVe.API.QuanLy
                 return BadRequest(ex.Message);
             }
         }
+
+        [Route("ready")]
+        [HttpGet]
+        public IHttpActionResult Ready()
+        {
+            try
+            {
+                using (var db = new DB())
+                {
+                    var kips = db.Kips.Where(x => x.trangthai == (int)Constant.HOATDONG).ToList();
+                    return Ok(kips.Select(x => new
+                    {
+                        x.makip,
+                        x.tenkip,
+                        x.gio,
+                        x.phut
+                    }).ToList());
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
     }
 }

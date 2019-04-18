@@ -84,7 +84,7 @@ namespace APIDatVe.API.QuanLy
                 {
                     using (var transaction = db.Database.BeginTransaction())
                     {
-                        if(string.IsNullOrEmpty(xe.maxe))
+                        if (string.IsNullOrEmpty(xe.maxe))
                             return BadRequest("Mã xe không hợp lệ");
                         Xe _xe = db.Xes.FirstOrDefault(x => x.maxe == xe.maxe);
                         if (_xe != null)
@@ -155,6 +155,33 @@ namespace APIDatVe.API.QuanLy
                         transaction.Commit();
                         return Ok(_maxe);
                     }
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [Route("ready")]
+        [HttpGet]
+        public IHttpActionResult Ready()
+        {
+            try
+            {
+                using (var db = new DB())
+                {
+                    var xes = db.Xes
+                                .Where(x => x.trangthai == (int)Constant.HOATDONG)
+                                .ToList();
+                    int sobanghi = xes.Count;
+                    return Ok(xes.Select(x => new
+                    {
+                        x.biensoxe,
+                        x.ghichu,
+                        x.maxe,
+                        x.soghe
+                    }).ToList());
                 }
             }
             catch (Exception ex)
