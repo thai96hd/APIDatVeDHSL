@@ -16,5 +16,7 @@ namespace APIDatVe.DTO.DatVe
 		public DateTime ngayhoatdong;
 		public DateTime thoigiandungxe;
 		public string tenkip;
+		public int gioxuatphat;
+		public int phutxuatphat;
 	}
 }

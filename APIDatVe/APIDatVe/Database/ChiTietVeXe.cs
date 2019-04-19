@@ -17,6 +17,9 @@ namespace APIDatVe.Database
         public string chitietvexeId { get; set; }
         public string vexeId { get; set; }
         public string maghe { get; set; }
+        public string tenhanhkhach { get; set; }
+        public string sodienthoai { get; set; }
+        public string doituong { get; set; }
     
         public virtual VeXe VeXe { get; set; }
     }

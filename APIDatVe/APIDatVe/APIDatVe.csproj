@@ -305,10 +305,22 @@
     <Compile Include="Database\QuyenManHinhQuanLy.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Database\sp_gettripbytripId_Result.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Database\sp_helpdiagramdefinition_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\sp_helpdiagrams_Result.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\sp_laythongtingiave_Result.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\sp_listdiemtrungchuyen_Result.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\sp_search_customerbyusername_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\sysdiagram.cs">
@@ -332,6 +344,7 @@
     <Compile Include="Database\Xe.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="DTO\DatVe\BangGiaDTO.cs" />
     <Compile Include="DTO\DatVe\ChuyenXeDTO.cs" />
     <Compile Include="DTO\DatVe\DiemTrungChuyenDTO.cs" />
     <Compile Include="DTO\DatVe\KhachHangDTO.cs" />

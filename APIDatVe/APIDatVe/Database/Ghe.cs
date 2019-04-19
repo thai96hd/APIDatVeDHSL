@@ -26,6 +26,7 @@ namespace APIDatVe.Database
         public int vitriX { get; set; }
         public int vitriY { get; set; }
         public Nullable<bool> active { get; set; }
+        public string tenghe { get; set; }
         public System.DateTime ngaycapnhat { get; set; }
     
         public virtual Xe Xe { get; set; }

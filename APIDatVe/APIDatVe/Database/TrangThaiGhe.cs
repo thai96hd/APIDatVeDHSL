@@ -18,6 +18,7 @@ namespace APIDatVe.Database
         public string maghe { get; set; }
         public Nullable<System.DateTime> ngay { get; set; }
         public Nullable<int> trangthai { get; set; }
+        public string machuyenxe { get; set; }
     
         public virtual Ghe Ghe { get; set; }
     }

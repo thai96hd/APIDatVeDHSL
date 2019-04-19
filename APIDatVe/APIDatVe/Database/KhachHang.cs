@@ -27,7 +27,7 @@ namespace APIDatVe.Database
         public string diachi { get; set; }
         public string sodienthoai { get; set; }
         public string email { get; set; }
-        public Nullable<double> diemtichluy { get; set; }
+        public Nullable<int> diemtichluy { get; set; }
         public string matkhau { get; set; }
         public string gioitinh { get; set; }
     

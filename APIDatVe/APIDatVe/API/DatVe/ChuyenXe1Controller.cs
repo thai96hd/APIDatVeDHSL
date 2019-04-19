@@ -25,7 +25,7 @@ namespace APIDatVe.API.DatVe
 		public IHttpActionResult getTrip([FromUri]string malotrinh, int day, int month, int year)
 		{
 			if (malotrinh == "")
-				return BadRequest("lotrinhid khong de trong");
+				return BadRequest("malotrinh khong de trong");
 			string date = "" + month + "/" + day + "/" + year;
 			DateTime start = DateTime.Parse(date);
 			List<ChuyenXeDTO> list = new ChuyenXeDAL().getListChuyenXe(malotrinh, start);

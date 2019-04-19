@@ -26,6 +26,8 @@ namespace APIDatVe.Database
         public string tendiemtrungchuyen { get; set; }
         public string diachi { get; set; }
         public int trangthai { get; set; }
+        public string lat { get; set; }
+        public string @long { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BangGia> BangGias { get; set; }
