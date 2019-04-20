@@ -7,6 +7,7 @@ namespace APIDatVe.DTO.DatVe
 {
 	public class ChuyenXeDTO
 	{
+		public string tenlotrinh;
 		public string machuyenxe;
 		public string malotrinh;
 		public string makip;

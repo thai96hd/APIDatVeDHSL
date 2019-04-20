@@ -52,6 +52,7 @@ namespace APIDatVe.DAL.DatVe
 				cx.machuyenxe = dr["machuyenxe"].ToString();
 				cx.gioxuatphat = int.Parse(dr["gio"].ToString());
 				cx.phutxuatphat = int.Parse(dr["phut"].ToString());
+				cx.tenlotrinh = dr["tenlotrinh"].ToString();
 				chuyenXeDTOs.Add(cx);
 			}
 			return chuyenXeDTOs;
