@@ -78,5 +78,35 @@ namespace APIDatVe.DAL.PhuXe
 
         }
 
+        //lay ttin khach len  tai diem trung chuyen
+
+        public DataTable GetKhachHangByDiemDon(string madiemtrungchuyen, string machuyenxe)
+        {
+
+            String sql = "SELECT *" +
+                       " FROM KhachHang kh" +
+                      "  JOIN VeXe vx ON kh.khachhangId = vx.khachhangId" +
+                       " JOIN DiemTrungChuyen dtc ON vx.madiemtrungchuyendon = dtc.madiemtrungchuyen" +
+                       " JOIN ChuyenXe cx ON vx.machuyenxe = cx.machuyenxe" +
+                      "  WHERE dtc.madiemtrungchuyen = @madiemtrungchuyen" +
+                       "   AND cx.machuyenxe = @machuyenxe";
+            SqlCommand command = DataProvider.Instance.getCommand(sql);
+
+            command.Parameters.AddWithValue("@madiemtrungchuyen", madiemtrungchuyen);
+
+            command.Parameters.AddWithValue("@machuyenxe", machuyenxe);
+
+            SqlDataReader rowsAffected = command.ExecuteReader();
+
+            var dataTable = new DataTable();
+            if (rowsAffected.HasRows)
+            {
+                dataTable.Load(rowsAffected);
+            }
+
+            return dataTable;
+
+        }
+
     }
 }

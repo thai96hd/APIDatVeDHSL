@@ -17,7 +17,7 @@ namespace APIDatVe.DAL.PhuXe
                          "  i.*" +
                  "  FROM" +
                  "     (SELECT vx.vexeId, vx.ghichu," +
-                   "           ct.maghe," +
+                   "            ct.maghe, " +
                     "      kh.*" +
                     "   FROM VeXe vx" +
                     "   JOIN ChuyenXe cx ON cx.machuyenxe = vx.machuyenxe" +
@@ -48,32 +48,6 @@ namespace APIDatVe.DAL.PhuXe
             {
                 command.Parameters.AddWithValue("@maghe", maghe);
             }
-
-            SqlDataReader rowsAffected = command.ExecuteReader();
-
-            var dataTable = new DataTable();
-            if (rowsAffected.HasRows)
-            {
-                dataTable.Load(rowsAffected);
-            }
-            return dataTable;
-        }
-
-
-        public DataTable GetSoDoXe(string maxe)
-        {
-            String sql = " SELECT ghe.tang," +
-             "  ghe.vitriX," +
-            "   ghe.vitriY," +
-           "    ghe.active," +
-          "     ghe.tenghe" +
-   "     FROM Xe xe" +
-"         JOIN Ghe ghe ON xe.maxe = ghe.maxe" +
-"    where xe.maxe= @maxe ";
-
-            SqlCommand command = DataProvider.Instance.getCommand(sql);
-
-            command.Parameters.AddWithValue("@maxe", maxe);
 
             SqlDataReader rowsAffected = command.ExecuteReader();
 

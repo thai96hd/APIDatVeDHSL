@@ -42,5 +42,20 @@ namespace APIDatVe.API.PhuXe
             DiemTrungChuyenDAL diemTrungChuyenDAL = new DiemTrungChuyenDAL();
             return ResponseToOk(diemTrungChuyenDAL.GetKhachHangByDiemXuong(madiemtrungchuyen, machuyenxe));
         }
+
+
+        /// <summary>
+        /// Lấy ra khách don
+        /// </summary>
+        /// <param name="madiemtrungchuyen"></param>
+        /// <param name="machuyenxe"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("getkhachtaidiemdon")]
+        public IHttpActionResult geKhachTaiDiemDon(string madiemtrungchuyen, string machuyenxe)
+        {
+            DiemTrungChuyenDAL diemTrungChuyenDAL = new DiemTrungChuyenDAL();
+            return ResponseToOk(diemTrungChuyenDAL.GetKhachHangByDiemDon(madiemtrungchuyen, machuyenxe));
+        }
     }
 }
