@@ -31,5 +31,14 @@ namespace APIDatVe.API.DatVe
 			List<ChuyenXeDTO> list = new ChuyenXeDAL().getListChuyenXe(malotrinh, start);
 			return Ok(list);
 		}
+
+		[Route("getSchemaCarByCarIDAndTripID")]
+		[HttpGet]
+		public XeDTO getSchemaCarByCarIDAndTripID(string carID, string tripID)
+		{
+			ChuyenXeDAL chuyenXeDAL = new ChuyenXeDAL();
+			return chuyenXeDAL.getSchemaCar(carID, tripID);
+
+		}
 	}
 }
