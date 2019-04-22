@@ -53,6 +53,16 @@ namespace APIDatVe.DAL.DatVe
 				cx.gioxuatphat = int.Parse(dr["gio"].ToString());
 				cx.phutxuatphat = int.Parse(dr["phut"].ToString());
 				cx.tenlotrinh = dr["tenlotrinh"].ToString();
+				SqlParameter[] sqlParameter1 = new SqlParameter[] {
+					new SqlParameter("@machuyenxe",cx.machuyenxe)
+				};
+				int _seatEmpty = int.Parse(DataProvider.Instance.GetData("sp_count_seat_empty_byTripID", sqlParameter1).Rows[0]["seatEmpty"].ToString());
+				cx.soghetrong = _seatEmpty;
+				SqlParameter[] sqlParameters2 = new SqlParameter[] {
+					new SqlParameter("@maxe",cx.maxe)
+				};
+				int _totalSeat = int.Parse(DataProvider.Instance.GetData("sp_count_car_seatnumber", sqlParameters2).Rows[0]["numberSeat"].ToString());
+				cx.tongsoghe = _totalSeat;
 				chuyenXeDTOs.Add(cx);
 			}
 			return chuyenXeDTOs;
@@ -85,14 +95,14 @@ namespace APIDatVe.DAL.DatVe
 				gheDTO.status = 0;
 				////////////////
 				///
-				
+
 				int.TryParse(dr["sohang"].ToString(), out sohang);
-				
+
 				int.TryParse(dr["socot"].ToString(), out socot);
 				xeDTO.socot = socot;
 				xeDTO.sohang = sohang;
 				xeDTO.maxe = carID;
-				
+
 				int.TryParse(dr["soghe"].ToString(), out soghe);
 				xeDTO.soghe = soghe;
 				if (gheDTO.tang == 1)
@@ -107,14 +117,16 @@ namespace APIDatVe.DAL.DatVe
 			List<GheDTO> listTrangThaiGhe = getGheStatusByTripID(tripID);
 			foreach (GheDTO ghe in listTrangThaiGhe)
 			{
-				if (ghe.status == 1) {
+				if (ghe.status == 1)
+				{
 					GheDTO ghe1 = xeDTO.floor1.SingleOrDefault(p => p.maghe == ghe.maghe);
 					GheDTO ghe2 = xeDTO.floor2.SingleOrDefault(p => p.maghe == ghe.maghe);
 					if (ghe1 != null)
 					{
 						xeDTO.floor1.Single(p => p.maghe == ghe.maghe).status = 1;
 					}
-					else if (ghe2 != null) {
+					else if (ghe2 != null)
+					{
 						xeDTO.floor2.Single(p => p.maghe == ghe.maghe).status = 1;
 					}
 				}
