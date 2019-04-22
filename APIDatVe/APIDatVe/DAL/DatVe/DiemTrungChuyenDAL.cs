@@ -36,17 +36,22 @@ namespace APIDatVe.DAL.DatVe
 				new SqlParameter("@madiemtrungchuyentra",madiemtrungchuyentra)
 			};
 			DataTable dt = DataProvider.Instance.GetData("sp_laythongtingiave", sqlParameters);
-			DataRow dr = dt.Rows[0];
-			BangGiaDTO bangGiaDTO = new BangGiaDTO();
-			if (dr != null)
+			if (dt.Rows.Count > 0)
 			{
-				bangGiaDTO.banggiaid = dr["banggiaid"].ToString();
-				bangGiaDTO.thoigiandukien = float.Parse(dr["thoigiandukien"].ToString());
-				bangGiaDTO.madiemtrungchuyendon = dr["madiemtrungchuyendon"].ToString();
-				bangGiaDTO.madiemtrungchuyentra = dr["madiemtrungchuyentra"].ToString();
-				bangGiaDTO.giave = float.Parse(dr["giave"].ToString());
+				DataRow dr = dt.Rows[0];
+				BangGiaDTO bangGiaDTO = new BangGiaDTO();
+				if (dr != null)
+				{
+					bangGiaDTO.banggiaid = dr["banggiaid"].ToString();
+					bangGiaDTO.thoigiandukien = float.Parse(dr["thoigiandukien"].ToString());
+					bangGiaDTO.madiemtrungchuyendon = dr["madiemtrungchuyendon"].ToString();
+					bangGiaDTO.madiemtrungchuyentra = dr["madiemtrungchuyentra"].ToString();
+					bangGiaDTO.giave = float.Parse(dr["giave"].ToString());
+				}
+				return bangGiaDTO;
 			}
-			return bangGiaDTO;
+			else
+				return new BangGiaDTO();
 		}
 	}
 }
