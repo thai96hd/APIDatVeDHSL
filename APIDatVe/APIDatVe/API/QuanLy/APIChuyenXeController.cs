@@ -98,21 +98,20 @@ namespace APIDatVe.API.QuanLy
                         if (chuyenXe != null)
                             return BadRequest("Mã chuyến xe đã tồn tại");
                         db.ChuyenXes.Add(_chuyenXe);
+                        db.SaveChanges();
                         // khởi tạo danh sách ghế đặt có trạng thái mặc định trống toàn bộ trong chuyến
                         List<Ghe> ghes = db.Ghes.Where(x => x.maxe == _chuyenXe.maxe).ToList();
                         if (ghes == null)
                             ghes = new List<Ghe>();
                         ghes.ForEach(x =>
                         {
-                            if (db.TrangThaiGhes.FirstOrDefault(y => y.maghe == x.maghe && x.ngaycapnhat == _chuyenXe.ngayhoatdong.Value) == null)
+                            db.TrangThaiGhes.Add(new Database.TrangThaiGhe()
                             {
-                                db.TrangThaiGhes.Add(new Database.TrangThaiGhe()
-                                {
-                                    maghe = x.maghe,
-                                    ngay = _chuyenXe.ngayhoatdong,
-                                    trangthai = Helper.TrangThaiGhe.GHETRONG
-                                });
-                            }
+                                maghe = x.maghe,
+                                ngay = _chuyenXe.ngayhoatdong,
+                                trangthai = Helper.TrangThaiGhe.GHETRONG,
+                                machuyenxe = _chuyenXe.machuyenxe
+                            });
                         });
                         db.SaveChanges();
                         transaction.Commit();

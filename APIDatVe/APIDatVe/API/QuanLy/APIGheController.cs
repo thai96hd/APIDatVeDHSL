@@ -1,5 +1,6 @@
 ﻿using APIDatVe.API.QuyenTruyCap;
 using APIDatVe.Database;
+using APIDatVe.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -63,17 +64,17 @@ namespace APIDatVe.API.QuanLy
                         {
                             Hang = (i + 1),
                             Tang = 1,
-                            Ghes = new List<Ghe>()
+                            Ghes = new List<EGhe>()
                         };
                         GheHang gheHangTang2 = new GheHang()
                         {
                             Hang = (i + 1),
                             Tang = 2,
-                            Ghes = new List<Ghe>()
+                            Ghes = new List<EGhe>()
                         };
                         for (int j = 0; j < 5; j++)
                         {
-                            gheHangTang1.Ghes.Add(new Ghe()
+                            gheHangTang1.Ghes.Add(new EGhe()
                             {
                                 active = false,
                                 maghe = "",
@@ -82,7 +83,7 @@ namespace APIDatVe.API.QuanLy
                                 vitriX = (j + 1),
                                 vitriY = (i + 1)
                             });
-                            gheHangTang2.Ghes.Add(new Ghe()
+                            gheHangTang2.Ghes.Add(new EGhe()
                             {
                                 active = false,
                                 maghe = "",
@@ -97,7 +98,7 @@ namespace APIDatVe.API.QuanLy
                     }
                     ghes.ForEach(x =>
                     {
-                        Ghe ghe = ghesAllTang1.FirstOrDefault(y => y.Tang == x.tang && y.Hang == x.vitriY)?.Ghes.FirstOrDefault(y => y.vitriX == x.vitriX);
+                        EGhe ghe = ghesAllTang1.FirstOrDefault(y => y.Tang == x.tang && y.Hang == x.vitriY)?.Ghes.FirstOrDefault(y => y.vitriX == x.vitriX);
                         if (ghe != null)
                         {
                             ghe.maghe = x.maghe.Split('_')[1];
@@ -306,7 +307,7 @@ namespace APIDatVe.API.QuanLy
     {
         public int Hang { get; set; }
         public int Tang { get; set; }
-        public List<Ghe> Ghes { get; set; }
+        public List<EGhe> Ghes { get; set; }
     }
     public class GheXeAll
     {

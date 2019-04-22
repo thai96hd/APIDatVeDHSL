@@ -1,5 +1,7 @@
 ﻿using APIDatVe.API.QuyenTruyCap;
 using APIDatVe.Database;
+using APIDatVe.Helper;
+using APIDatVe.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -97,7 +99,7 @@ namespace APIDatVe.API.QuanLy
                     });
                     chuyenXesFilter.ForEach(x =>
                     {
-                        List<TrangThaiGhe> trangThaiGhes = db.TrangThaiGhes.Where(y => y.Ghe.maxe == x.maxe && y.ngay.Value == ngaydi).ToList();
+                        List<Database.TrangThaiGhe> trangThaiGhes = db.TrangThaiGhes.Where(y => y.Ghe.maxe == x.maxe && y.ngay.Value == ngaydi).ToList();
                     });
                     BangGia bangGia = db.BangGias.FirstOrDefault(x => x.madiemtrungchuyendon == madiemtrungchuyendon && x.madiemtrungchuyentra == madiemtrungchuyentra);
                     double giave = 0;
@@ -130,17 +132,15 @@ namespace APIDatVe.API.QuanLy
 
         [Route("getghexe")]
         [HttpGet]
-        public IHttpActionResult GetGheXe(string maxe, DateTime ngaydi)
+        public IHttpActionResult GetGheXe(string machuyenxe, DateTime ngaydi)
         {
             try
             {
                 using (var db = new DB())
                 {
                     ngaydi = ngaydi.Date;
-                    List<Ghe> ghes = db.TrangThaiGhes
-                            .Where(x => x.Ghe.maxe == maxe)
-                            .Select(x => x.Ghe)
-                            .Distinct()
+                    List<Database.TrangThaiGhe> trangThaiGhes = db.TrangThaiGhes
+                            .Where(x => x.machuyenxe == machuyenxe)
                             .ToList();
                     List<GheHang> ghesAllTang1 = new List<GheHang>();
                     List<GheHang> ghesAllTang2 = new List<GheHang>();
@@ -150,55 +150,57 @@ namespace APIDatVe.API.QuanLy
                         {
                             Hang = (i + 1),
                             Tang = 1,
-                            Ghes = new List<Ghe>()
+                            Ghes = new List<EGhe>()
                         };
                         GheHang gheHangTang2 = new GheHang()
                         {
                             Hang = (i + 1),
                             Tang = 2,
-                            Ghes = new List<Ghe>()
+                            Ghes = new List<EGhe>()
                         };
                         for (int j = 0; j < 5; j++)
                         {
-                            gheHangTang1.Ghes.Add(new Ghe()
+                            gheHangTang1.Ghes.Add(new EGhe()
                             {
                                 active = false,
                                 maghe = "",
-                                maxe = maxe,
                                 tang = 1,
                                 vitriX = (j + 1),
-                                vitriY = (i + 1)
+                                vitriY = (i + 1),
+                                trangthai = 0
                             });
-                            gheHangTang2.Ghes.Add(new Ghe()
+                            gheHangTang2.Ghes.Add(new EGhe()
                             {
                                 active = false,
                                 maghe = "",
-                                maxe = maxe,
                                 tang = 2,
                                 vitriX = (j + 1),
-                                vitriY = (i + 1)
+                                vitriY = (i + 1),
+                                trangthai = 0
                             });
                         }
                         ghesAllTang1.Add(gheHangTang1);
                         ghesAllTang2.Add(gheHangTang2);
                     }
-                    ghes.ForEach(x =>
+                    trangThaiGhes.ForEach(x =>
                     {
-                        Ghe ghe = ghesAllTang1.FirstOrDefault(y => y.Tang == x.tang && y.Hang == x.vitriY)?.Ghes.FirstOrDefault(y => y.vitriX == x.vitriX);
+                        EGhe ghe = ghesAllTang1.FirstOrDefault(y => y.Tang == x.Ghe.tang && y.Hang == x.Ghe.vitriY)?.Ghes.FirstOrDefault(y => y.vitriX == x.Ghe.vitriX);
                         if (ghe != null)
                         {
                             ghe.maghe = x.maghe.Split('_')[1];
-                            ghe.active = x.active;
+                            ghe.active = x.Ghe.active;
+                            ghe.trangthai = x.trangthai;
                         }
                         else
                         {
-                            ghe = ghesAllTang2.FirstOrDefault(y => y.Tang == x.tang && y.Hang == x.vitriY)
+                            ghe = ghesAllTang2.FirstOrDefault(y => y.Tang == x.Ghe.tang && y.Hang == x.Ghe.vitriY)
                                     .Ghes
-                                    .FirstOrDefault(y => y.vitriX == x.vitriX);
+                                    .FirstOrDefault(y => y.vitriX == x.Ghe.vitriX);
                             if (ghe != null)
                             {
                                 ghe.maghe = x.maghe.Split('_')[1];
-                                ghe.active = x.active;
+                                ghe.active = x.Ghe.active;
+                                ghe.trangthai = x.trangthai;
                             }
                         }
                     });
@@ -211,11 +213,11 @@ namespace APIDatVe.API.QuanLy
                             Ghes = x.Ghes.Select(y => new
                             {
                                 y.maghe,
-                                y.maxe,
                                 y.vitriX,
                                 y.vitriY,
                                 y.active,
-                                y.tang
+                                y.tang,
+                                y.trangthai
                             })
                         }),
                         ghetang2 = ghesAllTang2.Select(x => new
@@ -225,11 +227,11 @@ namespace APIDatVe.API.QuanLy
                             Ghes = x.Ghes.Select(y => new
                             {
                                 y.maghe,
-                                y.maxe,
                                 y.vitriX,
                                 y.vitriY,
                                 y.active,
-                                y.tang
+                                y.tang,
+                                y.trangthai
                             })
                         })
                     });
@@ -245,24 +247,82 @@ namespace APIDatVe.API.QuanLy
         [Route("post")]
         [HttpPost]
         [AcceptAction(ActionName = "Post", ControllerName = "APIDatXeController")]
-        public IHttpActionResult Post()
+        public IHttpActionResult Post([FromBody] DatXe datXe)
         {
             try
             {
                 using (var db = new DB())
                 {
-                    var loTrinhs = db.LoTrinhs.ToList();
-                    int sobanghi = loTrinhs.Count;
-                    return Ok(loTrinhs.Select(x => new
+                    using (var transaction = db.Database.BeginTransaction())
                     {
-                        x.matinhdon,
-                        x.matinhtra,
-                        x.tenlotrinh,
-                        x.khoangthoigiandukien,
-                        x.malotrinh,
-                        tentinhdon = db.TinhThanhs.FirstOrDefault(y => y.matinh == x.matinhdon).tentinh,
-                        tentinhtra = db.TinhThanhs.FirstOrDefault(y => y.matinh == x.matinhtra).tentinh
-                    }).ToList());
+                        DateTime dateTimeNow = DateTime.Now;
+                        KhachHang khachHang = db.KhachHangs.FirstOrDefault(x => x.sodienthoai == datXe.khachhang.sodienthoai);
+                        string khachhangid = DataHelper.RandomString(20);
+                        if (khachHang != null)
+                        {
+                            khachHang.hoten = datXe.khachhang.hoten;
+                            khachHang.email = datXe.khachhang.email;
+                            khachHang.gioitinh = datXe.khachhang.gioitinh;
+                            khachHang.diachi = datXe.khachhang.diachi;
+                            khachhangid = khachHang.khachhangId;
+                        }
+                        else
+                        {
+                            datXe.khachhang.madoituong = "DTDEFAULT";
+                            while (db.KhachHangs.FirstOrDefault(x => x.khachhangId == khachhangid) != null)
+                            {
+                                khachhangid = DataHelper.RandomString(20);
+                            }
+                            datXe.khachhang.khachhangId = khachhangid;
+                            datXe.khachhang.matkhau = Encode.MD5(datXe.khachhang.sodienthoai);
+                            db.KhachHangs.Add(datXe.khachhang);
+                        }
+                        db.SaveChanges();
+                        string vexeid = DataHelper.RandomString(20);
+                        while (db.VeXes.FirstOrDefault(x => x.vexeId == vexeid) != null)
+                        {
+                            vexeid = DataHelper.RandomString(20);
+                        }
+                        VeXe veXe = new VeXe()
+                        {
+                            vexeId = vexeid,
+                            machuyenxe = datXe.machuyenxe,
+                            khachhangId = khachhangid,
+                            matrangthaive = 1,
+                            sokhach = datXe.ghes.Count,
+                            madiemtrungchuyendon = datXe.madiemtrungchuyendon,
+                            madiemtrungchuyentra = datXe.madiemtrungchuyentra,
+                            ngaydat = dateTimeNow,
+                            tongtien = datXe.tongtien.ToString()
+                        };
+                        db.VeXes.Add(veXe);
+                        db.SaveChanges();
+
+                        datXe.ghes.ForEach(x =>
+                        {
+                            Database.TrangThaiGhe trangThaiGhe = db.TrangThaiGhes.FirstOrDefault(y => y.maghe == x && y.machuyenxe == datXe.machuyenxe);
+                            if (trangThaiGhe != null)
+                                trangThaiGhe.trangthai = 1;
+
+                            string chitietvexeid = DataHelper.RandomString(20);
+                            while (db.ChiTietVeXes.FirstOrDefault(y => y.chitietvexeId == chitietvexeid) != null)
+                            {
+                                chitietvexeid = DataHelper.RandomString(20);
+                            }
+                            db.ChiTietVeXes.Add(new ChiTietVeXe()
+                            {
+                                chitietvexeId = chitietvexeid,
+                                vexeId = veXe.vexeId,
+                                tenhanhkhach = datXe.khachhang.hoten,
+                                sodienthoaikhach = datXe.khachhang.sodienthoai,
+                                maghe = x,
+                                doituong = "DTDEFAULT"
+                            });
+                        });
+                        db.SaveChanges();
+                        transaction.Commit();
+                        return Ok();
+                    }
                 }
             }
             catch (Exception ex)
@@ -271,5 +331,17 @@ namespace APIDatVe.API.QuanLy
             }
         }
 
+    }
+
+    public class DatXe
+    {
+        public string machuyenxe { get; set; }
+        public string madiemtrungchuyendon { get; set; }
+        public string madiemtrungchuyentra { get; set; }
+        public string malotrinh { get; set; }
+        public DateTime ngaydi { get; set; }
+        public List<string> ghes { get; set; }
+        public KhachHang khachhang { get; set; }
+        public float tongtien { get; set; }
     }
 }
