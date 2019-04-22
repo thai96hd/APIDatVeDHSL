@@ -1,9 +1,26 @@
 ﻿<style>
     .box-ghe {
         padding: 10px;
+        height: 70px;
+        overflow: hidden;
+        cursor: pointer
     }
+
+        .box-ghe.box-ghe-nonactive {
+            background: #ec7005;
+        }
+
+        .box-ghe.box-ghe-choose {
+            background: #0040f5 !IMPORTANT;
+            color: white;
+        }
+
         .box-ghe.box-ghe-active {
             background: #60ea57;
+        }
+
+        .box-ghe h3 {
+            margin: 12px 0 0 0
         }
 </style>
 <div>
@@ -25,10 +42,14 @@
                                 <tbody ng-cloak>
                                     <tr ng-repeat="item in dsghexe.ghetang1">
                                         <td class="text-center" ng-repeat="item2 in item.Ghes">
-                                            <div class="box-ghe {{item2.active?'box-ghe-active':''}}">
-                                                <h3 ng-if="item2.active">{{item2.maghe}}</h3>
-                                                <h3 ng-if="!item2.active">#</h3>
-                                                <button class="btn btn-primary btn-sm" ng-if="item2.active">Chọn</button>
+                                            <div ng-click="chooseGhe(item2)" ng-if="item2.active && item2.trangthai == 0" class="box-ghe box-ghe-{{item2.maghe}} box-ghe-active">
+                                                <h3>{{item2.maghe}}</h3>
+                                            </div>
+                                            <div ng-if="item2.active && item2.trangthai != 0" class="box-ghe box-ghe-nonactive">
+                                                <h3>{{item2.maghe}}</h3>
+                                            </div>
+                                            <div ng-if="!item2.active" class="box-ghe">
+                                                <h3>#</h3>
                                             </div>
                                         </td>
                                     </tr>
@@ -47,9 +68,15 @@
                                 <tbody ng-cloak>
                                     <tr ng-repeat="item in dsghexe.ghetang2">
                                         <td class="text-center" ng-repeat="item2 in item.Ghes">
-                                            <input id="ghe_{{item.Tang}}_{{item.Hang}}_{{item2.vitriX}}" ng-model="item2.active" type="checkbox" />
-                                            <label for="ghe_{{item.Tang}}_{{item.Hang}}_{{item2.vitriX}}" class="lbl-ghe">Vị trí ({{item2.vitriX}},{{item.Hang}})</label>
-                                            <input type="text" name="name" ng-model="item2.maghe" class="form-control" placeholder="Mã ghế" />
+                                            <div ng-click="chooseGhe(item2)" ng-if="item2.active && item2.trangthai == 0" class="box-ghe box-ghe-{{item2.maghe}} box-ghe-active">
+                                                <h3>{{item2.maghe}}</h3>
+                                            </div>
+                                            <div ng-if="item2.active && item2.trangthai != 0" class="box-ghe box-ghe-nonactive">
+                                                <h3>{{item2.maghe}}</h3>
+                                            </div>
+                                            <div ng-if="!item2.active" class="box-ghe">
+                                                <h3>#</h3>
+                                            </div>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -71,8 +98,8 @@
                         <h5>Giờ chạy: <b>{{xechon.thoigian}}</b></h5>
                         <h5>Giá vé/người: <b>{{xechon.giave | currency:'':''}}</b></h5>
                         <hr />
-                        <h5>Số lượng khách: <b>1</b></h5>
-                        <h4><b>THÀNH TIỀN: {{xechon.giave | currency:'':''}}</b></h4>
+                        <h5>Số lượng khách: <b>{{ghechons.length}}</b></h5>
+                        <h4><b>THÀNH TIỀN: {{(xechon.giave * ghechons.length) | currency:'':''}}</b></h4>
                     </div>
                     <hr />
                     <div>
@@ -84,9 +111,9 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label no-padding-right">Giới tính <span class="require">(*)</span></label>
+                            <label class="control-label no-padding-right">Giới tính</label>
                             <div>
-                                <select ng-model="detail.gioitinh" class="col-xs-12">
+                                <select ng-model="khachhang.gioitinh" class="col-xs-12">
                                     <option value="Nam">Nam</option>
                                     <option value="Nữ">Nữ</option>
                                 </select>
@@ -99,13 +126,13 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label no-padding-right">Email <span class="require">(*)</span></label>
+                            <label class="control-label no-padding-right">Email</label>
                             <div>
                                 <input type="text" class="form-control" ng-model="khachhang.email" name="name" value="" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label no-padding-right">Địa chỉ <span class="require">(*)</span></label>
+                            <label class="control-label no-padding-right">Địa chỉ</label>
                             <div>
                                 <input type="text" class="form-control" ng-model="khachhang.diachi" name="name" value="" />
                             </div>
@@ -113,7 +140,7 @@
                     </div>
                 </div>
             </div>
-        </div> 
+        </div>
         <div class="col-md-12 text-center" style="margin-top:50px">
             <button class="btn btn-sm" ng-click="gotoStep(-1)">
                 <i class="ace-icon fa fa-arrow-left"></i>

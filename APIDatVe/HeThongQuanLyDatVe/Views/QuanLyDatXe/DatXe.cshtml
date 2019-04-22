@@ -71,12 +71,21 @@
         $scope.lotrinhs = [];
         $scope.diemtrungchuyens = {};
         $scope.tuyenxes = [];
+        $scope.ghechons = []
         $scope.detail = {
             madiemtrungchuyendon: '',
             madiemtrungchuyentra: ''
         };
+        $scope.khachhang = {
+            hoten: '',
+            gioitinh: 'Nam',
+            sodienthoai: '',
+            email: '',
+            diachi: '',
+        }
 
         $scope.malotrinh = '';
+        $scope.machuyenxe = '';
         $scope.ngaydi = new Date('@DateTime.Now.ToString("yyyy-MM-dd")');
         $scope.currentStep = 1;
 
@@ -167,11 +176,12 @@
             console.log(xe)
             $scope.gotoStep(1);
             $scope.xechon = xe;
+            $scope.machuyenxe = xe.machuyenxe;
             $http({
                 url: urlGetGheXe,
                 method: "GET",
                 params: {
-                    maxe: xe.maxe,
+                    machuyenxe: xe.machuyenxe,
                     ngaydi: $scope.ngaydi
                 }
             }).then(function success(response) {
@@ -181,17 +191,51 @@
                 alert("Thực hiện không thành công");
             })
         }
+        $scope.chooseGhe = function (ghe) {
+            if ($(".box-ghe-" + ghe.maghe).hasClass('box-ghe-choose')) {
+                $(".box-ghe-" + ghe.maghe).removeClass('box-ghe-choose')
+                let index = $scope.ghechons.findIndex(x => x.maghe == ghe.maghe)
+                if (index >= 0)
+                    $scope.ghechons.splice(index, 1);
+            }
+            else {
+                $(".box-ghe-" + ghe.maghe).addClass('box-ghe-choose')
+                $scope.ghechons.push(ghe);
+            }
+            console.log($scope.ghechons)
+        }
+
         $scope.submit = function () {
-            if ($scope.detail.matinh == "" || $scope.detail.tentinh == "") {
+            if ($scope.ghechons.length == 0) {
+                alert("Vui lòng chọn ít nhất 1 ghế ngồi")
+                return;
+            }
+            if ($scope.khachhang.hoten == "" || $scope.khachhang.sodienthoai == "") {
                 alert("Vui lòng nhập đủ thông tin")
                 return;
             }
+            let trangthaigheids = [];
+            for (let i = 0; i < $scope.ghechons.length; i++) {
+                trangthaigheids.push($scope.ghechons[i].maghe)
+            }
+            let dataPost = {
+                malotrinh: $scope.malotrinh,
+                machuyenxe: $scope.machuyenxe,
+                madiemtrungchuyendon: $scope.detail.madiemtrungchuyendon,
+                madiemtrungchuyentra: $scope.detail.madiemtrungchuyentra,
+                ngaydi: $scope.ngaydi,
+                khachhang: $scope.khachhang,
+                ghes: trangthaigheids,
+                tongtien: $scope.xechon.giave * $scope.ghechons.length
+            };
+            console.log(dataPost)
             $http({
                 url: urlPost,
                 method: "POST",
-                data: $scope.detail
+                data: dataPost
             }).then(function success(response) {
-                alert("Thành công")
+                alert("Thành công");
+                location.href = '/QuanLyDatXe/DanhSachDatXe'
             }, function error(response) {
                 alert("Thực hiện không thành công");
             })
