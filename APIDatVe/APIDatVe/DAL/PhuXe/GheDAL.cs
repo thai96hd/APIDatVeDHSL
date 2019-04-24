@@ -9,22 +9,21 @@ namespace APIDatVe.DAL.PhuXe
 {
     public class GheDAL
     {
-
         public DataTable GetGhes(String maxe, String maghe)
         {
             String sql = " SELECT ttghe.trangthai," +
                        "  g.*," +
                          "  i.*" +
                  "  FROM" +
-                 "     (SELECT vx.vexeId, vx.ghichu," +
-                   "            ct.maghe, " +
+                 "     (SELECT vx.vexeId, vx.ghichu, vx.matrangthaive, vx.madiemtrungchuyendon, vx.madiemtrungchuyentra, " +
+                   "           ct.maghe, ct.tenhanhkhach, ct.doituong, ct.sodienthoaikhach, " +
                     "      kh.*" +
                     "   FROM VeXe vx" +
                     "   JOIN ChuyenXe cx ON cx.machuyenxe = vx.machuyenxe" +
                    "    JOIN Xe xe ON xe.maxe = cx.maxe" +
                     "   JOIN KhachHang kh ON kh.khachhangId = vx.khachhangId" +
                     "   JOIN ChiTietVeXe ct ON ct.vexeId = vx.vexeId" +
-                   "    WHERE xe.maxe = 1" +
+                   "    WHERE xe.maxe = @maxe" +
                    "      AND cx.ngayhoatdong =  Convert(datetime, @ngayhoatdong, 103)) AS i" +
                   "  RIGHT JOIN Ghe g ON g.maghe = i.maghe" +
                   "  JOIN TrangThaiGhe ttghe ON ttghe.maghe = g.maghe" +

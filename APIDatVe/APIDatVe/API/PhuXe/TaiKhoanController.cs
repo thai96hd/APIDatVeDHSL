@@ -27,9 +27,9 @@ namespace APIDatVe.API.PhuXe
             TaiKhoanDAL taiKhoanDAL = new TaiKhoanDAL();
             if (taiKhoanDAL.checkLogin(taiKhoanDTO, 3))
             {
-                return ResponseToOk(null);
+                return ResponseToOk(taiKhoanDTO);
             }
-            return ResponseToOk(null, "Can not found username or password", HttpStatusCode.NotFound);
+            return ResponseToOk(null, "Không tìm thấy tên tài khoản hoặc mật khẩu", HttpStatusCode.BadRequest);
 
         }
         /// <summary>
@@ -42,11 +42,16 @@ namespace APIDatVe.API.PhuXe
         {
 
             TaiKhoanDAL taiKhoanDAL = new TaiKhoanDAL();
-            if (taiKhoanDAL.updatePass(taiKhoanDTO))
+            if (!taiKhoanDAL.updatePass(taiKhoanDTO))
             {
-                return ResponseToOk(null);
+                return ResponseToOk(null, "Nhập sai mật khẩu", HttpStatusCode.BadRequest);
             }
-            return ResponseToOk(null, "Can not updated data", HttpStatusCode.NotImplemented);
+            else
+            {
+                return ResponseToOk(taiKhoanDTO, "Đổi mật khẩu thành công", HttpStatusCode.OK);
+            }
+
+            //  return ResponseToOk(null, "Can not updated data", HttpStatusCode.NotImplemented);
         }
 
         /// <summary>
@@ -57,7 +62,7 @@ namespace APIDatVe.API.PhuXe
         /// <returns></returns>
         [HttpGet]
         [Route("getthongtinphuxe")]
-        public IHttpActionResult getthongtinphuxe(string tentaikhoan, Int32 machucvu)
+        public IHttpActionResult getthongtinphuxe(string tentaikhoan)
         {
             TaiKhoanDAL taiKhoanDAL = new TaiKhoanDAL();
             return ResponseToOk(taiKhoanDAL.GetThongTinPhuXe(tentaikhoan, 3));

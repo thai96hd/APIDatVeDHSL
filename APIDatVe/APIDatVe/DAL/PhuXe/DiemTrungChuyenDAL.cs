@@ -53,11 +53,12 @@ namespace APIDatVe.DAL.PhuXe
         public DataTable GetKhachHangByDiemXuong(string madiemtrungchuyen, string machuyenxe)
         {
 
-            String sql = "SELECT *" +
+            String sql = " SELECT kh.hoten,kh.sodienthoai,vx.*, ct.maghe,ct.sodienthoaikhach,ct.tenhanhkhach " +
                        " FROM KhachHang kh" +
                       "  JOIN VeXe vx ON kh.khachhangId = vx.khachhangId" +
                        " JOIN DiemTrungChuyen dtc ON vx.madiemtrungchuyentra = dtc.madiemtrungchuyen" +
                        " JOIN ChuyenXe cx ON vx.machuyenxe = cx.machuyenxe" +
+                       " JOIN  ChiTietVeXe ct ON ct.vexeId = vx.vexeId" +
                       "  WHERE dtc.madiemtrungchuyen = @madiemtrungchuyen" +
                        "   AND cx.machuyenxe = @machuyenxe";
             SqlCommand command = DataProvider.Instance.getCommand(sql);
@@ -83,11 +84,12 @@ namespace APIDatVe.DAL.PhuXe
         public DataTable GetKhachHangByDiemDon(string madiemtrungchuyen, string machuyenxe)
         {
 
-            String sql = "SELECT *" +
+            String sql = "SELECT kh.hoten,kh.sodienthoai,vx.*, ct.maghe,ct.sodienthoaikhach,ct.tenhanhkhach " +
                        " FROM KhachHang kh" +
                       "  JOIN VeXe vx ON kh.khachhangId = vx.khachhangId" +
                        " JOIN DiemTrungChuyen dtc ON vx.madiemtrungchuyendon = dtc.madiemtrungchuyen" +
                        " JOIN ChuyenXe cx ON vx.machuyenxe = cx.machuyenxe" +
+                       " JOIN  ChiTietVeXe ct ON ct.vexeId = vx.vexeId"+
                       "  WHERE dtc.madiemtrungchuyen = @madiemtrungchuyen" +
                        "   AND cx.machuyenxe = @machuyenxe";
             SqlCommand command = DataProvider.Instance.getCommand(sql);

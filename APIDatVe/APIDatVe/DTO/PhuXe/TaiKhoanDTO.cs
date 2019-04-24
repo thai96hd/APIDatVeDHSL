@@ -16,5 +16,6 @@ namespace APIDatVe.DTO.PhuXe
 		public int? trangthai { get; set; }
 		public string linklaylaitaikhoan { get; set; }
 		public DateTime? thoigianyeucaulaylaitk { get; set; }
-	}
+        public string matkhaumoi { get; set; }
+    }
 }
