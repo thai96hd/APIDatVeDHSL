@@ -25,6 +25,5 @@ namespace APIDatVe.API.DatVe
 			VeXeDAL veXeDAL = new VeXeDAL();
 			return veXeDAL.AddTicketDeTail(chiTietVeXeDTO);
 		}
-
     }
 }

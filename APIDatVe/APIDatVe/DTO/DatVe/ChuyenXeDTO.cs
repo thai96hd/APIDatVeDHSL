@@ -19,5 +19,7 @@ namespace APIDatVe.DTO.DatVe
 		public string tenkip;
 		public int gioxuatphat;
 		public int phutxuatphat;
+		public int tongsoghe;
+		public int soghetrong;
 	}
 }
