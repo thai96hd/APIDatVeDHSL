@@ -17,6 +17,7 @@ namespace APIDatVe.Database
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public ChuyenXe()
         {
+            this.DanhGias = new HashSet<DanhGia>();
             this.VeXes = new HashSet<VeXe>();
         }
     
@@ -34,6 +35,8 @@ namespace APIDatVe.Database
         public virtual NhanVien NhanVien1 { get; set; }
         public virtual Xe Xe { get; set; }
         public virtual LoTrinh LoTrinh { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DanhGia> DanhGias { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<VeXe> VeXes { get; set; }
     }

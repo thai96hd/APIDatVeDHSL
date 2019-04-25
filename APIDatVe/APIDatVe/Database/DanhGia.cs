@@ -16,11 +16,11 @@ namespace APIDatVe.Database
     {
         public string madanhgia { get; set; }
         public string makhachhang { get; set; }
-        public string maxe { get; set; }
+        public string machuyenxe { get; set; }
         public Nullable<int> diemdanhgia { get; set; }
         public string noidungdanhgia { get; set; }
     
+        public virtual ChuyenXe ChuyenXe { get; set; }
         public virtual KhachHang KhachHang { get; set; }
-        public virtual Xe Xe { get; set; }
     }
 }

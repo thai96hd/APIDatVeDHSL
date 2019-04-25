@@ -29,6 +29,7 @@ namespace APIDatVe.Database
         public string ghichu { get; set; }
         public string madiemtrungchuyendon { get; set; }
         public string madiemtrungchuyentra { get; set; }
+        public Nullable<System.DateTime> ngaydat { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ChiTietVeXe> ChiTietVeXes { get; set; }

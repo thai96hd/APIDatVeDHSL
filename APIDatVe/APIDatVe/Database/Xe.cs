@@ -18,7 +18,6 @@ namespace APIDatVe.Database
         public Xe()
         {
             this.ChuyenXes = new HashSet<ChuyenXe>();
-            this.DanhGias = new HashSet<DanhGia>();
             this.Ghes = new HashSet<Ghe>();
         }
     
@@ -32,8 +31,6 @@ namespace APIDatVe.Database
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ChuyenXe> ChuyenXes { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DanhGia> DanhGias { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Ghe> Ghes { get; set; }
     }

@@ -53,7 +53,7 @@
           <Property Name="vexeId" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="maghe" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="tenhanhkhach" Type="nvarchar" MaxLength="50" />
-          <Property Name="sodienthoai" Type="varchar" MaxLength="50" />
+          <Property Name="sodienthoaikhach" Type="varchar" MaxLength="50" />
           <Property Name="doituong" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="ChucVu">
@@ -83,7 +83,7 @@
           </Key>
           <Property Name="madanhgia" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="makhachhang" Type="varchar" MaxLength="50" />
-          <Property Name="maxe" Type="varchar" MaxLength="50" />
+          <Property Name="machuyenxe" Type="varchar" MaxLength="50" />
           <Property Name="diemdanhgia" Type="int" />
           <Property Name="noidungdanhgia" Type="ntext" />
         </EntityType>
@@ -273,6 +273,7 @@
           <Property Name="ghichu" Type="ntext" />
           <Property Name="madiemtrungchuyendon" Type="varchar" MaxLength="50" />
           <Property Name="madiemtrungchuyentra" Type="varchar" MaxLength="50" />
+          <Property Name="ngaydat" Type="datetime" />
         </EntityType>
         <EntityType Name="Xe">
           <Key>
@@ -430,6 +431,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_DanhGia_ChuyenXe">
+          <End Role="ChuyenXe" Type="Self.ChuyenXe" Multiplicity="0..1" />
+          <End Role="DanhGia" Type="Self.DanhGia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ChuyenXe">
+              <PropertyRef Name="machuyenxe" />
+            </Principal>
+            <Dependent Role="DanhGia">
+              <PropertyRef Name="machuyenxe" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_DanhGia_KhachHang">
           <End Role="KhachHang" Type="Self.KhachHang" Multiplicity="0..1" />
           <End Role="DanhGia" Type="Self.DanhGia" Multiplicity="*" />
@@ -439,18 +452,6 @@
             </Principal>
             <Dependent Role="DanhGia">
               <PropertyRef Name="makhachhang" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DanhGia_Xe">
-          <End Role="Xe" Type="Self.Xe" Multiplicity="0..1" />
-          <End Role="DanhGia" Type="Self.DanhGia" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Xe">
-              <PropertyRef Name="maxe" />
-            </Principal>
-            <Dependent Role="DanhGia">
-              <PropertyRef Name="maxe" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -622,82 +623,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
-        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-          <Parameter Name="version" Type="int" Mode="In" />
-          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
-        </Function>
-        <Function Name="sp_checkLogin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="sodienthoai" Type="varchar" Mode="In" />
-          <Parameter Name="matkhau" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-          <Parameter Name="version" Type="int" Mode="In" />
-          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
-        </Function>
-        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_gettripbytripId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="malotrinh" Type="varchar" Mode="In" />
-          <Parameter Name="ngayhoatdong" Type="datetime" Mode="In" />
-        </Function>
-        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_laythongtingiave" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="madiemtrungchuyendon" Type="varchar" Mode="In" />
-          <Parameter Name="madiemtrungchuyentra" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="sp_listdiemtrungchuyen" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="malotrinh" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
-        </Function>
-        <Function Name="sp_search_customerbyusername" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="username" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="sp_themkhachhang" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="makhachhang" Type="varchar" Mode="In" />
-          <Parameter Name="hoten" Type="nvarchar" Mode="In" />
-          <Parameter Name="diachi" Type="nvarchar" Mode="In" />
-          <Parameter Name="sodienthoai" Type="varchar" Mode="In" />
-          <Parameter Name="email" Type="varchar" Mode="In" />
-          <Parameter Name="matkhau" Type="nvarchar" Mode="In" />
-          <Parameter Name="gioitinh" Type="nvarchar" Mode="In" />
-        </Function>
-        <Function Name="sp_update_password_customer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="username" Type="varchar" Mode="In" />
-          <Parameter Name="matkhau" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="sp_updateCustomeInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="makhachhang" Type="varchar" Mode="In" />
-          <Parameter Name="tenkhachhang" Type="nvarchar" Mode="In" />
-          <Parameter Name="sodienthoai" Type="varchar" Mode="In" />
-          <Parameter Name="diachi" Type="nvarchar" Mode="In" />
-          <Parameter Name="gioitinh" Type="nvarchar" Mode="In" />
-          <Parameter Name="matkhau" Type="nvarchar" Mode="In" />
-        </Function>
-        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="updatetrangthaighe" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="maghe" Type="varchar" Mode="In" />
-          <Parameter Name="trangthai" Type="int" Mode="In" />
-          <Parameter Name="vexeid" Type="varchar" Mode="In" />
-          <Parameter Name="matrangthaive" Type="int" Mode="In" />
-        </Function>
         <EntityContainer Name="QLDatVe_UDModelStoreContainer">
           <EntitySet Name="APIQuanLy" EntityType="Self.APIQuanLy" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BangGia" EntityType="Self.BangGia" Schema="dbo" store:Type="Tables" />
@@ -774,12 +699,12 @@
             <End Role="LoTrinh" EntitySet="LoTrinh" />
             <End Role="ChuyenXe" EntitySet="ChuyenXe" />
           </AssociationSet>
-          <AssociationSet Name="FK_DanhGia_KhachHang" Association="Self.FK_DanhGia_KhachHang">
-            <End Role="KhachHang" EntitySet="KhachHang" />
+          <AssociationSet Name="FK_DanhGia_ChuyenXe" Association="Self.FK_DanhGia_ChuyenXe">
+            <End Role="ChuyenXe" EntitySet="ChuyenXe" />
             <End Role="DanhGia" EntitySet="DanhGia" />
           </AssociationSet>
-          <AssociationSet Name="FK_DanhGia_Xe" Association="Self.FK_DanhGia_Xe">
-            <End Role="Xe" EntitySet="Xe" />
+          <AssociationSet Name="FK_DanhGia_KhachHang" Association="Self.FK_DanhGia_KhachHang">
+            <End Role="KhachHang" EntitySet="KhachHang" />
             <End Role="DanhGia" EntitySet="DanhGia" />
           </AssociationSet>
           <AssociationSet Name="FK_DiemChungChuyen_TinhThanh" Association="Self.FK_DiemChungChuyen_TinhThanh">
@@ -899,7 +824,7 @@
           <Property Name="vexeId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="maghe" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="tenhanhkhach" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="sodienthoai" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="sodienthoaikhach" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="doituong" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="VeXe" Relationship="Self.FK_ChiTietVeXe_VeXe" FromRole="ChiTietVeXe" ToRole="VeXe" />
         </EntityType>
@@ -929,6 +854,7 @@
           <NavigationProperty Name="NhanVien1" Relationship="Self.FK_ChiTietHoatDongXe_NhanVien1" FromRole="ChuyenXe" ToRole="NhanVien" />
           <NavigationProperty Name="Xe" Relationship="Self.FK_ChiTietHoatDongXe_Xe" FromRole="ChuyenXe" ToRole="Xe" />
           <NavigationProperty Name="LoTrinh" Relationship="Self.FK_ChuyenXe_LoTrinh" FromRole="ChuyenXe" ToRole="LoTrinh" />
+          <NavigationProperty Name="DanhGias" Relationship="Self.FK_DanhGia_ChuyenXe" FromRole="ChuyenXe" ToRole="DanhGia" />
           <NavigationProperty Name="VeXes" Relationship="Self.FK_VeXe_ChuyenXe" FromRole="ChuyenXe" ToRole="VeXe" />
         </EntityType>
         <EntityType Name="DanhGia">
@@ -937,11 +863,11 @@
           </Key>
           <Property Name="madanhgia" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="makhachhang" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="maxe" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="machuyenxe" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="diemdanhgia" Type="Int32" />
           <Property Name="noidungdanhgia" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ChuyenXe" Relationship="Self.FK_DanhGia_ChuyenXe" FromRole="DanhGia" ToRole="ChuyenXe" />
           <NavigationProperty Name="KhachHang" Relationship="Self.FK_DanhGia_KhachHang" FromRole="DanhGia" ToRole="KhachHang" />
-          <NavigationProperty Name="Xe" Relationship="Self.FK_DanhGia_Xe" FromRole="DanhGia" ToRole="Xe" />
         </EntityType>
         <EntityType Name="DiemTrungChuyen">
           <Key>
@@ -1161,6 +1087,7 @@
           <Property Name="ghichu" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="madiemtrungchuyendon" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="madiemtrungchuyentra" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ngaydat" Type="DateTime" Precision="3" />
           <NavigationProperty Name="ChiTietVeXes" Relationship="Self.FK_ChiTietVeXe_VeXe" FromRole="VeXe" ToRole="ChiTietVeXe" />
           <NavigationProperty Name="ChuyenXe" Relationship="Self.FK_VeXe_ChuyenXe" FromRole="VeXe" ToRole="ChuyenXe" />
           <NavigationProperty Name="KhachHang" Relationship="Self.FK_VeXe_KhachHang1" FromRole="VeXe" ToRole="KhachHang" />
@@ -1178,7 +1105,6 @@
           <Property Name="ghichu" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="trangthai" Type="Int32" Nullable="false" />
           <NavigationProperty Name="ChuyenXes" Relationship="Self.FK_ChiTietHoatDongXe_Xe" FromRole="Xe" ToRole="ChuyenXe" />
-          <NavigationProperty Name="DanhGias" Relationship="Self.FK_DanhGia_Xe" FromRole="Xe" ToRole="DanhGia" />
           <NavigationProperty Name="Ghes" Relationship="Self.FK_Ghe_Xe" FromRole="Xe" ToRole="Ghe" />
         </EntityType>
         <Association Name="FK_APIQuanLy_NhomAPI">
@@ -1349,6 +1275,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_DanhGia_ChuyenXe">
+          <End Role="ChuyenXe" Type="Self.ChuyenXe" Multiplicity="0..1" />
+          <End Role="DanhGia" Type="Self.DanhGia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ChuyenXe">
+              <PropertyRef Name="machuyenxe" />
+            </Principal>
+            <Dependent Role="DanhGia">
+              <PropertyRef Name="machuyenxe" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_VeXe_ChuyenXe">
           <End Role="ChuyenXe" Type="Self.ChuyenXe" Multiplicity="1" />
           <End Role="VeXe" Type="Self.VeXe" Multiplicity="*" />
@@ -1370,18 +1308,6 @@
             </Principal>
             <Dependent Role="DanhGia">
               <PropertyRef Name="makhachhang" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DanhGia_Xe">
-          <End Role="Xe" Type="Self.Xe" Multiplicity="0..1" />
-          <End Role="DanhGia" Type="Self.DanhGia" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Xe">
-              <PropertyRef Name="maxe" />
-            </Principal>
-            <Dependent Role="DanhGia">
-              <PropertyRef Name="maxe" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1601,16 +1527,16 @@
             <End Role="LoTrinh" EntitySet="LoTrinhs" />
             <End Role="ChuyenXe" EntitySet="ChuyenXes" />
           </AssociationSet>
+          <AssociationSet Name="FK_DanhGia_ChuyenXe" Association="Self.FK_DanhGia_ChuyenXe">
+            <End Role="ChuyenXe" EntitySet="ChuyenXes" />
+            <End Role="DanhGia" EntitySet="DanhGias" />
+          </AssociationSet>
           <AssociationSet Name="FK_VeXe_ChuyenXe" Association="Self.FK_VeXe_ChuyenXe">
             <End Role="ChuyenXe" EntitySet="ChuyenXes" />
             <End Role="VeXe" EntitySet="VeXes" />
           </AssociationSet>
           <AssociationSet Name="FK_DanhGia_KhachHang" Association="Self.FK_DanhGia_KhachHang">
             <End Role="KhachHang" EntitySet="KhachHangs" />
-            <End Role="DanhGia" EntitySet="DanhGias" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DanhGia_Xe" Association="Self.FK_DanhGia_Xe">
-            <End Role="Xe" EntitySet="Xes" />
             <End Role="DanhGia" EntitySet="DanhGias" />
           </AssociationSet>
           <AssociationSet Name="FK_DiemChungChuyen_TinhThanh" Association="Self.FK_DiemChungChuyen_TinhThanh">
@@ -1657,130 +1583,7 @@
             <End Role="TrangThaiVeXe" EntitySet="TrangThaiVeXes" />
             <End Role="VeXe" EntitySet="VeXes" />
           </AssociationSet>
-          <FunctionImport Name="sp_alterdiagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="version" Mode="In" Type="Int32" />
-            <Parameter Name="definition" Mode="In" Type="Binary" />
-          </FunctionImport>
-          <FunctionImport Name="sp_checkLogin" ReturnType="Collection(Int32)">
-            <Parameter Name="sodienthoai" Mode="In" Type="String" />
-            <Parameter Name="matkhau" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="sp_creatediagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="version" Mode="In" Type="Int32" />
-            <Parameter Name="definition" Mode="In" Type="Binary" />
-          </FunctionImport>
-          <FunctionImport Name="sp_dropdiagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_gettripbytripId" ReturnType="Collection(QLDatVe_UDModel.sp_gettripbytripId_Result)">
-            <Parameter Name="malotrinh" Mode="In" Type="String" />
-            <Parameter Name="ngayhoatdong" Mode="In" Type="DateTime" />
-          </FunctionImport>
-          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(QLDatVe_UDModel.sp_helpdiagramdefinition_Result)">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(QLDatVe_UDModel.sp_helpdiagrams_Result)">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_laythongtingiave" ReturnType="Collection(QLDatVe_UDModel.sp_laythongtingiave_Result)">
-            <Parameter Name="madiemtrungchuyendon" Mode="In" Type="String" />
-            <Parameter Name="madiemtrungchuyentra" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="sp_listdiemtrungchuyen" ReturnType="Collection(QLDatVe_UDModel.sp_listdiemtrungchuyen_Result)">
-            <Parameter Name="malotrinh" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="sp_renamediagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="new_diagramname" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="sp_search_customerbyusername" ReturnType="Collection(QLDatVe_UDModel.sp_search_customerbyusername_Result)">
-            <Parameter Name="username" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="sp_themkhachhang">
-            <Parameter Name="makhachhang" Mode="In" Type="String" />
-            <Parameter Name="hoten" Mode="In" Type="String" />
-            <Parameter Name="diachi" Mode="In" Type="String" />
-            <Parameter Name="sodienthoai" Mode="In" Type="String" />
-            <Parameter Name="email" Mode="In" Type="String" />
-            <Parameter Name="matkhau" Mode="In" Type="String" />
-            <Parameter Name="gioitinh" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="sp_update_password_customer">
-            <Parameter Name="username" Mode="In" Type="String" />
-            <Parameter Name="matkhau" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="sp_updateCustomeInfo">
-            <Parameter Name="makhachhang" Mode="In" Type="String" />
-            <Parameter Name="tenkhachhang" Mode="In" Type="String" />
-            <Parameter Name="sodienthoai" Mode="In" Type="String" />
-            <Parameter Name="diachi" Mode="In" Type="String" />
-            <Parameter Name="gioitinh" Mode="In" Type="String" />
-            <Parameter Name="matkhau" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="sp_upgraddiagrams" />
-          <FunctionImport Name="updatetrangthaighe">
-            <Parameter Name="maghe" Mode="In" Type="String" />
-            <Parameter Name="trangthai" Mode="In" Type="Int32" />
-            <Parameter Name="vexeid" Mode="In" Type="String" />
-            <Parameter Name="matrangthaive" Mode="In" Type="Int32" />
-          </FunctionImport>
         </EntityContainer>
-        <ComplexType Name="sp_gettripbytripId_Result">
-          <Property Type="String" Name="machuyenxe" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="malotrinh" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="mataixe" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="makip" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="tenkip" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="maphuxe" Nullable="false" MaxLength="50" />
-          <Property Type="DateTime" Name="ngayhoatdong" Nullable="true" />
-          <Property Type="DateTime" Name="thoigiandungxe" Nullable="true" Precision="23" />
-          <Property Type="String" Name="maxe" Nullable="false" MaxLength="50" />
-          <Property Type="Int32" Name="gio" Nullable="true" />
-          <Property Type="Int32" Name="phut" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="sp_helpdiagramdefinition_Result">
-          <Property Type="Int32" Name="version" Nullable="true" />
-          <Property Type="Binary" Name="definition" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="sp_helpdiagrams_Result">
-          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
-          <Property Type="Int32" Name="ID" Nullable="false" />
-          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
-          <Property Type="Int32" Name="OwnerID" Nullable="false" />
-        </ComplexType>
-        <ComplexType Name="sp_laythongtingiave_Result">
-          <Property Type="Int32" Name="banggiaId" Nullable="false" />
-          <Property Type="String" Name="madiemtrungchuyendon" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="madiemtrungchuyentra" Nullable="true" MaxLength="50" />
-          <Property Type="Double" Name="giave" Nullable="true" />
-          <Property Type="Double" Name="thoigiandukien" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="sp_listdiemtrungchuyen_Result">
-          <Property Type="String" Name="madiemtrungchuyen" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="tendiemtrungchuyen" Nullable="true" MaxLength="100" />
-          <Property Type="String" Name="diachi" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="matinh" Nullable="false" MaxLength="50" />
-        </ComplexType>
-        <ComplexType Name="sp_search_customerbyusername_Result">
-          <Property Type="String" Name="khachhangId" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="madoituong" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="hoten" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="diachi" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="sodienthoai" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="email" Nullable="true" MaxLength="50" />
-          <Property Type="Int32" Name="diemtichluy" Nullable="true" />
-          <Property Type="String" Name="matkhau" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="gioitinh" Nullable="true" MaxLength="10" />
-        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1838,7 +1641,7 @@
                 <ScalarProperty Name="vexeId" ColumnName="vexeId" />
                 <ScalarProperty Name="maghe" ColumnName="maghe" />
                 <ScalarProperty Name="tenhanhkhach" ColumnName="tenhanhkhach" />
-                <ScalarProperty Name="sodienthoai" ColumnName="sodienthoai" />
+                <ScalarProperty Name="sodienthoaikhach" ColumnName="sodienthoaikhach" />
                 <ScalarProperty Name="doituong" ColumnName="doituong" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1871,7 +1674,7 @@
               <MappingFragment StoreEntitySet="DanhGia">
                 <ScalarProperty Name="madanhgia" ColumnName="madanhgia" />
                 <ScalarProperty Name="makhachhang" ColumnName="makhachhang" />
-                <ScalarProperty Name="maxe" ColumnName="maxe" />
+                <ScalarProperty Name="machuyenxe" ColumnName="machuyenxe" />
                 <ScalarProperty Name="diemdanhgia" ColumnName="diemdanhgia" />
                 <ScalarProperty Name="noidungdanhgia" ColumnName="noidungdanhgia" />
               </MappingFragment>
@@ -2079,6 +1882,7 @@
                 <ScalarProperty Name="ghichu" ColumnName="ghichu" />
                 <ScalarProperty Name="madiemtrungchuyendon" ColumnName="madiemtrungchuyendon" />
                 <ScalarProperty Name="madiemtrungchuyentra" ColumnName="madiemtrungchuyentra" />
+                <ScalarProperty Name="ngaydat" ColumnName="ngaydat" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2095,88 +1899,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="QLDatVe_UDModel.Store.sp_alterdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_checkLogin" FunctionName="QLDatVe_UDModel.Store.sp_checkLogin" />
-          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="QLDatVe_UDModel.Store.sp_creatediagram" />
-          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="QLDatVe_UDModel.Store.sp_dropdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_gettripbytripId" FunctionName="QLDatVe_UDModel.Store.sp_gettripbytripId">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="QLDatVe_UDModel.sp_gettripbytripId_Result">
-                <ScalarProperty Name="machuyenxe" ColumnName="machuyenxe" />
-                <ScalarProperty Name="malotrinh" ColumnName="malotrinh" />
-                <ScalarProperty Name="mataixe" ColumnName="mataixe" />
-                <ScalarProperty Name="makip" ColumnName="makip" />
-                <ScalarProperty Name="tenkip" ColumnName="tenkip" />
-                <ScalarProperty Name="maphuxe" ColumnName="maphuxe" />
-                <ScalarProperty Name="ngayhoatdong" ColumnName="ngayhoatdong" />
-                <ScalarProperty Name="thoigiandungxe" ColumnName="thoigiandungxe" />
-                <ScalarProperty Name="maxe" ColumnName="maxe" />
-                <ScalarProperty Name="gio" ColumnName="gio" />
-                <ScalarProperty Name="phut" ColumnName="phut" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="QLDatVe_UDModel.Store.sp_helpdiagramdefinition">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="QLDatVe_UDModel.sp_helpdiagramdefinition_Result">
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="QLDatVe_UDModel.Store.sp_helpdiagrams">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="QLDatVe_UDModel.sp_helpdiagrams_Result">
-                <ScalarProperty Name="Database" ColumnName="Database" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Owner" ColumnName="Owner" />
-                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_laythongtingiave" FunctionName="QLDatVe_UDModel.Store.sp_laythongtingiave">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="QLDatVe_UDModel.sp_laythongtingiave_Result">
-                <ScalarProperty Name="banggiaId" ColumnName="banggiaId" />
-                <ScalarProperty Name="madiemtrungchuyendon" ColumnName="madiemtrungchuyendon" />
-                <ScalarProperty Name="madiemtrungchuyentra" ColumnName="madiemtrungchuyentra" />
-                <ScalarProperty Name="giave" ColumnName="giave" />
-                <ScalarProperty Name="thoigiandukien" ColumnName="thoigiandukien" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_listdiemtrungchuyen" FunctionName="QLDatVe_UDModel.Store.sp_listdiemtrungchuyen">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="QLDatVe_UDModel.sp_listdiemtrungchuyen_Result">
-                <ScalarProperty Name="madiemtrungchuyen" ColumnName="madiemtrungchuyen" />
-                <ScalarProperty Name="tendiemtrungchuyen" ColumnName="tendiemtrungchuyen" />
-                <ScalarProperty Name="diachi" ColumnName="diachi" />
-                <ScalarProperty Name="matinh" ColumnName="matinh" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="QLDatVe_UDModel.Store.sp_renamediagram" />
-          <FunctionImportMapping FunctionImportName="sp_search_customerbyusername" FunctionName="QLDatVe_UDModel.Store.sp_search_customerbyusername">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="QLDatVe_UDModel.sp_search_customerbyusername_Result">
-                <ScalarProperty Name="khachhangId" ColumnName="khachhangId" />
-                <ScalarProperty Name="madoituong" ColumnName="madoituong" />
-                <ScalarProperty Name="hoten" ColumnName="hoten" />
-                <ScalarProperty Name="diachi" ColumnName="diachi" />
-                <ScalarProperty Name="sodienthoai" ColumnName="sodienthoai" />
-                <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="diemtichluy" ColumnName="diemtichluy" />
-                <ScalarProperty Name="matkhau" ColumnName="matkhau" />
-                <ScalarProperty Name="gioitinh" ColumnName="gioitinh" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_themkhachhang" FunctionName="QLDatVe_UDModel.Store.sp_themkhachhang" />
-          <FunctionImportMapping FunctionImportName="sp_update_password_customer" FunctionName="QLDatVe_UDModel.Store.sp_update_password_customer" />
-          <FunctionImportMapping FunctionImportName="sp_updateCustomeInfo" FunctionName="QLDatVe_UDModel.Store.sp_updateCustomeInfo" />
-          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="QLDatVe_UDModel.Store.sp_upgraddiagrams" />
-          <FunctionImportMapping FunctionImportName="updatetrangthaighe" FunctionName="QLDatVe_UDModel.Store.updatetrangthaighe" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
