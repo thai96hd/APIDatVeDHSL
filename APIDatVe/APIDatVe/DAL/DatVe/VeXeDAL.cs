@@ -16,13 +16,14 @@ namespace APIDatVe.DAL.DatVe
 				new SqlParameter("@maghe",chiTietVeXeDTO.maghe),
 				new SqlParameter("@tenhanhkhach",chiTietVeXeDTO.tenhanhkhach),
 				new SqlParameter("@sodienthoai",chiTietVeXeDTO.sodienthoai),
-				new SqlParameter("@doituong",chiTietVeXeDTO.doituong)
+				new SqlParameter("@doituong",chiTietVeXeDTO.doituong),
+				new SqlParameter("@machuyenxe",chiTietVeXeDTO.machuyenxe)
 			};
 			return DataProvider.Instance.ExecuteNonQuery("sp_addTicketDetail", parameters) > 0;
 		}
 		public bool AddTicket(VeXeDTO veXeDTO) {
 			SqlParameter[] parameters = new SqlParameter[] {
-				new SqlParameter("@vexeid",Guid.NewGuid().ToString()),
+				new SqlParameter("@vexeid",veXeDTO.vexeid),
 				new SqlParameter("@machuyenxe",veXeDTO.machuyenxe),
 				new SqlParameter("@khachhangid",veXeDTO.khachhangid),
 				new SqlParameter("@matrangthaive",veXeDTO.matrangthaive),

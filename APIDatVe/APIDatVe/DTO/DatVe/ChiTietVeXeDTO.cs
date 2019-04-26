@@ -13,5 +13,6 @@ namespace APIDatVe.DTO.DatVe
 		public string tenhanhkhach { get; set; }
 		public string sodienthoai { get; set; }
 		public string doituong { get; set; }
+		public string machuyenxe { get; set; }
 	}
 }

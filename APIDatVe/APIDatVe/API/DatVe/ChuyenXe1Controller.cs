@@ -22,13 +22,13 @@ namespace APIDatVe.API.DatVe
 			return Ok(ChuyenXeDAL.getListRoute());
 		}
 		[Route("getTripByIdAndDateStart/{day}/{month}/{year}")]
-		public IHttpActionResult getTrip([FromUri]string malotrinh, int day, int month, int year)
+		public IHttpActionResult getTrip([FromUri]string malotrinh, [FromUri] string pointStartID, string pointEndID, int day, int month, int year)
 		{
 			if (malotrinh == "")
 				return BadRequest("malotrinh khong de trong");
 			string date = "" + month + "/" + day + "/" + year;
-			DateTime start = DateTime.Parse(date);
-			List<ChuyenXeDTO> list = new ChuyenXeDAL().getListChuyenXe(malotrinh, start);
+			DateTime startDate = DateTime.Parse(date);
+			List<ChuyenXeDTO> list = new ChuyenXeDAL().getListChuyenXe(malotrinh, startDate, pointStartID, pointEndID);
 			return Ok(list);
 		}
 

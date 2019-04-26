@@ -26,7 +26,7 @@ namespace APIDatVe.DAL.DatVe
 			}
 			return loTrinhDTOs;
 		}
-		public List<ChuyenXeDTO> getListChuyenXe(string malotrinh, DateTime ngayhoatdong)
+		public List<ChuyenXeDTO> getListChuyenXe(string malotrinh, DateTime ngayhoatdong,string _pointStartID,string _pointEndID)
 		{
 			List<ChuyenXeDTO> chuyenXeDTOs = new List<ChuyenXeDTO>();
 			SqlParameter[] sqlParameters = new SqlParameter[] {
@@ -35,11 +35,9 @@ namespace APIDatVe.DAL.DatVe
 
 			};
 			DataTable dt = DataProvider.Instance.GetData("sp_gettripbytripId", sqlParameters);
-
+			ChuyenXeDTO cx = new ChuyenXeDTO();
 			foreach (DataRow dr in dt.Rows)
 			{
-				ChuyenXeDTO cx = new ChuyenXeDTO();
-
 				cx.malotrinh = dr["malotrinh"].ToString();
 				cx.ngayhoatdong = DateTime.Parse(dr["ngayhoatdong"].ToString());
 				DateTime refDate = DateTime.Now;
@@ -63,8 +61,11 @@ namespace APIDatVe.DAL.DatVe
 				};
 				int _totalSeat = int.Parse(DataProvider.Instance.GetData("sp_count_car_seatnumber", sqlParameters2).Rows[0]["numberSeat"].ToString());
 				cx.tongsoghe = _totalSeat;
-				chuyenXeDTOs.Add(cx);
+				BangGiaDTO bangGiaDTO = new BangGiaDTO();
+				bangGiaDTO = new DiemTrungChuyenDAL().LayThongTinGiaVe(_pointStartID,_pointEndID);
+				cx.banggia = bangGiaDTO;
 			}
+			chuyenXeDTOs.Add(cx);
 			return chuyenXeDTOs;
 		}
 

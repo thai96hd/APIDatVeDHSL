@@ -21,5 +21,6 @@ namespace APIDatVe.DTO.DatVe
 		public int phutxuatphat;
 		public int tongsoghe;
 		public int soghetrong;
+		public BangGiaDTO banggia { get; set; }
 	}
 }
