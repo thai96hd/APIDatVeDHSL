@@ -343,6 +343,7 @@
     <Compile Include="DTO\DatVe\ChuyenXeDTO.cs" />
     <Compile Include="DTO\DatVe\DiemTrungChuyenDTO.cs" />
     <Compile Include="DTO\DatVe\GheDTO.cs" />
+    <Compile Include="DTO\DatVe\KhachHangDatVeDTO.cs" />
     <Compile Include="DTO\DatVe\KhachHangDTO.cs" />
     <Compile Include="DTO\DatVe\LoTrinhDTO.cs" />
     <Compile Include="DTO\DatVe\VeXeDTO.cs" />

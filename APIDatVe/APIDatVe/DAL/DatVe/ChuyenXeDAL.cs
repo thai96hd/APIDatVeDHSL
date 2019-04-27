@@ -36,6 +36,10 @@ namespace APIDatVe.DAL.DatVe
 			};
 			DataTable dt = DataProvider.Instance.GetData("sp_gettripbytripId", sqlParameters);
 			ChuyenXeDTO cx = new ChuyenXeDTO();
+			if (dt.Rows.Count == 0) {
+				chuyenXeDTOs.Add(cx);
+				return chuyenXeDTOs;
+			}
 			foreach (DataRow dr in dt.Rows)
 			{
 				cx.malotrinh = dr["malotrinh"].ToString();
@@ -64,8 +68,8 @@ namespace APIDatVe.DAL.DatVe
 				BangGiaDTO bangGiaDTO = new BangGiaDTO();
 				bangGiaDTO = new DiemTrungChuyenDAL().LayThongTinGiaVe(_pointStartID,_pointEndID);
 				cx.banggia = bangGiaDTO;
+				chuyenXeDTOs.Add(cx);
 			}
-			chuyenXeDTOs.Add(cx);
 			return chuyenXeDTOs;
 		}
 

@@ -84,7 +84,7 @@ namespace APIDatVe.DAL.DatVe
 			}
 			return list;
 		}
-		public bool UpdateCustomerInfo(string username,KhachHangDTO khachHangDTO)
+		public bool UpdateCustomerInfo(string username, KhachHangDTO khachHangDTO)
 		{
 			SqlParameter[] parameters = new SqlParameter[] {
 				new SqlParameter("@sodienthoai",khachHangDTO.sodienthoai),
@@ -100,6 +100,42 @@ namespace APIDatVe.DAL.DatVe
 			return false;
 		}
 
-		
+		public List<KhachHangDatVeDTO> getListBookingTicketByCustomerID(string customerID)
+		{
+			SqlParameter[] sqlParameters = new SqlParameter[] {
+			  new SqlParameter("@makhachhang",customerID)
+			};
+			List<KhachHangDatVeDTO> khachHangDatVeDTOs = new List<KhachHangDatVeDTO>();
+			DataTable dt = DataProvider.Instance.GetData("sp_getListBookingTicketByCustomerID", sqlParameters);
+			if (dt.Rows.Count > 0)
+			{
+				foreach (DataRow dr in dt.Rows)
+				{
+					KhachHangDatVeDTO khachHangDatVeDTO = new KhachHangDatVeDTO();
+					string madiemdon = dr["madiemtrungchuyendon"].ToString();
+					string madiemtra = dr["madiemtrungchuyentra"].ToString();
+					DiemTrungChuyenDAL diemTrungChuyenDAL = new DiemTrungChuyenDAL();
+					khachHangDatVeDTO.diemdon = diemTrungChuyenDAL.getInforPointStartByID(madiemdon);
+					khachHangDatVeDTO.diemtra = diemTrungChuyenDAL.getInforPointStartByID(madiemtra);
+					khachHangDatVeDTO.makhachhang = dr["khachhangid"].ToString();
+					khachHangDatVeDTO.tongtien = dr["tongtien"].ToString();
+					khachHangDatVeDTO.sokhach = int.Parse(dr["sokhach"].ToString());
+					khachHangDatVeDTO.trangthaive = int.Parse(dr["matrangthaive"].ToString());
+					khachHangDatVeDTO.ngaydat = DateTime.Parse(dr["ngaydat"].ToString());
+					khachHangDatVeDTO.machuyenxe = dr["machuyenxe"].ToString();
+					khachHangDatVeDTO.vexeid = dr["vexeid"].ToString();
+					VeXeDAL veXeDAL = new VeXeDAL();
+					List<ChiTietVeXeDTO> list = veXeDAL.getTicketDetailByTicketID(khachHangDatVeDTO.vexeid);
+					khachHangDatVeDTO.danhsachve = list;
+					khachHangDatVeDTOs.Add(khachHangDatVeDTO);
+				}
+				return khachHangDatVeDTOs;
+			}
+			else
+			{
+				return null;
+			}
+		}
+
 	}
 }

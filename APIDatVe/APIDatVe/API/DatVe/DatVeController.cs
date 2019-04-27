@@ -25,5 +25,11 @@ namespace APIDatVe.API.DatVe
 			VeXeDAL veXeDAL = new VeXeDAL();
 			return veXeDAL.AddTicketDeTail(chiTietVeXeDTO);
 		}
+		[HttpGet]
+		[Route("getTicketDetailByTicketID")]
+		public List<ChiTietVeXeDTO> getTicketDetailByTicketID(string ticketID) {
+			VeXeDAL veXeDAL = new VeXeDAL();
+			return veXeDAL.getTicketDetailByTicketID(ticketID);
+		}
     }
 }

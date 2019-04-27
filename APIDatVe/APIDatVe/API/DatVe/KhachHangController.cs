@@ -106,5 +106,15 @@ namespace APIDatVe.API.DatVe
 				return BadRequest("update not success");
 
 		}
+
+	
+		[HttpGet]
+		[Route("getListBookingTicketByCustomerID")]
+		public List<KhachHangDatVeDTO> getListBookingTicketByCustomerID(string customerID)
+		{
+			KhachHangDAL khachHangDAL = new KhachHangDAL();
+			return khachHangDAL.getListBookingTicketByCustomerID(customerID);
+		}
+
 	}
 }

@@ -38,5 +38,15 @@ namespace APIDatVe.API.DatVe
 				return Ok(bangia);
 			}
 		}
+		public IHttpActionResult getInfoPointDepartByID(string pointStartID) {
+			if (pointStartID == "")
+			{
+				return BadRequest("pointStartID not empty");
+			}
+			else {
+				DiemTrungChuyenDAL diemTrungChuyenDAL = new DiemTrungChuyenDAL();
+				return Ok(diemTrungChuyenDAL.getInforPointStartByID(pointStartID));
+			}
+		}
 	}
 }

@@ -53,5 +53,19 @@ namespace APIDatVe.DAL.DatVe
 			else
 				return new BangGiaDTO();
 		}
+		public DiemTrungChuyenDTO getInforPointStartByID(string pointStartID) {
+			SqlParameter[] sqlParameters = new SqlParameter[] {
+				new SqlParameter("@madiemtrungchuyen",pointStartID)
+			};
+			DiemTrungChuyenDTO diemTrungChuyenDTO = new DiemTrungChuyenDTO();
+			DataTable dt = DataProvider.Instance.GetData("sp_getInfoPointStartById",sqlParameters);
+			if (dt.Rows.Count > 0) {
+				DataRow dr = dt.Rows[0];
+				diemTrungChuyenDTO.madiemtrungchuyen = dr["madiemtrungchuyen"].ToString();
+				diemTrungChuyenDTO.tendiemtrungchuyen = dr["tendiemtrungchuyen"].ToString();
+				diemTrungChuyenDTO.diachi = dr["diachi"].ToString();
+			}
+			return diemTrungChuyenDTO;
+		}
     }
 }
