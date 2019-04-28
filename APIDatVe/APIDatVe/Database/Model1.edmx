@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="QLDatVe_UDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="QLDatVe4Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="APIQuanLy">
           <Key>
             <PropertyRef Name="APIquanlyid" />
@@ -41,7 +41,7 @@
           <Key>
             <PropertyRef Name="machitietlotrinh" />
           </Key>
-          <Property Name="machitietlotrinh" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="machitietlotrinh" Type="int" Nullable="false" />
           <Property Name="malotrinh" Type="varchar" MaxLength="50" />
           <Property Name="idtinhthanh" Type="varchar" MaxLength="50" />
         </EntityType>
@@ -74,7 +74,7 @@
           <Property Name="maxe" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="mataixe" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="maphuxe" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="ngayhoatdong" Type="date" />
+          <Property Name="ngayhoatdong" Type="datetime" />
           <Property Name="thoigiandungxe" Type="datetime" />
         </EntityType>
         <EntityType Name="DanhGia">
@@ -249,7 +249,7 @@
           </Key>
           <Property Name="trangthaigheId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="maghe" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="ngay" Type="date" />
+          <Property Name="ngay" Type="datetime" />
           <Property Name="trangthai" Type="int" />
           <Property Name="machuyenxe" Type="varchar" MaxLength="50" />
         </EntityType>
@@ -623,7 +623,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="QLDatVe_UDModelStoreContainer">
+        <EntityContainer Name="QLDatVe4ModelStoreContainer">
           <EntitySet Name="APIQuanLy" EntityType="Self.APIQuanLy" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BangGia" EntityType="Self.BangGia" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ChiTietLaiXe" EntityType="Self.ChiTietLaiXe" Schema="dbo" store:Type="Tables" />
@@ -768,7 +768,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="QLDatVe_UDModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="QLDatVe4Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="APIQuanLy">
           <Key>
             <PropertyRef Name="APIquanlyid" />
@@ -810,7 +810,7 @@
           <Key>
             <PropertyRef Name="machitietlotrinh" />
           </Key>
-          <Property Name="machitietlotrinh" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="machitietlotrinh" Type="Int32" Nullable="false" />
           <Property Name="malotrinh" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="idtinhthanh" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="LoTrinh" Relationship="Self.FK_ChiTietLoTrinh_LoTrinh" FromRole="ChiTietLoTrinh" ToRole="LoTrinh" />
@@ -847,7 +847,7 @@
           <Property Name="maxe" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="mataixe" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="maphuxe" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ngayhoatdong" Type="DateTime" Precision="0" />
+          <Property Name="ngayhoatdong" Type="DateTime" Precision="3" />
           <Property Name="thoigiandungxe" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Kip" Relationship="Self.FK_ChiTietHoatDongXe_Kip" FromRole="ChuyenXe" ToRole="Kip" />
           <NavigationProperty Name="NhanVien" Relationship="Self.FK_ChiTietHoatDongXe_NhanVien" FromRole="ChuyenXe" ToRole="NhanVien" />
@@ -1061,7 +1061,7 @@
           </Key>
           <Property Name="trangthaigheId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="maghe" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ngay" Type="DateTime" Precision="0" />
+          <Property Name="ngay" Type="DateTime" Precision="3" />
           <Property Name="trangthai" Type="Int32" />
           <Property Name="machuyenxe" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Ghe" Relationship="Self.FK_TrangThaiGhe_Ghe" FromRole="TrangThaiGhe" ToRole="Ghe" />
@@ -1589,9 +1589,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="QLDatVe_UDModelStoreContainer" CdmEntityContainer="DB">
+        <EntityContainerMapping StorageEntityContainer="QLDatVe4ModelStoreContainer" CdmEntityContainer="DB">
           <EntitySetMapping Name="APIQuanLies">
-            <EntityTypeMapping TypeName="QLDatVe_UDModel.APIQuanLy">
+            <EntityTypeMapping TypeName="QLDatVe4Model.APIQuanLy">
               <MappingFragment StoreEntitySet="APIQuanLy">
                 <ScalarProperty Name="APIquanlyid" ColumnName="APIquanlyid" />
                 <ScalarProperty Name="manhomapi" ColumnName="manhomapi" />
@@ -1602,7 +1602,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="BangGias">
-            <EntityTypeMapping TypeName="QLDatVe_UDModel.BangGia">
+            <EntityTypeMapping TypeName="QLDatVe4Model.BangGia">
               <MappingFragment StoreEntitySet="BangGia">
                 <ScalarProperty Name="banggiaId" ColumnName="banggiaId" />
                 <ScalarProperty Name="madiemtrungchuyendon" ColumnName="madiemtrungchuyendon" />
@@ -1613,7 +1613,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ChiTietLaiXes">
-            <EntityTypeMapping TypeName="QLDatVe_UDModel.ChiTietLaiXe">
+            <EntityTypeMapping TypeName="QLDatVe4Model.ChiTietLaiXe">
               <MappingFragment StoreEntitySet="ChiTietLaiXe">
                 <ScalarProperty Name="chitietlaixeId" ColumnName="chitietlaixeId" />
                 <ScalarProperty Name="manhanvien" ColumnName="manhanvien" />
@@ -1626,7 +1626,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ChiTietLoTrinhs">
-            <EntityTypeMapping TypeName="QLDatVe_UDModel.ChiTietLoTrinh">
+            <EntityTypeMapping TypeName="QLDatVe4Model.ChiTietLoTrinh">
               <MappingFragment StoreEntitySet="ChiTietLoTrinh">
                 <ScalarProperty Name="machitietlotrinh" ColumnName="machitietlotrinh" />
                 <ScalarProperty Name="malotrinh" ColumnName="malotrinh" />
@@ -1635,7 +1635,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ChiTietVeXes">
-            <EntityTypeMapping TypeName="QLDatVe_UDModel.ChiTietVeXe">
+            <EntityTypeMapping TypeName="QLDatVe4Model.ChiTietVeXe">
               <MappingFragment StoreEntitySet="ChiTietVeXe">
                 <ScalarProperty Name="chitietvexeId" ColumnName="chitietvexeId" />
                 <ScalarProperty Name="vexeId" ColumnName="vexeId" />
@@ -1647,7 +1647,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ChucVus">
-            <EntityTypeMapping TypeName="QLDatVe_UDModel.ChucVu">
+            <EntityTypeMapping TypeName="QLDatVe4Model.ChucVu">
               <MappingFragment StoreEntitySet="ChucVu">
                 <ScalarProperty Name="machucvu" ColumnName="machucvu" />
                 <ScalarProperty Name="tenchucvu" ColumnName="tenchucvu" />
@@ -1656,7 +1656,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ChuyenXes">
-            <EntityTypeMapping TypeName="QLDatVe_UDModel.ChuyenXe">
+            <EntityTypeMapping TypeName="QLDatVe4Model.ChuyenXe">
               <MappingFragment StoreEntitySet="ChuyenXe">
                 <ScalarProperty Name="machuyenxe" ColumnName="machuyenxe" />
                 <ScalarProperty Name="malotrinh" ColumnName="malotrinh" />
@@ -1670,7 +1670,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DanhGias">
-            <EntityTypeMapping TypeName="QLDatVe_UDModel.DanhGia">
+            <EntityTypeMapping TypeName="QLDatVe4Model.DanhGia">
               <MappingFragment StoreEntitySet="DanhGia">
                 <ScalarProperty Name="madanhgia" ColumnName="madanhgia" />
                 <ScalarProperty Name="makhachhang" ColumnName="makhachhang" />
@@ -1681,7 +1681,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DiemTrungChuyens">
-            <EntityTypeMapping TypeName="QLDatVe_UDModel.DiemTrungChuyen">
+            <EntityTypeMapping TypeName="QLDatVe4Model.DiemTrungChuyen">
               <MappingFragment StoreEntitySet="DiemTrungChuyen">
                 <ScalarProperty Name="madiemtrungchuyen" ColumnName="madiemtrungchuyen" />
                 <ScalarProperty Name="matinh" ColumnName="matinh" />
@@ -1694,7 +1694,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DoiTuongs">
-            <EntityTypeMapping TypeName="QLDatVe_UDModel.DoiTuong">
+            <EntityTypeMapping TypeName="QLDatVe4Model.DoiTuong">
               <MappingFragment StoreEntitySet="DoiTuong">
                 <ScalarProperty Name="madoituong" ColumnName="madoituong" />
                 <ScalarProperty Name="tendoituong" ColumnName="tendoituong" />
@@ -1703,7 +1703,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Ghes">
-            <EntityTypeMapping TypeName="QLDatVe_UDModel.Ghe">
+            <EntityTypeMapping TypeName="QLDatVe4Model.Ghe">
               <MappingFragment StoreEntitySet="Ghe">
                 <ScalarProperty Name="maghe" ColumnName="maghe" />
                 <ScalarProperty Name="tang" ColumnName="tang" />
@@ -1717,7 +1717,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="KhachHangs">
-            <EntityTypeMapping TypeName="QLDatVe_UDModel.KhachHang">
+            <EntityTypeMapping TypeName="QLDatVe4Model.KhachHang">
               <MappingFragment StoreEntitySet="KhachHang">
                 <ScalarProperty Name="khachhangId" ColumnName="khachhangId" />
                 <ScalarProperty Name="madoituong" ColumnName="madoituong" />
@@ -1732,7 +1732,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Kips">
-            <EntityTypeMapping TypeName="QLDatVe_UDModel.Kip">
+            <EntityTypeMapping TypeName="QLDatVe4Model.Kip">
               <MappingFragment StoreEntitySet="Kip">
                 <ScalarProperty Name="makip" ColumnName="makip" />
                 <ScalarProperty Name="tenkip" ColumnName="tenkip" />
@@ -1743,7 +1743,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="LoTrinhs">
-            <EntityTypeMapping TypeName="QLDatVe_UDModel.LoTrinh">
+            <EntityTypeMapping TypeName="QLDatVe4Model.LoTrinh">
               <MappingFragment StoreEntitySet="LoTrinh">
                 <ScalarProperty Name="malotrinh" ColumnName="malotrinh" />
                 <ScalarProperty Name="matinhtra" ColumnName="matinhtra" />
@@ -1754,7 +1754,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ManHinhQuanLies">
-            <EntityTypeMapping TypeName="QLDatVe_UDModel.ManHinhQuanLy">
+            <EntityTypeMapping TypeName="QLDatVe4Model.ManHinhQuanLy">
               <MappingFragment StoreEntitySet="ManHinhQuanLy">
                 <ScalarProperty Name="manhinhquanlyId" ColumnName="manhinhquanlyId" />
                 <ScalarProperty Name="tenmanhinh" ColumnName="tenmanhinh" />
@@ -1763,7 +1763,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="NhanViens">
-            <EntityTypeMapping TypeName="QLDatVe_UDModel.NhanVien">
+            <EntityTypeMapping TypeName="QLDatVe4Model.NhanVien">
               <MappingFragment StoreEntitySet="NhanVien">
                 <ScalarProperty Name="manhanvien" ColumnName="manhanvien" />
                 <ScalarProperty Name="hoten" ColumnName="hoten" />
@@ -1780,7 +1780,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="NhomAPIs">
-            <EntityTypeMapping TypeName="QLDatVe_UDModel.NhomAPI">
+            <EntityTypeMapping TypeName="QLDatVe4Model.NhomAPI">
               <MappingFragment StoreEntitySet="NhomAPI">
                 <ScalarProperty Name="manhomapi" ColumnName="manhomapi" />
                 <ScalarProperty Name="classname" ColumnName="classname" />
@@ -1789,7 +1789,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Quyens">
-            <EntityTypeMapping TypeName="QLDatVe_UDModel.Quyen">
+            <EntityTypeMapping TypeName="QLDatVe4Model.Quyen">
               <MappingFragment StoreEntitySet="Quyen">
                 <ScalarProperty Name="maquyen" ColumnName="maquyen" />
                 <ScalarProperty Name="tenquyen" ColumnName="tenquyen" />
@@ -1797,7 +1797,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="QuyenAPIQuanLies">
-            <EntityTypeMapping TypeName="QLDatVe_UDModel.QuyenAPIQuanLy">
+            <EntityTypeMapping TypeName="QLDatVe4Model.QuyenAPIQuanLy">
               <MappingFragment StoreEntitySet="QuyenAPIQuanLy">
                 <ScalarProperty Name="quyenapiquanlyid" ColumnName="quyenapiquanlyid" />
                 <ScalarProperty Name="APIquanlyid" ColumnName="APIquanlyid" />
@@ -1807,7 +1807,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="QuyenManHinhQuanLies">
-            <EntityTypeMapping TypeName="QLDatVe_UDModel.QuyenManHinhQuanLy">
+            <EntityTypeMapping TypeName="QLDatVe4Model.QuyenManHinhQuanLy">
               <MappingFragment StoreEntitySet="QuyenManHinhQuanLy">
                 <ScalarProperty Name="quyenmanhinhquanlyId" ColumnName="quyenmanhinhquanlyId" />
                 <ScalarProperty Name="manhinhquanlyId" ColumnName="manhinhquanlyId" />
@@ -1817,7 +1817,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="QLDatVe_UDModel.sysdiagram">
+            <EntityTypeMapping TypeName="QLDatVe4Model.sysdiagram">
               <MappingFragment StoreEntitySet="sysdiagrams">
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="principal_id" ColumnName="principal_id" />
@@ -1828,7 +1828,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TaiKhoans">
-            <EntityTypeMapping TypeName="QLDatVe_UDModel.TaiKhoan">
+            <EntityTypeMapping TypeName="QLDatVe4Model.TaiKhoan">
               <MappingFragment StoreEntitySet="TaiKhoan">
                 <ScalarProperty Name="tentaikhoan" ColumnName="tentaikhoan" />
                 <ScalarProperty Name="maquyen" ColumnName="maquyen" />
@@ -1843,7 +1843,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TinhThanhs">
-            <EntityTypeMapping TypeName="QLDatVe_UDModel.TinhThanh">
+            <EntityTypeMapping TypeName="QLDatVe4Model.TinhThanh">
               <MappingFragment StoreEntitySet="TinhThanh">
                 <ScalarProperty Name="matinh" ColumnName="matinh" />
                 <ScalarProperty Name="tentinh" ColumnName="tentinh" />
@@ -1852,7 +1852,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TrangThaiGhes">
-            <EntityTypeMapping TypeName="QLDatVe_UDModel.TrangThaiGhe">
+            <EntityTypeMapping TypeName="QLDatVe4Model.TrangThaiGhe">
               <MappingFragment StoreEntitySet="TrangThaiGhe">
                 <ScalarProperty Name="trangthaigheId" ColumnName="trangthaigheId" />
                 <ScalarProperty Name="maghe" ColumnName="maghe" />
@@ -1863,7 +1863,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TrangThaiVeXes">
-            <EntityTypeMapping TypeName="QLDatVe_UDModel.TrangThaiVeXe">
+            <EntityTypeMapping TypeName="QLDatVe4Model.TrangThaiVeXe">
               <MappingFragment StoreEntitySet="TrangThaiVeXe">
                 <ScalarProperty Name="matrangthaive" ColumnName="matrangthaive" />
                 <ScalarProperty Name="tentrangthai" ColumnName="tentrangthai" />
@@ -1871,7 +1871,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="VeXes">
-            <EntityTypeMapping TypeName="QLDatVe_UDModel.VeXe">
+            <EntityTypeMapping TypeName="QLDatVe4Model.VeXe">
               <MappingFragment StoreEntitySet="VeXe">
                 <ScalarProperty Name="vexeId" ColumnName="vexeId" />
                 <ScalarProperty Name="machuyenxe" ColumnName="machuyenxe" />
@@ -1887,7 +1887,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Xes">
-            <EntityTypeMapping TypeName="QLDatVe_UDModel.Xe">
+            <EntityTypeMapping TypeName="QLDatVe4Model.Xe">
               <MappingFragment StoreEntitySet="Xe">
                 <ScalarProperty Name="maxe" ColumnName="maxe" />
                 <ScalarProperty Name="biensoxe" ColumnName="biensoxe" />

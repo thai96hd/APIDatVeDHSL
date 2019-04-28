@@ -23,12 +23,12 @@ namespace APIDatVe.API.PhuXe
         /// <returns></returns>
         [HttpGet]
         [Route("getthongtinghe")]
-        public IHttpActionResult getThongTinGhe([FromUri]String maxe, [FromUri] string maghe)
+        public IHttpActionResult getThongTinGhe([FromUri]String machuyenxe, [FromUri] string maghe)
         {
 
             GheDAL gheDAL = new GheDAL();
 
-            return ResponseToOk(gheDAL.GetGhes(maxe, maghe));
+            return ResponseToOk(gheDAL.GetGhes(machuyenxe, maghe));
         }
     }
 }

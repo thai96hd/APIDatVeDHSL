@@ -1,6 +1,7 @@
 ﻿
 
 using APIDatVe.DAL.PhuXe;
+using APIDatVe.DTO.PhuXe;
 using APIDatVe.Response;
 using System;
 using System.Collections.Generic;
@@ -30,32 +31,34 @@ namespace APIDatVe.API.PhuXe
         }
 
         /// <summary>
-        /// Lấy ra khách xuống
+        /// Lấy ra khách xuống, lên
         /// </summary>
         /// <param name="madiemtrungchuyen"></param>
         /// <param name="machuyenxe"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("getkhachtaidiemxuong")]
-        public IHttpActionResult geKhachTaiDiemXuong(string madiemtrungchuyen, string machuyenxe)
+        [Route("getkhachtaidiemtrungchuyen")]
+        public IHttpActionResult getKhachTaiDiemTrungChuyen(string madiemtrungchuyen, string machuyenxe)
         {
             DiemTrungChuyenDAL diemTrungChuyenDAL = new DiemTrungChuyenDAL();
-            return ResponseToOk(diemTrungChuyenDAL.GetKhachHangByDiemXuong(madiemtrungchuyen, machuyenxe));
+            return ResponseToOk(diemTrungChuyenDAL.GetKhachHangByDiemTrungChuyen(madiemtrungchuyen, machuyenxe));
         }
 
-
-        /// <summary>
-        /// Lấy ra khách don
-        /// </summary>
-        /// <param name="madiemtrungchuyen"></param>
-        /// <param name="machuyenxe"></param>
-        /// <returns></returns>
+        [Route("laythongtingiave")]
         [HttpGet]
-        [Route("getkhachtaidiemdon")]
-        public IHttpActionResult geKhachTaiDiemDon(string madiemtrungchuyen, string machuyenxe)
+        public IHttpActionResult getGiaVeGiuaHaiDiem(string _madiemdon, string _madiemden)
         {
-            DiemTrungChuyenDAL diemTrungChuyenDAL = new DiemTrungChuyenDAL();
-            return ResponseToOk(diemTrungChuyenDAL.GetKhachHangByDiemDon(madiemtrungchuyen, machuyenxe));
+            if (_madiemdon == "" || _madiemden == "")
+            {
+                return BadRequest("Mã điểm đón và mã điểm đến không được để trống");
+            }
+
+            else
+            {
+                DiemTrungChuyenDAL diemTrungChuyenDAL = new DiemTrungChuyenDAL();
+                BangGiaDTO bangia = diemTrungChuyenDAL.LayThongTinGiaVe(_madiemdon, _madiemden);
+                return ResponseToOk(bangia);
+            }
         }
     }
 }

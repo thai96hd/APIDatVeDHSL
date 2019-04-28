@@ -14,7 +14,7 @@ namespace APIDatVe.API.PhuXe
     [RoutePrefix("api/chuyenxe")]
     public class ChuyenXeController : ApiBase
     {
- 
+
         /// <summary>
         /// Lấy ra lịch sử của phụ xe: tính từ ngày trk ngày vào app
         /// </summary>

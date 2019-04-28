@@ -8,8 +8,8 @@ using System.Web;
 
 namespace APIDatVe.DAL.PhuXe
 {
-	public class DiemTrungChuyenDAL
-	{
+    public class DiemTrungChuyenDAL
+    {
         public List<DiemTrungChuyenDTO> GetDiemTrungChuyens()
         {
             List<DiemTrungChuyenDTO> diemTrungChuyens = new List<DiemTrungChuyenDTO>();
@@ -50,15 +50,16 @@ namespace APIDatVe.DAL.PhuXe
 
         //lay ttin khach xg tai diem trung chuyen
 
-        public DataTable GetKhachHangByDiemXuong(string madiemtrungchuyen, string machuyenxe)
+        public DataTable GetKhachHangByDiemTrungChuyen(string madiemtrungchuyen, string machuyenxe)
         {
 
-            String sql = " SELECT kh.hoten,kh.sodienthoai,vx.*, ct.maghe,ct.sodienthoaikhach,ct.tenhanhkhach " +
+            String sql = " SELECT kh.hoten,kh.sodienthoai,vx.*, ct.maghe,ct.sodienthoaikhach,ct.tenhanhkhach, ghe.tenghe" +
                        " FROM KhachHang kh" +
                       "  JOIN VeXe vx ON kh.khachhangId = vx.khachhangId" +
                        " JOIN DiemTrungChuyen dtc ON vx.madiemtrungchuyentra = dtc.madiemtrungchuyen" +
                        " JOIN ChuyenXe cx ON vx.machuyenxe = cx.machuyenxe" +
                        " JOIN  ChiTietVeXe ct ON ct.vexeId = vx.vexeId" +
+                       " JOIN Ghe ghe ON ghe.maghe = ct.maghe" +
                       "  WHERE dtc.madiemtrungchuyen = @madiemtrungchuyen" +
                        "   AND cx.machuyenxe = @machuyenxe";
             SqlCommand command = DataProvider.Instance.getCommand(sql);
@@ -75,40 +76,55 @@ namespace APIDatVe.DAL.PhuXe
                 dataTable.Load(rowsAffected);
             }
 
+            sql = "SELECT kh.hoten,kh.sodienthoai,vx.*, ct.maghe,ct.sodienthoaikhach,ct.tenhanhkhach, ghe.tenghe" +
+                     " FROM KhachHang kh" +
+                    "  JOIN VeXe vx ON kh.khachhangId = vx.khachhangId" +
+                     " JOIN DiemTrungChuyen dtc ON vx.madiemtrungchuyendon = dtc.madiemtrungchuyen" +
+                     " JOIN ChuyenXe cx ON vx.machuyenxe = cx.machuyenxe" +
+                     " JOIN  ChiTietVeXe ct ON ct.vexeId = vx.vexeId" +
+                     " JOIN Ghe ghe ON ghe.maghe = ct.maghe" +
+                    "  WHERE dtc.madiemtrungchuyen = @madiemtrungchuyen" +
+                     "   AND cx.machuyenxe = @machuyenxe";
+            command = DataProvider.Instance.getCommand(sql);
+
+            command.Parameters.AddWithValue("@madiemtrungchuyen", madiemtrungchuyen);
+
+            command.Parameters.AddWithValue("@machuyenxe", machuyenxe);
+
+            rowsAffected = command.ExecuteReader();
+
+            if (rowsAffected.HasRows)
+            {
+                dataTable.Load(rowsAffected);
+            }
+
             return dataTable;
 
         }
 
-        //lay ttin khach len  tai diem trung chuyen
-
-        public DataTable GetKhachHangByDiemDon(string madiemtrungchuyen, string machuyenxe)
+        public BangGiaDTO LayThongTinGiaVe(string madiemtrungchuyendon, string madiemtrungchuyentra)
         {
-
-            String sql = "SELECT kh.hoten,kh.sodienthoai,vx.*, ct.maghe,ct.sodienthoaikhach,ct.tenhanhkhach " +
-                       " FROM KhachHang kh" +
-                      "  JOIN VeXe vx ON kh.khachhangId = vx.khachhangId" +
-                       " JOIN DiemTrungChuyen dtc ON vx.madiemtrungchuyendon = dtc.madiemtrungchuyen" +
-                       " JOIN ChuyenXe cx ON vx.machuyenxe = cx.machuyenxe" +
-                       " JOIN  ChiTietVeXe ct ON ct.vexeId = vx.vexeId"+
-                      "  WHERE dtc.madiemtrungchuyen = @madiemtrungchuyen" +
-                       "   AND cx.machuyenxe = @machuyenxe";
-            SqlCommand command = DataProvider.Instance.getCommand(sql);
-
-            command.Parameters.AddWithValue("@madiemtrungchuyen", madiemtrungchuyen);
-
-            command.Parameters.AddWithValue("@machuyenxe", machuyenxe);
-
-            SqlDataReader rowsAffected = command.ExecuteReader();
-
-            var dataTable = new DataTable();
-            if (rowsAffected.HasRows)
+            SqlParameter[] sqlParameters = new SqlParameter[] {
+                new SqlParameter("@madiemtrungchuyendon",madiemtrungchuyendon),
+                new SqlParameter("@madiemtrungchuyentra",madiemtrungchuyentra)
+            };
+            DataTable dt = DataProvider.Instance.GetData("sp_laythongtingiave", sqlParameters);
+            if (dt.Rows.Count > 0)
             {
-                dataTable.Load(rowsAffected);
+                DataRow dr = dt.Rows[0];
+                BangGiaDTO bangGiaDTO = new BangGiaDTO();
+                if (dr != null)
+                {
+                    bangGiaDTO.banggiaid = dr["banggiaid"].ToString();
+                    bangGiaDTO.thoigiandukien = float.Parse(dr["thoigiandukien"].ToString());
+                    bangGiaDTO.madiemtrungchuyendon = dr["madiemtrungchuyendon"].ToString();
+                    bangGiaDTO.madiemtrungchuyentra = dr["madiemtrungchuyentra"].ToString();
+                    bangGiaDTO.giave = float.Parse(dr["giave"].ToString());
+                }
+                return bangGiaDTO;
             }
-
-            return dataTable;
-
+            else
+                return new BangGiaDTO();
         }
-
     }
 }

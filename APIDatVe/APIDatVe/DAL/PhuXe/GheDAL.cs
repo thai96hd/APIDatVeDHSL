@@ -9,26 +9,53 @@ namespace APIDatVe.DAL.PhuXe
 {
     public class GheDAL
     {
-        public DataTable GetGhes(String maxe, String maghe)
+        public DataTable GetGhes(String machuyenxe, String maghe)
         {
             String sql = " SELECT ttghe.trangthai," +
-                       "  g.*," +
-                         "  i.*" +
-                 "  FROM" +
-                 "     (SELECT vx.vexeId, vx.ghichu, vx.matrangthaive, vx.madiemtrungchuyendon, vx.madiemtrungchuyentra, " +
-                   "           ct.maghe, ct.tenhanhkhach, ct.doituong, ct.sodienthoaikhach, " +
-                    "      kh.*" +
+                         "  g.*," +
+                          " i.vexeId," +
+                          " i.ghichu," +
+                          " i.matrangthaive," +
+                     " (SELECT DISTINCT tendiemtrungchuyen" +
+                      " FROM DiemTrungChuyen dtc" +
+                     "  WHERE dtc.madiemtrungchuyen = i.madiemtrungchuyendon )AS diemtrungchuyendon," +
+                     " (SELECT DISTINCT tendiemtrungchuyen" +
+
+                      "  FROM DiemTrungChuyen dtc" +
+
+                       " WHERE dtc.madiemtrungchuyen = i.madiemtrungchuyentra)AS diemtrungchuyentra," +
+                        "     i.hoten," +
+                         "  i.sodienthoai," +
+                          " i.tenhanhkhach," +
+                          " i.sodienthoaikhach," +
+                          " i.diachi," +
+                          " i.doituong," +
+                          " i.email," +
+                          " i.gioitinh," +
+                          " i.madoituong," +
+                          " i.tongtien" +
+                   " FROM" +
+                   "   (SELECT vx.vexeId," +
+                    "          vx.matrangthaive," +
+                     "         vx.ghichu," +
+                      "        vx.tongtien," +
+                       "       vx.madiemtrungchuyendon," +
+                        "      vx.madiemtrungchuyentra," +
+                         "     ct.maghe," +
+                          "    ct.tenhanhkhach," +
+                           "   ct.doituong," +
+                            "  ct.sodienthoaikhach," +
+                             " kh.*" +
                     "   FROM VeXe vx" +
-                    "   JOIN ChuyenXe cx ON cx.machuyenxe = vx.machuyenxe" +
-                   "    JOIN Xe xe ON xe.maxe = cx.maxe" +
-                    "   JOIN KhachHang kh ON kh.khachhangId = vx.khachhangId" +
-                    "   JOIN ChiTietVeXe ct ON ct.vexeId = vx.vexeId" +
-                   "    WHERE xe.maxe = @maxe" +
-                   "      AND cx.ngayhoatdong =  Convert(datetime, @ngayhoatdong, 103)) AS i" +
-                  "  RIGHT JOIN Ghe g ON g.maghe = i.maghe" +
-                  "  JOIN TrangThaiGhe ttghe ON ttghe.maghe = g.maghe" +
-                 "   WHERE g.active = 1" +
-                 "    AND ttghe.ngay = Convert(datetime, @ngayhoatdong, 103)";
+                     "  JOIN ChuyenXe cx ON cx.machuyenxe = vx.machuyenxe" +
+                      " JOIN Xe xe ON xe.maxe = cx.maxe" +
+                      " JOIN KhachHang kh ON kh.khachhangId = vx.khachhangId" +
+                      " JOIN ChiTietVeXe ct ON ct.vexeId = vx.vexeId" +
+                      " WHERE cx.machuyenxe = @machuyenxe) AS i" +
+                   " RIGHT JOIN Ghe g ON g.maghe = i.maghe" +
+                   " JOIN TrangThaiGhe ttghe ON ttghe.maghe = g.maghe" +
+                   " WHERE g.active = 1" +
+                   "   AND ttghe.machuyenxe = @machuyenxe";
 
             if (!String.IsNullOrWhiteSpace(maghe))
             {
@@ -39,9 +66,9 @@ namespace APIDatVe.DAL.PhuXe
 
             SqlCommand command = DataProvider.Instance.getCommand(sql);
 
-            command.Parameters.AddWithValue("@maxe", maxe);
+            command.Parameters.AddWithValue("@machuyenxe", machuyenxe);
 
-            command.Parameters.AddWithValue("@ngayhoatdong", dateTime.ToString("dd-MM-yyyy"));
+            //   command.Parameters.AddWithValue("@ngayhoatdong", dateTime.ToString("dd-MM-yyyy"));
 
             if (!String.IsNullOrWhiteSpace(maghe))
             {

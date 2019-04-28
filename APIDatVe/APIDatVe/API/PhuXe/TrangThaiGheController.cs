@@ -27,8 +27,6 @@ namespace APIDatVe.API.PhuXe
             {
                 return ResponseToOk(null, "can not update data", HttpStatusCode.NotImplemented);
             }
-
-
         }
     }
 }
