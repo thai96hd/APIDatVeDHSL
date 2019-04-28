@@ -137,5 +137,13 @@ namespace APIDatVe.DAL.DatVe
 			}
 		}
 
+		public bool changePasswordCustomer(string phoneNumber,string password) {
+			SqlParameter[] sqlParameters = new SqlParameter[] {
+				new SqlParameter("@username",phoneNumber),
+				new SqlParameter("@password",password)
+			};
+			return DataProvider.Instance.ExecuteNonQuery("sp_update_password_customer", sqlParameters) > 0;
+		}
+
 	}
 }

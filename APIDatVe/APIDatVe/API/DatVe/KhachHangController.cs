@@ -116,5 +116,11 @@ namespace APIDatVe.API.DatVe
 			return khachHangDAL.getListBookingTicketByCustomerID(customerID);
 		}
 
+		[HttpPost]
+		[Route("changePasswordCustomer")]
+		public bool changePasswordCutomer(string phoneNumber,string password) {
+			KhachHangDAL khachHangDAL = new KhachHangDAL();
+			return khachHangDAL.changePasswordCustomer(phoneNumber, password);
+		}
 	}
 }
