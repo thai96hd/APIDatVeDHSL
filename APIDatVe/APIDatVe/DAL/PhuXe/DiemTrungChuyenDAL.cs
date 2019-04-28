@@ -109,29 +109,5 @@ namespace APIDatVe.DAL.PhuXe
 
         }
 
-        public BangGiaDTO LayThongTinGiaVe(string madiemtrungchuyendon, string madiemtrungchuyentra)
-        {
-            SqlParameter[] sqlParameters = new SqlParameter[] {
-                new SqlParameter("@madiemtrungchuyendon",madiemtrungchuyendon),
-                new SqlParameter("@madiemtrungchuyentra",madiemtrungchuyentra)
-            };
-            DataTable dt = DataProvider.Instance.GetData("sp_laythongtingiave", sqlParameters);
-            if (dt.Rows.Count > 0)
-            {
-                DataRow dr = dt.Rows[0];
-                BangGiaDTO bangGiaDTO = new BangGiaDTO();
-                if (dr != null)
-                {
-                    bangGiaDTO.banggiaid = dr["banggiaid"].ToString();
-                    bangGiaDTO.thoigiandukien = float.Parse(dr["thoigiandukien"].ToString());
-                    bangGiaDTO.madiemtrungchuyendon = dr["madiemtrungchuyendon"].ToString();
-                    bangGiaDTO.madiemtrungchuyentra = dr["madiemtrungchuyentra"].ToString();
-                    bangGiaDTO.giave = float.Parse(dr["giave"].ToString());
-                }
-                return bangGiaDTO;
-            }
-            else
-                return new BangGiaDTO();
         }
-    }
 }

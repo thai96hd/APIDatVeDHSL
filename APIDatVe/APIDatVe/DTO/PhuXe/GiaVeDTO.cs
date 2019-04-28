@@ -5,7 +5,7 @@ using System.Web;
 
 namespace APIDatVe.DTO.PhuXe
 {
-    public class BangGiaDTO
+    public class GiaVeDTO
     {
         public string banggiaid { get; set; }
         public string madiemtrungchuyendon { get; set; }

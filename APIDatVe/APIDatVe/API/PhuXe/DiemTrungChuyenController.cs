@@ -44,21 +44,6 @@ namespace APIDatVe.API.PhuXe
             return ResponseToOk(diemTrungChuyenDAL.GetKhachHangByDiemTrungChuyen(madiemtrungchuyen, machuyenxe));
         }
 
-        [Route("laythongtingiave")]
-        [HttpGet]
-        public IHttpActionResult getGiaVeGiuaHaiDiem(string _madiemdon, string _madiemden)
-        {
-            if (_madiemdon == "" || _madiemden == "")
-            {
-                return BadRequest("Mã điểm đón và mã điểm đến không được để trống");
-            }
-
-            else
-            {
-                DiemTrungChuyenDAL diemTrungChuyenDAL = new DiemTrungChuyenDAL();
-                BangGiaDTO bangia = diemTrungChuyenDAL.LayThongTinGiaVe(_madiemdon, _madiemden);
-                return ResponseToOk(bangia);
-            }
-        }
     }
 }
+

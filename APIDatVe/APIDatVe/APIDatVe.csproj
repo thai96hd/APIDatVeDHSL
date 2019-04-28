@@ -171,6 +171,7 @@
     <Compile Include="API\PhuXe\ChuyenXeController.cs" />
     <Compile Include="API\PhuXe\DiemTrungChuyenController.cs" />
     <Compile Include="API\PhuXe\GheController.cs" />
+    <Compile Include="API\PhuXe\GiaVeController.cs" />
     <Compile Include="API\PhuXe\PhuXeDatVeController.cs" />
     <Compile Include="API\PhuXe\TaiKhoanController.cs" />
     <Compile Include="API\PhuXe\TrangThaiGheController.cs" />
@@ -239,7 +240,7 @@
     <Compile Include="DAL\PhuXe\DatVeDAL.cs" />
     <Compile Include="DAL\PhuXe\DiemTrungChuyenDAL.cs" />
     <Compile Include="DAL\PhuXe\GheDAL.cs" />
-    <Compile Include="DAL\PhuXe\KhachHangDAL.cs" />
+    <Compile Include="DAL\PhuXe\GiaVeDAL.cs" />
     <Compile Include="DAL\PhuXe\TaiKhoanDAL.cs" />
     <Compile Include="DAL\PhuXe\TrangThaiGheDAL.cs" />
     <Compile Include="Database\APIQuanLy.cs">
@@ -350,12 +351,11 @@
     <Compile Include="DTO\DatVe\LoTrinhDTO.cs" />
     <Compile Include="DTO\DatVe\VeXeDTO.cs" />
     <Compile Include="DTO\DatVe\XeDTO.cs" />
-    <Compile Include="DTO\PhuXe\BangGiaDTO.cs" />
+    <Compile Include="DTO\PhuXe\GiaVeDTO.cs" />
     <Compile Include="DTO\PhuXe\ChuyenXeDTO.cs" />
     <Compile Include="DTO\PhuXe\DatVeDTO.cs" />
     <Compile Include="DTO\PhuXe\DiemTrungChuyenDTO.cs" />
     <Compile Include="DTO\PhuXe\GheDTO.cs" />
-    <Compile Include="DTO\PhuXe\KhachHangDTO.cs" />
     <Compile Include="DTO\PhuXe\LichTrinhPhuXeDTO.cs" />
     <Compile Include="DTO\PhuXe\NhanVienDTO.cs" />
     <Compile Include="DTO\PhuXe\TaiKhoanDTO.cs" />
