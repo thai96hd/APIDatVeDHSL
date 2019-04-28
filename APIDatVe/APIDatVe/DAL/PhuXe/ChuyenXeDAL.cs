@@ -76,6 +76,7 @@ namespace APIDatVe.DAL.PhuXe
                 "  xe.maxe, " +
                 "  cx.machuyenxe, " +
                         " lt.tenlotrinh," +
+                        " lt.malotrinh," +
                          "  kip.tenkip," +
                          " xe.biensoxe" +
                         " FROM NhanVien nv" +
@@ -122,6 +123,7 @@ namespace APIDatVe.DAL.PhuXe
                     lichTrinhPhuXeDTO.maxe = rowsAffected.GetString(sl++);
                     lichTrinhPhuXeDTO.machuyenxe = rowsAffected.GetString(sl++);
                     lichTrinhPhuXeDTO.tenlotrinh = rowsAffected.GetString(sl++);
+                    lichTrinhPhuXeDTO.malotrinh = rowsAffected.GetString(sl++);
                     lichTrinhPhuXeDTO.tenkip = rowsAffected.GetString(sl++);
                     lichTrinhPhuXeDTO.biensoxe = rowsAffected.GetString(sl++);
 

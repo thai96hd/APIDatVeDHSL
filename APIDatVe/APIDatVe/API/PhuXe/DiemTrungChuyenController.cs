@@ -22,12 +22,12 @@ namespace APIDatVe.API.PhuXe
         /// <returns></returns>
         [HttpGet]
         [Route("getdiemtrungchuyen")]
-        public IHttpActionResult getDiemTrungChuyen()
+        public IHttpActionResult getDiemTrungChuyen(string malotrinh)
         {
 
             DiemTrungChuyenDAL diemTrungChuyenDAL = new DiemTrungChuyenDAL();
 
-            return ResponseToOk(diemTrungChuyenDAL.GetDiemTrungChuyens());
+            return ResponseToOk(diemTrungChuyenDAL.GetDiemTrungChuyens(malotrinh));
         }
 
         /// <summary>

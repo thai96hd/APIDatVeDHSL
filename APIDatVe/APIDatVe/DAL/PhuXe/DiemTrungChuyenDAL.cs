@@ -10,12 +10,19 @@ namespace APIDatVe.DAL.PhuXe
 {
     public class DiemTrungChuyenDAL
     {
-        public List<DiemTrungChuyenDTO> GetDiemTrungChuyens()
+        public List<DiemTrungChuyenDTO> GetDiemTrungChuyens(string malotrinh)
         {
             List<DiemTrungChuyenDTO> diemTrungChuyens = new List<DiemTrungChuyenDTO>();
-            String sql = " select * from DiemTrungChuyen ";
+            String sql = "SELECT  dt.*"+
+                      "  FROM DiemTrungChuyen dt"+
+                      "  JOIN TinhThanh th ON dt.matinh = dt.matinh"+
+                     "   JOIN ChiTietLoTrinh ct ON ct.idtinhthanh = dt.matinh"+
+                      "  AND ct.idtinhthanh = dt.matinh"+
+                      "  WHERE ct.malotrinh = @malotrinh ";
 
             SqlCommand command = DataProvider.Instance.getCommand(sql);
+
+            command.Parameters.AddWithValue("@malotrinh", malotrinh);
 
             SqlDataReader rowsAffected = command.ExecuteReader();
 
@@ -48,7 +55,7 @@ namespace APIDatVe.DAL.PhuXe
             return diemTrungChuyens;
         }
 
-        //lay ttin khach xg tai diem trung chuyen
+        //lay ttin khach xg,len tai diem trung chuyen
 
         public DataTable GetKhachHangByDiemTrungChuyen(string madiemtrungchuyen, string machuyenxe)
         {

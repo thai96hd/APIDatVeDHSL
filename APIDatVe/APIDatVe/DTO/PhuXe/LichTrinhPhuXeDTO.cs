@@ -13,5 +13,6 @@ namespace APIDatVe.DTO.PhuXe
         public string biensoxe { get; set; }
         public string maxe { get; set; }
         public string machuyenxe { get; set; }
+        public string malotrinh { get; set; }
     }
 }
