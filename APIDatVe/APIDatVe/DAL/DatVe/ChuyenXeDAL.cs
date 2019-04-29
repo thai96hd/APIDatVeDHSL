@@ -35,13 +35,15 @@ namespace APIDatVe.DAL.DatVe
 
 			};
 			DataTable dt = DataProvider.Instance.GetData("sp_gettripbytripId", sqlParameters);
-			ChuyenXeDTO cx = new ChuyenXeDTO();
+			
 			if (dt.Rows.Count == 0) {
+				ChuyenXeDTO cx = new ChuyenXeDTO();
 				chuyenXeDTOs.Add(cx);
 				return chuyenXeDTOs;
 			}
 			foreach (DataRow dr in dt.Rows)
 			{
+				ChuyenXeDTO cx = new ChuyenXeDTO();
 				cx.malotrinh = dr["malotrinh"].ToString();
 				cx.ngayhoatdong = DateTime.Parse(dr["ngayhoatdong"].ToString());
 				DateTime refDate = DateTime.Now;
