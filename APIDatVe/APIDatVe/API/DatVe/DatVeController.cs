@@ -9,18 +9,18 @@ using System.Web.Http;
 
 namespace APIDatVe.API.DatVe
 {
-	[RoutePrefix("api/datve")]
+	[RoutePrefix("api/bookingTicket")]
 	public class DatVeController : ApiController
 	{
 		[HttpPost]
-		[Route("themve")]
+		[Route("addTicket")]
 		public bool AddTicket([FromBody] VeXeDTO veXeDTO) {
 			VeXeDAL veXeDAL = new VeXeDAL();
 			return veXeDAL.AddTicket(veXeDTO);
 		}
 
 		[HttpPost]
-		[Route("themchitietve")]
+		[Route("addTicketDetail")]
 		public bool AddTicketDeTail([FromBody] ChiTietVeXeDTO chiTietVeXeDTO) {
 			VeXeDAL veXeDAL = new VeXeDAL();
 			return veXeDAL.AddTicketDeTail(chiTietVeXeDTO);

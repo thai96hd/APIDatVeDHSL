@@ -13,7 +13,7 @@ namespace APIDatVe.API.DatVe
 	/// <summary>
 	/// API for KhachHang 
 	/// </summary>
-	[RoutePrefix("api/khachhang")]
+	[RoutePrefix("api/customer")]
 	public class KhachHangController : ApiController
 	{
 		/// <summary>
@@ -107,7 +107,7 @@ namespace APIDatVe.API.DatVe
 
 		}
 
-	
+
 		[HttpGet]
 		[Route("getListBookingTicketByCustomerID")]
 		public List<KhachHangDatVeDTO> getListBookingTicketByCustomerID(string customerID)
@@ -118,9 +118,18 @@ namespace APIDatVe.API.DatVe
 
 		[HttpPost]
 		[Route("changePasswordCustomer")]
-		public bool changePasswordCutomer(string phoneNumber,string password) {
+		public bool changePasswordCutomer(string phoneNumber, string password)
+		{
 			KhachHangDAL khachHangDAL = new KhachHangDAL();
 			return khachHangDAL.changePasswordCustomer(phoneNumber, password);
+		}
+
+		[HttpPost]
+		[Route("addFeedbackCustomer")]
+		public bool addFeedbackCustomer(KhachHangDanhGiaDTO khachHangDanhGiaDTO)
+		{
+			KhachHangDAL khachHangDAL = new KhachHangDAL();
+			return khachHangDAL.addFeedbackCustomer(khachHangDanhGiaDTO);
 		}
 	}
 }
