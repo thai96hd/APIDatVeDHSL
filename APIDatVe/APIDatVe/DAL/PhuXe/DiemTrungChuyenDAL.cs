@@ -13,12 +13,12 @@ namespace APIDatVe.DAL.PhuXe
         public List<DiemTrungChuyenDTO> GetDiemTrungChuyens(string malotrinh)
         {
             List<DiemTrungChuyenDTO> diemTrungChuyens = new List<DiemTrungChuyenDTO>();
-            String sql = "SELECT  dt.*"+
+            String sql = "SELECT DISTINCT dt.*"+
                       "  FROM DiemTrungChuyen dt"+
                       "  JOIN TinhThanh th ON dt.matinh = dt.matinh"+
-                     "   JOIN ChiTietLoTrinh ct ON ct.idtinhthanh = dt.matinh"+
+                      "  JOIN ChiTietLoTrinh ct ON ct.idtinhthanh = dt.matinh"+
                       "  AND ct.idtinhthanh = dt.matinh"+
-                      "  WHERE ct.malotrinh = @malotrinh ";
+                      "  WHERE ct.malotrinh = @malotrinh";
 
             SqlCommand command = DataProvider.Instance.getCommand(sql);
 
