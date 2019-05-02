@@ -3,8 +3,7 @@
     ViewBag.Title = "Quản lý tài khoản";
 }
 <script src="~/ckfinder/ckfinder.js"></script>
-
-<div class="page-content">
+<div class="page-content" ng-controller="controller">
     <div class="page-header">
         <h1>
             Thông tin tài khoản
@@ -16,30 +15,30 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label class="control-label no-padding-right text-center" style="display:block">Avatar</label>
-                        <img id="img-logo" src="~/FileDefault/img-default.gif" style="width:100%">
-                        <input id="Logo" style="display: none; width: 0px;" name="Logo" class="upload">
+                        <img id="img-logo" ng-src="detail.avatar" style="width:100%">
+                        <input id="Logo" value="{{detail.avatar}}" style="display: none; width: 0px;" name="Logo" class="upload">
                     </div>
                 </div>
                 <div class="col-md-8">
                     <div class="form-group">
                         <label class="control-label no-padding-right">Họ và tên</label>
                         <div>
-                            <input name="hoten" disabled value="Nguyễn Thị A" type="text" class="col-xs-12" />
+                            <input name="hoten" disabled ng-model="detail.hoten" type="text" class="col-xs-12" />
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label no-padding-right">Giới tính</label>
                         <div>
-                            <input value="Nam" id="gioi_tinh_nam" type="checkbox" checked />
+                            <input ng-model="detail.gioitinh" value="Nam" id="gioi_tinh_nam" name="gioitinh" type="radio" />
                             <label for="gioi_tinh_nam" style="margin-right:10px">Nam</label>
-                            <input value="Nữ" id="gioi_tinh_nu" type="checkbox" />
+                            <input ng-model="detail.gioitinh" value="Nữ" id="gioi_tinh_nu" name="gioitinh" type="radio" />
                             <label for="gioi_tinh_nu">Nữ</label>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label no-padding-right">Ngày sinh</label>
                         <div>
-                            <input name="ngaysinh" disabled type="date" class="col-xs-12" value="1996-01-01" />
+                            <input name="ngaysinh" disabled type="date" class="col-xs-12" ng-model="detail.ngaysinh" />
                         </div>
                     </div>
                 </div>
@@ -49,23 +48,22 @@
                     </div>
                     <label class="control-label no-padding-right">Địa chỉ</label>
                     <div>
-                        <input name="diachi" disabled value="" type="text" class="col-xs-12" />
+                        <input name="diachi" disabled ng-model="detail.diachi" type="text" class="col-xs-12" />
                     </div>
                 </div>
                 <div class="col-md-12 text-center hidden" id="box_submit" style="margin-top:10px">
-                    <button class="btn btn-primary btn-sm">Cập nhật</button>
+                    <button class="btn btn-primary btn-sm" ng-click="submit()">Cập nhật</button>
                 </div>
             </div>
         </div>
         <div class="col-md-1">
-
         </div>
         <div class="col-md-5">
             <div class="form-group clearfix">
                 <label class="control-label no-padding-right">Địa chỉ email</label>
                 <div>
                     <label class="control-label no-padding-right">
-                        <b>anonymous@gmail.com</b>
+                        <b>{{detail.email}}</b>
                     </label>
                     <button class="btn btn-primary btn-sm pull-right">Edit</button>
                 </div>
@@ -85,8 +83,9 @@
         </div>
     </div>
 </div>
-
 <script>
+    var urlDetail = 'http://localhost:56893/api/taikhoan/thongtintaikhoan';
+    var urlPut = 'http://localhost:56893/api/taikhoan/capnhatthongtintaikhoan';
     function editInfo() {
         $(document.getElementsByName('hoten')[0]).removeAttr("disabled");
         $(document.getElementsByName('ngaysinh')[0]).removeAttr("disabled");
@@ -116,4 +115,33 @@
             }
         }
     });
+    app.controller('controller', ['$scope', '$http', function ($scope, $http) {
+        $scope.getThongTinTaiKhoan = function () {
+            $scope.isAdd = false;
+            $http({
+                url: urlDetail,
+                method: "GET",
+                params: {
+                    _tentaikhoan: '@Session["userName"]'
+                }
+            }).then(function success(response) {
+                $scope.detail = response.data;
+                $scope.detail.ngaysinh = new Date($scope.detail.ngaysinh);
+            }, function error(response) {
+                alert(response.data.Message);
+            })
+        };
+        $scope.submit = function () {
+            $http({
+                url: urlPut,
+                method: "PUT",
+                data: $scope.detail
+            }).then(function success(response) {
+                location.reload();
+            }, function error(response) {
+                alert("Thực hiện không thành công");
+            })
+        }
+        $scope.getThongTinTaiKhoan();
+    }]);
 </script>

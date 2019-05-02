@@ -11,6 +11,8 @@ namespace HeThongQuanLyDatVe.Controllers
         // GET: QuanLyTaiKhoan
         public ActionResult ThongTinTaiKhoan()
         {
+            if (!CheckAcceptAction("ThongTinTaiKhoan"))
+                return Redirect("/Login/DangNhap");
             return View();
         }
         public ActionResult DanhSachTaiKhoan()

@@ -31,7 +31,7 @@
                             <td>{{item.giave | currency:'':''}}</td>
                             <td>{{item.soghetrong}}</td>
                             <td class="text-center">
-                                <button class="btn btn-primary btn-sm" ng-click="chonxe(item)">Chọn</button>
+                                <button ng-if="item.soghetrong > 0" class="btn btn-primary btn-sm" ng-click="chonxe(item)">Chọn</button>
                             </td>
                         </tr>
                     </tbody>
