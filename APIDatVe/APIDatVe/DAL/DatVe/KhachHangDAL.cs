@@ -92,7 +92,8 @@ namespace APIDatVe.DAL.DatVe
 				new SqlParameter("@diachi",khachHangDTO.diachi),
 				new SqlParameter("@tenkhachhang",khachHangDTO.hoten),
 				new SqlParameter("@makhachhang",khachHangDTO.makhachhang),
-				new SqlParameter("@matkhau",khachHangDTO.matkhau)
+				new SqlParameter("@matkhau",khachHangDTO.matkhau),
+				new SqlParameter ("@email",khachHangDTO.email)
 
 			};
 			if (DataProvider.Instance.ExecuteNonQuery("sp_updateCustomeInfo", parameters) > 0)
