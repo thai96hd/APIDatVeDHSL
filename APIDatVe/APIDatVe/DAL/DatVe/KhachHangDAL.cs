@@ -92,7 +92,8 @@ namespace APIDatVe.DAL.DatVe
 				new SqlParameter("@diachi",khachHangDTO.diachi),
 				new SqlParameter("@tenkhachhang",khachHangDTO.hoten),
 				new SqlParameter("@makhachhang",khachHangDTO.makhachhang),
-				new SqlParameter("@matkhau",khachHangDTO.matkhau)
+				new SqlParameter("@matkhau",khachHangDTO.matkhau),
+				new SqlParameter ("@email",khachHangDTO.email)
 
 			};
 			if (DataProvider.Instance.ExecuteNonQuery("sp_updateCustomeInfo", parameters) > 0)
@@ -145,5 +146,15 @@ namespace APIDatVe.DAL.DatVe
 			return DataProvider.Instance.ExecuteNonQuery("sp_update_password_customer", sqlParameters) > 0;
 		}
 
+		public bool addFeedbackCustomer(KhachHangDanhGiaDTO khachHangDanhGiaDTO) {
+			SqlParameter[] sqlParameters = new SqlParameter[] {
+				new SqlParameter("@madanhgia",Guid.NewGuid().ToString()),
+				new SqlParameter("@makhachhang",khachHangDanhGiaDTO.makhachhang),
+				new SqlParameter("machuyenxe",khachHangDanhGiaDTO.machuyenxe),
+				new SqlParameter("@diemdanhgia",khachHangDanhGiaDTO.diemdanhgia),
+				new SqlParameter("@noidungdanhgia",khachHangDanhGiaDTO.noidungdanhgia)
+			};
+			return DataProvider.Instance.ExecuteNonQuery("sp_addFeedbackCustomer", sqlParameters) > 0;
+		}
 	}
 }

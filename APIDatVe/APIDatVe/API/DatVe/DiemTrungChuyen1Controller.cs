@@ -8,10 +8,10 @@ using System.Web.Http;
 
 namespace APIDatVe.API.DatVe
 {
-	[RoutePrefix("api/diemtrungchuyen1")]
-	public  class DiemTrungChuyen1Controller : ApiController
+	[RoutePrefix("api/transshipmentpoint")]
+	public class DiemTrungChuyen1Controller : ApiController
 	{
-		[Route("danhsachdiemchuyenchuyen")]
+		[Route("getListTransshipmentPoint")]
 		public IHttpActionResult getListDiemTrungChuyen([FromUri] string malotrinh)
 		{
 			if (malotrinh == "" || malotrinh == null)
@@ -24,26 +24,39 @@ namespace APIDatVe.API.DatVe
 				return Ok(diemTrungChuyenDAL.getListDiemTrungChuyen(malotrinh));
 			}
 		}
-		[Route("laythongtingiave")]
+		/// <summary>
+		/// Lấy thông tin giá vé
+		/// </summary>
+		/// <param name="_madiemdon"></param>
+		/// <param name="_madiemden"></param>
+		/// <returns></returns>
+		[Route("getFeeCar")]
 		[HttpGet]
-		public IHttpActionResult getGiaVeGiuaHaiDiem(string _madiemdon,string _madiemden) {
+		public IHttpActionResult getGiaVeGiuaHaiDiem(string _madiemdon, string _madiemden)
+		{
 			if (_madiemdon == "" || _madiemden == "")
 			{
 				return BadRequest("Mã điểm đón và mã điểm đến không được để trống");
 			}
 
-			else {
+			else
+			{
 				DiemTrungChuyenDAL diemTrungChuyenDAL = new DiemTrungChuyenDAL();
-				BangGiaDTO bangia=diemTrungChuyenDAL.LayThongTinGiaVe(_madiemdon, _madiemden);
+				BangGiaDTO bangia = diemTrungChuyenDAL.LayThongTinGiaVe(_madiemdon, _madiemden);
 				return Ok(bangia);
 			}
 		}
-		public IHttpActionResult getInfoPointDepartByID(string pointStartID) {
+
+		[HttpGet]
+		[Route("getInfoPointDepartByID")]
+		public IHttpActionResult getInfoPointDepartByID(string pointStartID)
+		{
 			if (pointStartID == "")
 			{
 				return BadRequest("pointStartID not empty");
 			}
-			else {
+			else
+			{
 				DiemTrungChuyenDAL diemTrungChuyenDAL = new DiemTrungChuyenDAL();
 				return Ok(diemTrungChuyenDAL.getInforPointStartByID(pointStartID));
 			}
