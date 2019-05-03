@@ -157,6 +157,7 @@
                         var data = response.data;
                         setCookie('token', data.token, 1)
                         setCookie('danhsachmanhinh', data.danhsachmanhinh, 1)
+                        setCookie('setingstyle', data.setingstyle, 1)
                         location.href = '/';
                     }, function error(response) {
                         alert(response.data.Message);

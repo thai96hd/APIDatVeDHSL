@@ -1,0 +1,121 @@
+﻿
+@{
+    ViewBag.Title = "Setting Style";
+}
+
+<div class="page-content" ng-controller="controller">
+    <div ng-if="typestyle == 1">
+        <style>
+            .table-header {
+                background-color: #1abd36 !important;
+            }
+
+            .navbar {
+                background: #18b733 !important;
+            }
+
+            .ace-nav > li.light-blue > a {
+                background-color: #18b733 !important;
+            }
+
+                .ace-nav > li.light-blue > a:focus, .ace-nav > li.light-blue > a:hover, .ace-nav > li.open.light-blue > a {
+                    background-color: #1c9430 !IMPORTANT;
+                }
+
+            .page-header h1 {
+                color: #0ba926 !important;
+            }
+
+            .no-skin .nav-list > li.active > a {
+                color: #0ba926 !important;
+            }
+
+            .no-skin .nav-list > li.open > a {
+                color: #0ba926 !important;
+            }
+
+            .no-skin .nav-list > li > .submenu li.open > a, .no-skin .nav-list > li > .submenu li > .submenu li.active > a, .no-skin .nav-list > li > .submenu li > .submenu li.open > a {
+                color: #0ba926 !important;
+            }
+
+            .no-skin .nav-list li.active > a:after {
+                border-right-color: #0ba926 !important;
+            }
+
+            .no-skin .nav-list > li.active:after {
+                border: 2px solid #0ba926 !important;
+            }
+            .btn-primary, .btn-primary.focus, .btn-primary:focus {
+                background-color: #0BA926 !important;
+                border-color: #0BA926;
+            }
+                .btn-primary.focus:hover, .btn-primary:active:hover, .btn-primary:focus:active, .btn-primary:focus:hover, .btn-primary:hover, .open > .btn-primary.dropdown-toggle, .open > .btn-primary.dropdown-toggle.focus, .open > .btn-primary.dropdown-toggle:active, .open > .btn-primary.dropdown-toggle:focus, .open > .btn-primary.dropdown-toggle:hover {
+                    background-color: #18b733 !important;
+                    border-color: #18b733 !important;
+                }
+            .widget-header {
+                color: #18b733 !important;
+            }
+
+            .steps > li.active .step, .steps > li.active:before, .steps > li.complete .step, .steps > li.complete:before {
+                border-color: #18b733 !important;
+            }
+            .blue {
+                color: #0c5c1a !important;
+            }
+        </style>
+    </div>
+    <div class="page-header">
+        <h1>
+            Cài đặt - {{typestyle}}
+            <small>
+                <i class="ace-icon fa fa-angle-double-right"></i>
+                Setting Style
+            </small>
+        </h1>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="form-group">
+                <label style="margin-right:10px">
+                    <input type="radio" ng-model="typestyle" name="settingstyle" value="1" />
+                    Style 1
+                </label>
+                <label>
+                    <input type="radio" ng-model="typestyle" name="settingstyle" value="2" />
+                    Style 2
+                </label>
+            </div>
+            <button ng-click="submmit()" class="btn btn-primary btn-sm">Cập nhật</button>
+        </div>
+    </div>
+</div>
+<script>
+    var urlsubmmit = 'http://localhost:56893/api/setting/put';
+    app.controller('controller', ['$scope', '$http', function ($scope, $http) {
+        $scope.typestyle = '@Session["setingstyle"]'
+        $scope.submmit = function () {
+            setCookie('setingstyle', $scope.typestyle, 1)
+            $http({
+                url: urlsubmmit,
+                method: "PUT",
+                data: {
+                    _tentaikhoan: '@Session["userName"]',
+                    type: $scope.typestyle
+                }
+            }).then(function success(response) {
+                location.reload();
+            }, function error(response) {
+                alert("Thực hiện không thành công");
+            })
+        };
+    }]);
+</script>
+<script type="text/javascript">
+    function setCookie(cname, cvalue, exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        var expires = "expires=" + d.toUTCString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    }
+</script>

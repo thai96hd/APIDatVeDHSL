@@ -15,7 +15,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label class="control-label no-padding-right text-center" style="display:block">Avatar</label>
-                        <img id="img-logo" ng-src="detail.avatar" style="width:100%">
+                        <img id="img-logo" ng-src="{{detail.avatar}}" style="width:100%">
                         <input id="Logo" value="{{detail.avatar}}" style="display: none; width: 0px;" name="Logo" class="upload">
                     </div>
                 </div>
@@ -61,11 +61,12 @@
         <div class="col-md-5">
             <div class="form-group clearfix">
                 <label class="control-label no-padding-right">Địa chỉ email</label>
-                <div>
-                    <label class="control-label no-padding-right">
+                <div ng-cloak>
+                    <label ng-if="!isEditEmail" class="control-label no-padding-right">
                         <b>{{detail.email}}</b>
                     </label>
-                    <button class="btn btn-primary btn-sm pull-right">Edit</button>
+                    <input ng-if="isEditEmail" type="text" ng-model="detail.email" />
+                    <button class="btn btn-primary btn-sm pull-right" ng-click="editemail()">Edit</button>
                 </div>
             </div>
             <div class="form-group clearfix">
@@ -116,6 +117,11 @@
         }
     });
     app.controller('controller', ['$scope', '$http', function ($scope, $http) {
+        $scope.isEditEmail = false;
+        $scope.editemail = function () {
+            $scope.isEditEmail = true;
+            $("#box_submit").removeClass("hidden")
+        }
         $scope.getThongTinTaiKhoan = function () {
             $scope.isAdd = false;
             $http({
@@ -132,6 +138,7 @@
             })
         };
         $scope.submit = function () {
+            $scope.detail.avatar = $("#Logo").val();
             $http({
                 url: urlPut,
                 method: "PUT",
