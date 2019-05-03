@@ -71,7 +71,8 @@ namespace APIDatVe.API.QuanLy
                         taiKhoan.hoten,
                         taiKhoan.maquyen,
                         taiKhoan.trangthai,
-                        matkhau = ""
+                        matkhau = "",
+                        taiKhoan.gioitinh
                     });
                 }
             }
@@ -98,6 +99,7 @@ namespace APIDatVe.API.QuanLy
                         _taikhoan.linklaylaitaikhoan = "";
                         _taikhoan.solandangnhapsai = 0;
                         _taikhoan.matkhau = Encode.MD5(_taikhoan.matkhau);
+
                         db.TaiKhoans.Add(_taikhoan);
                         db.SaveChanges();
                         transaction.Commit();
@@ -136,9 +138,19 @@ namespace APIDatVe.API.QuanLy
                         taiKhoan.email = _taikhoan.email;
                         taiKhoan.hoten = _taikhoan.hoten;
                         taiKhoan.maquyen = _taikhoan.maquyen;
+                        taiKhoan.gioitinh = _taikhoan.gioitinh;
+                        taiKhoan.ngaysinh = _taikhoan.ngaysinh;
+                        taiKhoan.diachi = _taikhoan.diachi;
                         taiKhoan.trangthai = _taikhoan.trangthai;
                         if (!string.IsNullOrEmpty(_taikhoan.matkhau))
                             taiKhoan.matkhau = Encode.MD5(_taikhoan.matkhau);
+
+                        NhanVien nhanVien = db.NhanViens.FirstOrDefault(x => x.tentaikhoan == _taikhoan.tentaikhoan);
+                        if (nhanVien != null)
+                        {
+                            nhanVien.ngaysinh = _taikhoan.ngaysinh;
+                            nhanVien.diachi = _taikhoan.diachi;
+                        }
                         db.SaveChanges();
                         transaction.Commit();
                         return Ok(new
@@ -188,6 +200,73 @@ namespace APIDatVe.API.QuanLy
             }
         }
 
+        [Route("thongtintaikhoan")]
+        [HttpGet]
+        [AcceptAction(ActionName = "ThongTinTaiKhoan", ControllerName = "APITaiKhoanController")]
+        public IHttpActionResult ThongTinTaiKhoan(string _tentaikhoan)
+        {
+            try
+            {
+                using (var db = new DB())
+                {
+                    TaiKhoan taiKhoan = db.TaiKhoans.FirstOrDefault(x => x.tentaikhoan == _tentaikhoan);
+                    return Ok(new
+                    {
+                        taiKhoan.tentaikhoan,
+                        taiKhoan.email,
+                        taiKhoan.hoten,
+                        taiKhoan.gioitinh,
+                        taiKhoan.diachi,
+                        ngaysinh = taiKhoan.ngaysinh == null ? "" : taiKhoan.ngaysinh.Value.ToString("yyyy-MM-dd"),
+                        taiKhoan.avatar
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [Route("capnhatthongtintaikhoan")]
+        [HttpPut]
+        [AcceptAction(ActionName = "CapNhatThongTinTaiKhoan", ControllerName = "APITaiKhoanController")]
+        public IHttpActionResult CapNhatThongTinTaiKhoan(TaiKhoan _taikhoan)
+        {
+            try
+            {
+                using (var db = new DB())
+                {
+                    using (var transaction = db.Database.BeginTransaction())
+                    {
+                        TaiKhoan taiKhoan = db.TaiKhoans.FirstOrDefault(x => x.tentaikhoan == _taikhoan.tentaikhoan);
+                        if (taiKhoan == null)
+                            return BadRequest("Tài khoản không tồn tại");
+                        taiKhoan.avatar = _taikhoan.avatar;
+                        taiKhoan.email = _taikhoan.email;
+                        taiKhoan.hoten = _taikhoan.hoten;
+                        taiKhoan.gioitinh = _taikhoan.gioitinh;
+                        taiKhoan.ngaysinh = _taikhoan.ngaysinh;
+                        taiKhoan.diachi = _taikhoan.diachi;
+                        if (!string.IsNullOrEmpty(_taikhoan.matkhau))
+                            taiKhoan.matkhau = Encode.MD5(_taikhoan.matkhau);
+                        NhanVien nhanVien = db.NhanViens.FirstOrDefault(x => x.tentaikhoan == _taikhoan.tentaikhoan);
+                        if (nhanVien != null)
+                        {
+                            nhanVien.ngaysinh = _taikhoan.ngaysinh;
+                            nhanVien.diachi = _taikhoan.diachi;
+                        }
+                        db.SaveChanges();
+                        transaction.Commit();
+                        return Ok();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
 
     }

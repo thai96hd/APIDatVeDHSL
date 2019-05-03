@@ -34,7 +34,7 @@ namespace APIDatVe.API.QuyenTruyCap
                     if (UserSecurity.CheckLogin(account._userName, account._password))
                     {
                         TaiKhoan taiKhoan = db.TaiKhoans.FirstOrDefault(x => x.tentaikhoan == account._userName);
-                        if(taiKhoan.trangthai == (int)Constant.KHOA)
+                        if (taiKhoan.trangthai == (int)Constant.KHOA)
                         {
                             return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Tài khoản đã bị khóa");
                         }
@@ -44,10 +44,12 @@ namespace APIDatVe.API.QuyenTruyCap
                             .Where(x => x.maquyen == taiKhoan.maquyen && x.chon)
                             .Select(x => x.ManHinhQuanLy.tenmanhinh)
                             .ToList());
+                        TaiKhoanCauHinh taiKhoanCauHinh = taiKhoan.TaiKhoanCauHinhs.FirstOrDefault();
                         return Request.CreateResponse(HttpStatusCode.OK, new
                         {
                             token = Encode.Encrypt(account._userName + ":" + account._password),
-                            danhsachmanhinh = Encode.Encrypt(danhsachmanhinh)
+                            danhsachmanhinh = Encode.Encrypt(danhsachmanhinh),
+                            setingstyle = taiKhoanCauHinh == null ? "0" : taiKhoanCauHinh.cauhinh
                         });
                     }
                     else

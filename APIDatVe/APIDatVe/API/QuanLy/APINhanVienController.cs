@@ -80,7 +80,8 @@ namespace APIDatVe.API.QuanLy
                         ngaycap = nhanVien.ngaycap,
                         ngaysinh = nhanVien.ngaysinh,
                         maquyen = nhanVien.TaiKhoan.maquyen,
-                        trangthai = nhanVien.TaiKhoan.trangthai.Value
+                        trangthai = nhanVien.TaiKhoan.trangthai.Value,
+                        gioitinh = nhanVien.TaiKhoan.gioitinh
                     };
                     ChiTietLaiXe chiTietLaiXe = db.ChiTietLaiXes.FirstOrDefault(x => x.manhanvien == _manhanvien);
                     if (chiTietLaiXe != null)
@@ -141,7 +142,11 @@ namespace APIDatVe.API.QuanLy
                                     matkhau = Encode.MD5(eNhanVien.matkhau),
                                     solandangnhapsai = 0,
                                     tentaikhoan = eNhanVien.tentaikhoan,
-                                    trangthai = eNhanVien.trangthai
+                                    trangthai = eNhanVien.trangthai,
+                                    gioitinh = eNhanVien.gioitinh,
+                                    avatar = "",
+                                    diachi = eNhanVien.diachi,
+                                    ngaysinh = eNhanVien.ngaysinh
                                 }
                             };
                             db.NhanViens.Add(nhanVien);
@@ -164,6 +169,9 @@ namespace APIDatVe.API.QuanLy
                             oldNhanVien.TaiKhoan.maquyen = eNhanVien.maquyen;
                             oldNhanVien.TaiKhoan.tentaikhoan = eNhanVien.tentaikhoan;
                             oldNhanVien.TaiKhoan.trangthai = eNhanVien.trangthai;
+                            oldNhanVien.TaiKhoan.gioitinh = eNhanVien.gioitinh;
+                            oldNhanVien.TaiKhoan.ngaysinh = eNhanVien.ngaysinh;
+                            oldNhanVien.TaiKhoan.diachi = eNhanVien.diachi;
                             if (!string.IsNullOrEmpty(eNhanVien.matkhau))
                                 oldNhanVien.TaiKhoan.matkhau = Encode.MD5(eNhanVien.matkhau);
                         }
