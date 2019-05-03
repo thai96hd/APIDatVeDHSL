@@ -119,7 +119,7 @@ namespace APIDatVe.API.QuanLy
                             phuxe = x.NhanVien1.hoten,
                             x.ngayhoatdong,
                             giave,
-                            soghetrong = db.TrangThaiGhes.Where(y => y.Ghe.maxe == x.maxe && y.ngay.Value == ngaydi).Count()
+                            soghetrong = db.TrangThaiGhes.Where(y => y.Ghe.maxe == x.maxe && y.ngay.Value == ngaydi && y.trangthai == 0).Count()
                         }).ToList())
                     });
                 }
@@ -269,6 +269,7 @@ namespace APIDatVe.API.QuanLy
                         else
                         {
                             datXe.khachhang.madoituong = "DTDEFAULT";
+                            datXe.khachhang.diemtichluy = 0;
                             while (db.KhachHangs.FirstOrDefault(x => x.khachhangId == khachhangid) != null)
                             {
                                 khachhangid = DataHelper.RandomString(20);
@@ -297,10 +298,10 @@ namespace APIDatVe.API.QuanLy
                         };
                         db.VeXes.Add(veXe);
                         db.SaveChanges();
-
+                        string maxe = db.ChuyenXes.FirstOrDefault(x => x.machuyenxe == datXe.machuyenxe).maxe;
                         datXe.ghes.ForEach(x =>
                         {
-                            Database.TrangThaiGhe trangThaiGhe = db.TrangThaiGhes.FirstOrDefault(y => y.maghe == x && y.machuyenxe == datXe.machuyenxe);
+                            Database.TrangThaiGhe trangThaiGhe = db.TrangThaiGhes.FirstOrDefault(y => (y.maghe == maxe + "_" + x) && y.machuyenxe == datXe.machuyenxe);
                             if (trangThaiGhe != null)
                                 trangThaiGhe.trangthai = 1;
 
@@ -331,6 +332,134 @@ namespace APIDatVe.API.QuanLy
             }
         }
 
+        [Route("getdanhsachdatxe")]
+        [HttpGet]
+        public IHttpActionResult GetDanhSachDatXe(DateTime _tungay, DateTime _denngay, int _trang = 1, int _sobanghi = 100)
+        {
+            try
+            {
+                using (var db = new DB())
+                {
+                    _tungay = _tungay.Date;
+                    _denngay = _denngay.Date;
+                    List<VeXe> veXes = db.VeXes.Where(x => x.ngaydat.Value >= _tungay && x.ngaydat.Value <= _denngay).ToList();
+                    int sobanghi = veXes.Count;
+                    return Ok(new
+                    {
+                        vexes = veXes.Select(x => new
+                        {
+                            x.vexeId,
+                            x.khachhangId,
+                            x.KhachHang.hoten,
+                            x.ChuyenXe.machuyenxe,
+                            x.TrangThaiVeXe.tentrangthai,
+                            x.sokhach,
+                            diemdon = db.DiemTrungChuyens.FirstOrDefault(y => y.madiemtrungchuyen == x.madiemtrungchuyendon).tendiemtrungchuyen,
+                            diemtra = db.DiemTrungChuyens.FirstOrDefault(y => y.madiemtrungchuyen == x.madiemtrungchuyentra).tendiemtrungchuyen,
+                            ngaydat = x.ngaydat.Value.ToString("dd/MM/yyyy HH:mm"),
+                            x.ChiTietVeXes.FirstOrDefault().sodienthoaikhach,
+                            x.tongtien
+                        }).Skip((_trang - 1) * _sobanghi).Take(_sobanghi).ToList(),
+                        sobanghi = sobanghi
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [Route("detailvexe")]
+        [HttpGet]
+        public IHttpActionResult DetailVeXe(string _vexeId)
+        {
+            try
+            {
+                using (var db = new DB())
+                {
+                    VeXe veXe = db.VeXes.FirstOrDefault(x => x.vexeId == _vexeId);
+                    return Ok(new
+                    {
+                        ve = new
+                        {
+                            veXe.vexeId,
+                            veXe.khachhangId,
+                            veXe.KhachHang.hoten,
+                            veXe.ChuyenXe.machuyenxe,
+                            veXe.TrangThaiVeXe.tentrangthai,
+                            veXe.TrangThaiVeXe.matrangthaive,
+                            veXe.sokhach,
+                            diemdon = db.DiemTrungChuyens.FirstOrDefault(y => y.madiemtrungchuyen == veXe.madiemtrungchuyendon).tendiemtrungchuyen,
+                            diemtra = db.DiemTrungChuyens.FirstOrDefault(y => y.madiemtrungchuyen == veXe.madiemtrungchuyentra).tendiemtrungchuyen,
+                            ngaydat = veXe.ngaydat.Value.ToString("dd/MM/yyyy HH:mm"),
+                            veXe.ChiTietVeXes.FirstOrDefault().sodienthoaikhach,
+                            veXe.tongtien
+                        },
+                        chitietves = veXe.ChiTietVeXes.Select(y => new
+                        {
+                            y.maghe
+                        }),
+                        khachhang = new
+                        {
+                            veXe.KhachHang.hoten,
+                            veXe.KhachHang.DoiTuong.tendoituong,
+                            veXe.KhachHang.diachi,
+                            veXe.KhachHang.sodienthoai,
+                            veXe.KhachHang.email,
+                            veXe.KhachHang.gioitinh,
+                            veXe.KhachHang.diemtichluy
+                        }
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [Route("thanhtoanvexe")]
+        [HttpGet]
+        public IHttpActionResult ThanhToanVeXe(string _vexeId)
+        {
+            try
+            {
+                using (var db = new DB())
+                {
+                    VeXe veXe = db.VeXes.FirstOrDefault(x => x.vexeId == _vexeId);
+                    if (veXe.matrangthaive == 1)
+                        veXe.matrangthaive = 2;
+                    veXe.KhachHang.diemtichluy += int.Parse(veXe.tongtien);
+                    db.SaveChanges();
+                    return Ok();
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [Route("huyvexe")]
+        [HttpGet]
+        public IHttpActionResult HuyVeXe(string _vexeId)
+        {
+            try
+            {
+                using (var db = new DB())
+                {
+                    VeXe veXe = db.VeXes.FirstOrDefault(x => x.vexeId == _vexeId);
+                    if (veXe.matrangthaive == 1)
+                        veXe.matrangthaive = 3;
+                    db.SaveChanges();
+                    return Ok();
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 
     public class DatXe
