@@ -1,18 +1,21 @@
 ﻿
 @{
-    ViewBag.Title = "Quản lý ghế ngồi";
+    ViewBag.Title = "Danh sách khách hàng";
 }
-
-<div class="page-content">
+<div class="page-content" ng-controller="controller">
     <div class="page-header">
         <h1>
-           Danh sách khách hàng
+            Quản lý khách hàng
+            <small>
+                <i class="ace-icon fa fa-angle-double-right"></i>
+                Danh sách khách hàng
+            </small>
         </h1>
     </div>
     <div class="row">
         <div class="col-xs-12">
             <div class="table-header">
-               Danh sách khách hàng
+                Danh sách khách hàng
                 <div class="pull-right tableTools-container"></div>
             </div>
             <div>
@@ -28,49 +31,94 @@
                             <th class="center">Thao tác</th>
                         </tr>
                     </thead>
-
-                    <tbody>
-                        @for (int i = 1; i < 20; i++)
-                        {
-                            <tr>
-                                <td class="center">
-                                    <label class="pos-rel">@i</label>
-                                </td>
-                                <td>
-                                    <span>Loại @i</span>
-                                </td>
-                                <td>
-                                    <span>Mã @i</span>
-                                </td>
-                                <td>
-                                    <span>Tên khách hàng @i</span>
-                                </td>
-                                <td><span>Số điện thoại @i</span></td>
-                                <td>
-                                    <span>@i</span>
-                                </td>
-                                <td class="center">
-                                    <div class="action-buttons">
-                                        <a class="blue" href="#">
-                                            <i class="ace-icon fa fa-search-plus bigger-130"></i>
-                                        </a>
-
-                                        <a class="green" href="#">
-                                            <i class="ace-icon fa fa-pencil bigger-130"></i>
-                                        </a>
-
-                                        <a class="red" href="#">
-                                            <i class="ace-icon fa fa-trash-o bigger-130"></i>
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
-                        }
+                    <tbody ng-cloak>
+                        <tr ng-repeat="item in datas.khachHangs">
+                            <td class="center">
+                                <label class="pos-rel">{{$index + 1}}</label>
+                            </td>
+                            <td>
+                                {{item.tendoituong}}
+                            </td>
+                            <td>
+                                {{item.khachhangId}}
+                            </td>
+                            <td>
+                                {{item.hoten}}
+                            </td>
+                            <td>
+                                {{item.sodienthoai}}
+                            </td>
+                            <td>
+                                {{item.diemtichluy}}
+                            </td>
+                            <td class="center">
+                                <div class="action-buttons">
+                                    @*<a class="green" ng-click="getThongTinKhachHang(item.khachhangId)">
+                                        Chi tiết
+                                    </a>*@
+                                </div>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
         </div>
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-xs-6">
+                    <select ng-model="filter._sobanghi" class="col-xs-2" convert-to-number ng-change="getDanhSachKhachHang()">
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                </div>
+                <div class="col-xs-6">
+                    <span style="float:right;margin-top: 3px;"> {{datas.sobanghi}} bản ghi</span>
+                    <input type="number" min="1" max="{{datas.sobanghi % filter._sobanghi == 0?datas.sobanghi / filter._sobanghi:datas.sobanghi / filter._sobanghi + 1}}" name="name" ng-model="filter._trang" ng-change="getDanhSachKhachHang()" class="col-xs-2" style="float:right;margin-right:50px;height: 27px;margin-right:15px" />
+                    <label style="float:right;margin-right:10px;margin-top: 3px;">Trang</label>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-
-<script src="~/Scripts/dataTable.js"></script>
+<script>
+    var urlGet = 'http://localhost:56893/api/khachhang';
+    var urlDetail = 'http://localhost:56893/api/khachhang/detail';
+    app.controller('controller', ['$scope', '$http', function ($scope, $http) {
+        $scope.filter = {
+            _tukhoa: '',
+            _trang: 1,
+            _sobanghi: 100
+        }
+        $scope.detail = {};
+        $scope.getDanhSachKhachHang = function () {
+            $http({
+                url: urlGet,
+                method: "GET",
+                params: $scope.filter
+            }).then(function success(response) {
+                $scope.datas = response.data;
+            }, function error(response) {
+                alert("Thực hiện không thành công");
+            })
+        };
+        $scope.getThongTinKhachHang = function (_tentaikhoan) {
+            $scope.isAdd = false;
+            $http({
+                url: urlDetail,
+                method: "GET",
+                params: {
+                    _tentaikhoan
+                }
+            }).then(function success(response) {
+                $scope.detail = response.data;
+                console.log($scope.detail)
+                $("#modal").modal();
+            }, function error(response) {
+                alert(response.data.Message);
+            })
+        };
+        $scope.getDanhSachKhachHang();
+    }]);
+</script>
