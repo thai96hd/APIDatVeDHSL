@@ -25,7 +25,7 @@ namespace APIDatVe.API.PhuXe
         public IHttpActionResult Login([FromBody] TaiKhoanDTO taiKhoanDTO)
         {
             TaiKhoanDAL taiKhoanDAL = new TaiKhoanDAL();
-            if (taiKhoanDAL.checkLogin(taiKhoanDTO, 3))
+            if (taiKhoanDAL.checkLogin(taiKhoanDTO, "CV1004"))
             {
                 return ResponseToOk(taiKhoanDTO);
             }
@@ -50,8 +50,6 @@ namespace APIDatVe.API.PhuXe
             {
                 return ResponseToOk(taiKhoanDTO, "Đổi mật khẩu thành công", HttpStatusCode.OK);
             }
-
-            //  return ResponseToOk(null, "Can not updated data", HttpStatusCode.NotImplemented);
         }
 
         /// <summary>
@@ -65,7 +63,7 @@ namespace APIDatVe.API.PhuXe
         public IHttpActionResult getthongtinphuxe(string tentaikhoan)
         {
             TaiKhoanDAL taiKhoanDAL = new TaiKhoanDAL();
-            return ResponseToOk(taiKhoanDAL.GetThongTinPhuXe(tentaikhoan, 3));
+            return ResponseToOk(taiKhoanDAL.GetThongTinPhuXe(tentaikhoan, "CV1004"));
         }
     }
 }

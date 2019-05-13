@@ -10,7 +10,7 @@ namespace APIDatVe.DAL.PhuXe
 {
     public class TaiKhoanDAL
     {
-        public bool checkLogin(TaiKhoanDTO taiKhoanDTO, Int32 maChucVu)
+        public bool checkLogin(TaiKhoanDTO taiKhoanDTO, string maChucVu)
         {
 
             String sql = "SELECT 1" +
@@ -27,7 +27,7 @@ namespace APIDatVe.DAL.PhuXe
 
             command.Parameters.AddWithValue("@matkhau", taiKhoanDTO.matkhau);
 
-            command.Parameters.AddWithValue("@machucvu", 3);
+            command.Parameters.AddWithValue("@machucvu", "CV1004");
 
             SqlDataReader rowsAffected = command.ExecuteReader();
 
@@ -71,7 +71,7 @@ namespace APIDatVe.DAL.PhuXe
 
         }
 
-        public DataTable GetThongTinPhuXe(string tentaikhoan, Int32 machucvu)
+        public DataTable GetThongTinPhuXe(string tentaikhoan, string machucvu)
         {
 
             String sql = "SELECT nv.hoten,nv.sodienthoai,nv.ngaysinh,nv.email" +
@@ -85,7 +85,7 @@ namespace APIDatVe.DAL.PhuXe
 
             command.Parameters.AddWithValue("@tentaikhoan", tentaikhoan);
 
-            command.Parameters.AddWithValue("@machucvu", 3);
+            command.Parameters.AddWithValue("@machucvu", "CV1004");
 
             SqlDataReader rowsAffected = command.ExecuteReader();
 

@@ -18,7 +18,7 @@ namespace APIDatVe.DAL.PhuXe
                       "  JOIN TinhThanh th ON dt.matinh = dt.matinh"+
                       "  JOIN ChiTietLoTrinh ct ON ct.idtinhthanh = dt.matinh"+
                       "  AND ct.idtinhthanh = dt.matinh"+
-                      "  WHERE ct.malotrinh = @malotrinh";
+                      "  WHERE ct.malotrinh = @malotrinh" ;
 
             SqlCommand command = DataProvider.Instance.getCommand(sql);
 
@@ -32,6 +32,7 @@ namespace APIDatVe.DAL.PhuXe
             int indextenDiemTrungChuyen = rowsAffected.GetOrdinal("tendiemtrungchuyen");
             int indexLat = rowsAffected.GetOrdinal("lat");
             int indexLong = rowsAffected.GetOrdinal("long");
+            //int indexThuTu = rowsAffected.GetOrdinal("thutu");
 
 
             if (rowsAffected.HasRows)
@@ -46,6 +47,7 @@ namespace APIDatVe.DAL.PhuXe
                     diemTrungChuyen.diachi = rowsAffected.IsDBNull(indexDiaChi) ? "" : rowsAffected.GetString(indexDiaChi);
                     diemTrungChuyen.lat = rowsAffected.IsDBNull(indexLat) ? "" : rowsAffected.GetString(indexLat);
                     diemTrungChuyen.longt = rowsAffected.IsDBNull(indexLong) ? "" : rowsAffected.GetString(indexLong);
+                  //  diemTrungChuyen.thutu = rowsAffected.IsDBNull(indexThuTu) ? "" : rowsAffected.GetString(indexThuTu);
 
                     diemTrungChuyens.Add(diemTrungChuyen);
 
