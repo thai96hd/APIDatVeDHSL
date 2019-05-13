@@ -28,6 +28,7 @@ namespace APIDatVe.Database
         public int trangthai { get; set; }
         public string lat { get; set; }
         public string @long { get; set; }
+        public Nullable<int> thutu { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BangGia> BangGias { get; set; }
