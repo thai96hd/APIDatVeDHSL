@@ -17,7 +17,7 @@ namespace APIDatVe.DAL.PhuXe
                 new SqlParameter("@machuyenxe",datVeDTO.machuyenxe),
                 new SqlParameter("@khachhangId", datVeDTO.khachhangId),
                 new SqlParameter("@matrangthaive",datVeDTO.matrangthaive),
-                new SqlParameter("@tongtien",datVeDTO.tongtien),
+                new SqlParameter("@tongtien",datVeDTO.tongtien+""),
                 new SqlParameter("@sokhach",datVeDTO.sokhach),
                 new SqlParameter("@ghichu",datVeDTO.ghichu),
                 new SqlParameter("@madiemtrungchuyendon",datVeDTO.madiemtrungchuyendon),
