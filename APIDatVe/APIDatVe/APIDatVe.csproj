@@ -326,6 +326,9 @@
     <Compile Include="Database\TaiKhoan.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Database\TaiKhoanCauHinh.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Database\TinhThanh.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

@@ -10,6 +10,7 @@ namespace APIDatVe.Models
         public string maghe { get; set; }
         public int tang { get; set; }
         public string maxe { get; set; }
+		public string tenghe { get; set; }
         public int vitriX { get; set; }
         public int vitriY { get; set; }
         public Nullable<bool>  active { get; set; }

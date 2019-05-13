@@ -27,5 +27,6 @@ namespace APIDatVe.Models
         public string ngaycaplaixe { get; set; }
         public string noicaplaixe { get; set; }
         public string ghichu { get; set; }
+		public string gioitinh { get; set; }
     }
 }

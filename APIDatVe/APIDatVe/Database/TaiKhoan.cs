@@ -18,6 +18,7 @@ namespace APIDatVe.Database
         public TaiKhoan()
         {
             this.NhanViens = new HashSet<NhanVien>();
+            this.TaiKhoanCauHinhs = new HashSet<TaiKhoanCauHinh>();
         }
     
         public string tentaikhoan { get; set; }
@@ -29,9 +30,15 @@ namespace APIDatVe.Database
         public Nullable<int> trangthai { get; set; }
         public string linklaylaitaikhoan { get; set; }
         public Nullable<System.DateTime> thoigianyeucaulaylaitk { get; set; }
+        public string avatar { get; set; }
+        public string gioitinh { get; set; }
+        public string diachi { get; set; }
+        public Nullable<System.DateTime> ngaysinh { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NhanVien> NhanViens { get; set; }
         public virtual Quyen Quyen { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TaiKhoanCauHinh> TaiKhoanCauHinhs { get; set; }
     }
 }
