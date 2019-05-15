@@ -88,10 +88,8 @@ namespace APIDatVe.DAL.PhuXe
                     if (dataTable.Rows[i][7].Equals(dataTable.Rows[i - 1][7]))
                     {
                         dataTable.Rows.Remove(dataTable.Rows[i]);
+                        i--;
                     }
-                    i--;
-                }
-                {
 
                 }
             }
