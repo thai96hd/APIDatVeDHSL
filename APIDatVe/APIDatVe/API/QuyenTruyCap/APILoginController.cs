@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Web;
 using System.Web.Http;
 
 namespace APIDatVe.API.QuyenTruyCap
@@ -18,10 +19,12 @@ namespace APIDatVe.API.QuyenTruyCap
         {
             public string _userName { get; set; }
             public string _password { get; set; }
+            public string _token { get; set; }
+            public string emailresetpasswork { get; set; }
         }
         [Route("check-account")]
         [HttpPost]
-        public HttpResponseMessage CheckAccount(AccountLogin account)
+        public HttpResponseMessage CheckAccount([FromBody]AccountLogin account)
         {
             try
             {
@@ -73,6 +76,94 @@ namespace APIDatVe.API.QuyenTruyCap
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
             }
         }
+
+        [Route("reset-account")]
+        [HttpPost]
+        public HttpResponseMessage ResetAccount([FromBody]AccountLogin account)
+        {
+            try
+            {
+                using (var db = new DB())
+                {
+                    TaiKhoan taiKhoan = db.TaiKhoans.FirstOrDefault(x => x.email == account.emailresetpasswork || x.tentaikhoan == account.emailresetpasswork);
+                    if (taiKhoan == null)
+                    {
+                        return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Gửi email thất bại! Thông tin email không tồn tại");
+                    }
+                    string tokenReset = DataHelper.RandomString(24);
+                    string tokenEncode = HttpUtility.HtmlEncode(Encode.Encrypt(account.emailresetpasswork + "|" + tokenReset));
+                    string urlResetPasswork = "http://localhost:54328/Login/ResetPasswork?token=" + tokenEncode;
+                    taiKhoan.linklaylaitaikhoan = tokenEncode;
+                    taiKhoan.thoigianyeucaulaylaitk = DateTime.Now.AddDays(1);
+                    db.SaveChanges();
+                    MailHelper.SendMailGuest(account.emailresetpasswork, "Lấy lại mật khẩu", "Đường dẫn lấy lại mật khẩu: " + urlResetPasswork);
+                    return Request.CreateResponse(HttpStatusCode.OK);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Gửi email thất bại! Vui lòng nhập lại thông tin email");
+            }
+        }
+
+        [Route("check-token")]
+        [HttpPost]
+        public HttpResponseMessage CheckToken([FromBody]AccountLogin account)
+        {
+            try
+            {
+                using (var db = new DB())
+                {
+                    string tokenParse = Encode.Decrypt(HttpUtility.HtmlDecode(account._token));
+                    string[] tokenInfos = tokenParse.Split('|');
+                    string username = tokenInfos[0];
+                    TaiKhoan taiKhoan = db.TaiKhoans.FirstOrDefault(x => x.email == username || x.tentaikhoan == username);
+                    if (taiKhoan.thoigianyeucaulaylaitk < DateTime.Now)
+                        return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Đường link hết hiệu lực");
+                    if (taiKhoan.linklaylaitaikhoan != account._token)
+                        return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Token không còn hiệu lực");
+                    return Request.CreateResponse(HttpStatusCode.OK, new
+                    {
+                        _userName = taiKhoan.tentaikhoan,
+                        _token = account._token
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Không thể lấy lại mật khẩu: " + ex.Message);
+            }
+        }
+
+        [Route("reset")]
+        [HttpPost]
+        public HttpResponseMessage Reset([FromBody]AccountLogin account)
+        {
+            try
+            {
+                using (var db = new DB())
+                {
+                    string tokenParse = Encode.Decrypt(HttpUtility.HtmlDecode(account._token));
+                    string[] tokenInfos = tokenParse.Split('|');
+                    string username = tokenInfos[0];
+                    TaiKhoan taiKhoan = db.TaiKhoans.FirstOrDefault(x => x.email == username || x.tentaikhoan == username);
+                    if (taiKhoan.thoigianyeucaulaylaitk < DateTime.Now)
+                        return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Đường link hết hiệu lực");
+                    if (taiKhoan.linklaylaitaikhoan != account._token)
+                        return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Token không còn hiệu lực");
+                    if (taiKhoan.matkhau == Encode.MD5(account._password))
+                        return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Mật khẩu không thể trùng với mật khẩu cũ");
+                    taiKhoan.matkhau = Encode.MD5(account._password);
+                    db.SaveChanges();
+                    return Request.CreateResponse(HttpStatusCode.OK);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Cập nhật thất bại: " + ex.Message);
+            }
+        }
+
 
     }
 }
