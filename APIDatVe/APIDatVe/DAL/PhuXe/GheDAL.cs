@@ -41,6 +41,7 @@ namespace APIDatVe.DAL.PhuXe
                       "        vx.tongtien," +
                        "       vx.madiemtrungchuyendon," +
                         "      vx.madiemtrungchuyentra," +
+                        "      vx.ngaydat," +
                          "     ct.maghe," +
                           "    ct.tenhanhkhach," +
                            "   ct.doituong," +
@@ -56,11 +57,13 @@ namespace APIDatVe.DAL.PhuXe
                    " JOIN TrangThaiGhe ttghe ON ttghe.maghe = g.maghe" +
                    " WHERE g.active = 1" +
                    "   AND ttghe.machuyenxe = @machuyenxe";
+                  
 
             if (!String.IsNullOrWhiteSpace(maghe))
             {
                 sql += " AND g.maghe=@maghe";
             }
+            sql += "  order by g.tenghe,i.ngaydat DESC";
 
             DateTime dateTime = DateTime.Now;
 
@@ -68,8 +71,7 @@ namespace APIDatVe.DAL.PhuXe
 
             command.Parameters.AddWithValue("@machuyenxe", machuyenxe);
 
-            //   command.Parameters.AddWithValue("@ngayhoatdong", dateTime.ToString("dd-MM-yyyy"));
-
+          
             if (!String.IsNullOrWhiteSpace(maghe))
             {
                 command.Parameters.AddWithValue("@maghe", maghe);
@@ -81,6 +83,17 @@ namespace APIDatVe.DAL.PhuXe
             if (rowsAffected.HasRows)
             {
                 dataTable.Load(rowsAffected);
+                for(int i = 1; i < dataTable.Rows.Count; i++)
+                {
+                    if (dataTable.Rows[i][7].Equals(dataTable.Rows[i - 1][7]))
+                    {
+                        dataTable.Rows.Remove(dataTable.Rows[i]);
+                    }
+                    i--;
+                }
+                {
+
+                }
             }
             return dataTable;
         }

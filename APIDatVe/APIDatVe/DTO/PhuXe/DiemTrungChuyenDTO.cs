@@ -13,6 +13,6 @@ namespace APIDatVe.DTO.PhuXe
 		public String diachi { get; set; }
 		public String lat { get; set; }
 		public String longt { get; set; }
-     //   public int thutu { get; set; }
+        public Int32 thutu { get; set; }
 	}
 }
