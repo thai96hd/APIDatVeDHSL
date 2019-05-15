@@ -9,15 +9,16 @@ namespace APIDatVe.Helper
 {
     public class ConfigEmail
     {
-        public string Email { get; set; }
-        public string Password { get; set; }
+        public string Email { get; set; } = "ngoxuanduong23@gmail.com";
+        public string Password { get; set; } = "duongthanthanduong239608";
     }
     public class MailHelper
     {
-        public static bool SendMailGuest(ConfigEmail configEmail, string sendTo, string subject, string body, List<string> cc = null, List<string> bcc = null)
+        public static bool SendMailGuest(string sendTo, string subject, string body)
         {
             try
             {
+                ConfigEmail configEmail = new ConfigEmail();
                 SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
                 // Mail send for Guest
                 MailMessage mail = new MailMessage();
@@ -26,22 +27,6 @@ namespace APIDatVe.Helper
                 mail.To.Add(sendTo);
                 mail.Subject = subject;
                 mail.Body = body;
-                if (cc != null && cc.Count > 0)
-                {
-                    cc.ForEach(x =>
-                    {
-                        if (x != "")
-                            mail.CC.Add(x);
-                    });
-                }
-                if (bcc != null && bcc.Count > 0)
-                {
-                    bcc.ForEach(x =>
-                    {
-                        if (x != "")
-                            mail.Bcc.Add(x);
-                    });
-                }
                 // Send
                 SmtpServer.Port = 587;
                 SmtpServer.Credentials = new System.Net.NetworkCredential(configEmail.Email, configEmail.Password);
