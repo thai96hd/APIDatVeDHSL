@@ -107,6 +107,10 @@
                         alert('Mật khẩu nhập lại không khớp');
                         return;
                     }
+                    if ($scope.account._password.length < 6) {
+                        alert("Mật khẩu phải trên 6 ký tự")
+                        return;
+                    }
                     $http({
                         url: urlReset,
                         method: 'POST',
