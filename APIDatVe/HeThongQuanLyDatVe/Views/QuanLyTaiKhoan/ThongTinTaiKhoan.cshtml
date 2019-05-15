@@ -65,14 +65,15 @@
                     <label ng-if="!isEditEmail" class="control-label no-padding-right">
                         <b>{{detail.email}}</b>
                     </label>
-                    <input ng-if="isEditEmail" type="text" ng-model="detail.email" />
+                    <input ng-if="isEditEmail" type="text" ng-model="detail.email" class="form-control" />
                     <button class="btn btn-primary btn-sm pull-right" ng-click="editemail()">Edit</button>
                 </div>
             </div>
             <div class="form-group clearfix">
                 <div>
                     <label class="control-label no-padding-right">Mật khẩu</label>
-                    <button class="btn btn-primary btn-sm pull-right">Edit</button>
+                    <input ng-if="isEditPassword" type="text" ng-model="detail.matkhau" class="form-control" />
+                    <button class="btn btn-primary btn-sm pull-right" ng-click="editpassword()">Edit</button>
                 </div>
             </div>
             <div class="form-group clearfix">
@@ -118,8 +119,13 @@
     });
     app.controller('controller', ['$scope', '$http', function ($scope, $http) {
         $scope.isEditEmail = false;
+        $scope.isEditPassword = false;
         $scope.editemail = function () {
             $scope.isEditEmail = true;
+            $("#box_submit").removeClass("hidden")
+        }
+        $scope.editpassword = function () {
+            $scope.isEditPassword = true;
             $("#box_submit").removeClass("hidden")
         }
         $scope.getThongTinTaiKhoan = function () {
@@ -139,6 +145,10 @@
         };
         $scope.submit = function () {
             $scope.detail.avatar = $("#Logo").val();
+            if ($scope.detail.matkhau != null && $scope.detail.matkhau != "" && $scope.detail.matkhau.length < 6) {
+                alert("Mật khẩu phải trên 6 ký tự");
+                return;
+            }
             $http({
                 url: urlPut,
                 method: "PUT",

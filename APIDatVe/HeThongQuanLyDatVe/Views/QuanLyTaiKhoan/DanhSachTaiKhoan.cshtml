@@ -166,6 +166,7 @@
                     </div>
                 </div>
                 <div class="modal-footer text-right">
+                    <button ng-if="!isAdd" class="btn btn-sm btn-primary" ng-click="guimailtaikhoan()">Gửi thông tin tài khoản qua email</button>
                     <button class="btn btn-sm btn-success" ng-click="submit()">Lưu</button>
                     <button class="btn btn-sm btn-default" data-dismiss="modal">Hủy</button>
                 </div>
@@ -197,6 +198,7 @@
     var urlPost = 'http://localhost:56893/api/taikhoan/post';
     var urlPut = 'http://localhost:56893/api/taikhoan/put';
     var urlDelete = 'http://localhost:56893/api/taikhoan/change-status';
+    var urlGuiMailTaiKhoan = 'http://localhost:56893/api/taikhoan/gui-thongtin-taikhoan';
     app.controller('controller', ['$scope', '$http', function ($scope, $http) {
         $scope.filter = {
             _tukhoa: '',
@@ -256,9 +258,26 @@
                 alert(response.data.Message);
             })
         };
+        $scope.guimailtaikhoan = function () {
+            $http({
+                url: urlGuiMailTaiKhoan,
+                method: "GET",
+                params: {
+                    _tentaikhoan: $scope.detail.tentaikhoan
+                }
+            }).then(function success(response) {
+                alert("Đã gửi thông tin qua email của tài khoản");
+            }, function error(response) {
+                alert(response.data.Message);
+            })
+        }
         $scope.submit = function () {
             if ($scope.detail.tentaikhoan == "" || $scope.detail.maquyen == "") {
                 alert("Vui lòng nhập đủ thông tin")
+                return;
+            }
+            if ($scope.detail.matkhau != null && $scope.detail.matkhau != "" && $scope.detail.matkhau.length < 6) {
+                alert("Mật khẩu phải trên 6 ký tự")
                 return;
             }
             if ($scope.isAdd) {
