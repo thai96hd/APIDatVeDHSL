@@ -11,5 +11,6 @@ namespace APIDatVe.DTO.DatVe
 		public string matinh;
 		public string tendiemtrungchuyen;
 		public string diachi;
+		public int thutu;
 	}
 }
