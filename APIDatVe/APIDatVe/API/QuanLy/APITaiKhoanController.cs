@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 
 namespace APIDatVe.API.QuanLy
@@ -268,6 +269,31 @@ namespace APIDatVe.API.QuanLy
             }
         }
 
+        [Route("gui-thongtin-taikhoan")]
+        [HttpGet]
+        public IHttpActionResult GuiMailTaiKhoan(string _tentaikhoan)
+        {
+            try
+            {
+                using (var db = new DB())
+                {
+                    TaiKhoan taiKhoan = db.TaiKhoans.FirstOrDefault(x => x.tentaikhoan == _tentaikhoan);
+                    string tokenReset = DataHelper.RandomString(24);
+                    string tokenEncode = HttpUtility.HtmlEncode(Encode.Encrypt(taiKhoan.email + "|" + tokenReset));
+                    string urlResetPasswork = "http://localhost:54328/Login/ResetPasswork?token=" + tokenEncode;
+                    taiKhoan.linklaylaitaikhoan = tokenEncode;
+                    taiKhoan.thoigianyeucaulaylaitk = DateTime.Now.AddDays(1);
+                    db.SaveChanges();
+                    MailHelper.SendMailGuest(taiKhoan.email, "Thông tin tài khoản", "Tài khoản của bạn : " + taiKhoan.tentaikhoan
+                        + ". Vui lòng cập nhật lại mật khẩu theo đường dẫn sau: " + urlResetPasswork);
+                    return Ok(_tentaikhoan);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
     }
 }
