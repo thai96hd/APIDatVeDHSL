@@ -85,12 +85,12 @@
                                             <fieldset>
                                                 <label class="block clearfix">
                                                     <span class="block input-icon input-icon-right">
-                                                        <input type="email" class="form-control" placeholder="Email" />
+                                                        <input ng-model="emailresetpasswork" type="email" class="form-control" placeholder="Email" />
                                                         <i class="ace-icon fa fa-envelope"></i>
                                                     </span>
                                                 </label>
                                                 <div class="clearfix">
-                                                    <button type="button" class="width-35 pull-right btn btn-sm btn-danger">
+                                                    <button ng-click="resetpasswork()" type="button" class="width-35 pull-right btn btn-sm btn-danger">
                                                         <i class="ace-icon fa fa-lightbulb-o"></i>
                                                         <span class="bigger-110">Gửi</span>
                                                     </button>
@@ -138,6 +138,8 @@
             });
             return resultCheck;
         }
+        var urlLogin = "http://localhost:56893/api/login/check-account";
+        var urlResetPasswork = "http://localhost:56893/api/login/reset-account";
         var app = angular.module('app', []);
         app.controller('controller', ['$scope', '$http', function ($scope, $http) {
             $scope.account = {
@@ -150,7 +152,7 @@
                 if (checkRequired()) {
                     $scope.account._saveLogin = $('#login_page_stay_signed').is(':checked');
                     $http({
-                        url: 'http://localhost:56893/api/login/check-account',
+                        url: urlLogin,
                         method: 'POST',
                         data: $scope.account
                     }).then(function success(response) {
@@ -167,6 +169,23 @@
                     alert("Vui lòng nhập đầy đủ tên tài khoản và mật khẩu")
                 }
             };
+            $scope.resetpasswork = function () {
+                if ($scope.emailresetpasswork == null || $scope.emailresetpasswork == "") {
+                    alert("Email không hợp lệ");
+                    return;
+                }
+                $http({
+                    url: urlResetPasswork,
+                    method: 'POST',
+                    data: {
+                        emailresetpasswork: $scope.emailresetpasswork
+                    }
+                }).then(function success(response) {
+                    alert("Thông tin đã được gửi đến email vui lòng vào hòm thư để tiếp tục");
+                }, function error(response) {
+                    alert(response.data.Message);
+                });
+            }
         }]);
 
         function setCookie(cname, cvalue, exdays) {
