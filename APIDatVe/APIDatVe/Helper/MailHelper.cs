@@ -9,8 +9,8 @@ namespace APIDatVe.Helper
 {
     public class ConfigEmail
     {
-        public string Email { get; set; } = "ngoxuanduong23@gmail.com";
-        public string Password { get; set; } = "duongthanthanduong239608";
+        public string Email { get; set; } = "Phuonglinhth238@gmail.com";
+        public string Password { get; set; } = "linh2308";
     }
     public class MailHelper
     {
