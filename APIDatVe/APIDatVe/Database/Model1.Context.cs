@@ -45,6 +45,7 @@ namespace APIDatVe.Database
         public virtual DbSet<Quyen> Quyens { get; set; }
         public virtual DbSet<QuyenAPIQuanLy> QuyenAPIQuanLies { get; set; }
         public virtual DbSet<QuyenManHinhQuanLy> QuyenManHinhQuanLies { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<TaiKhoan> TaiKhoans { get; set; }
         public virtual DbSet<TaiKhoanCauHinh> TaiKhoanCauHinhs { get; set; }
         public virtual DbSet<TinhThanh> TinhThanhs { get; set; }

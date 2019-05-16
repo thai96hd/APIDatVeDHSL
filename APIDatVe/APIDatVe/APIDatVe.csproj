@@ -183,12 +183,15 @@
     <Compile Include="API\QuanLy\APIDiemTrungChuyenController.cs" />
     <Compile Include="API\QuanLy\APIDoiTuongController.cs" />
     <Compile Include="API\QuanLy\APIGheController.cs" />
+    <Compile Include="API\QuanLy\APIKhachHangController.cs" />
     <Compile Include="API\QuanLy\APIKipController.cs" />
     <Compile Include="API\QuanLy\APILoTrinhController.cs" />
     <Compile Include="API\QuanLy\APINhanVienController.cs" />
     <Compile Include="API\QuanLy\APIPhanQuyenController.cs" />
     <Compile Include="API\QuanLy\APIQuyenController.cs" />
+    <Compile Include="API\QuanLy\APISettingController.cs" />
     <Compile Include="API\QuanLy\APITaiKhoanController.cs" />
+    <Compile Include="API\QuanLy\APIThongKeController.cs" />
     <Compile Include="API\QuanLy\APITinhThanhController.cs" />
     <Compile Include="API\QuanLy\APIXeController.cs" />
     <Compile Include="API\QuyenTruyCap\AcceptAction.cs" />
@@ -318,6 +321,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\QuyenManHinhQuanLy.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\sysdiagram.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\TaiKhoan.cs">

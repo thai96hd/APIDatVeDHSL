@@ -143,7 +143,9 @@
     <Compile Include="Controllers\QuanLyTaiKhoanController.cs" />
     <Compile Include="Controllers\QuanLyTinhThanhController.cs" />
     <Compile Include="Controllers\QuanLyXeController.cs" />
+    <Compile Include="Controllers\SettingController.cs" />
     <Compile Include="Controllers\SettingPasswordController.cs" />
+    <Compile Include="Controllers\ThongKeController.cs" />
     <Compile Include="Controllers\TongQuanController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -1433,6 +1435,9 @@
     <Content Include="Views\QuanLyChucVu\DanhSachChucVu.cshtml" />
     <Content Include="Views\QuanLyQuyen\DanhSachQuyen.cshtml" />
     <Content Include="Views\QuanLyNhanVien\DanhSachNhanVien.cshtml" />
+    <Content Include="Views\Setting\SettingStyle.cshtml" />
+    <Content Include="Views\ThongKe\ThongKeDatXe.cshtml" />
+    <Content Include="Views\QuanLyLoTrinh\DanhSachChiTietLoTrinh.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

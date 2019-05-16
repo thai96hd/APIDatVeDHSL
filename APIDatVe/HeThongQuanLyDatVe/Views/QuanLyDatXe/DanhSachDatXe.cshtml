@@ -218,8 +218,8 @@
                     </div>
                 </div>
                 <div class="modal-footer text-right">
-                    <button ng-if="detail.ve.matrangthaive == 1" class="btn btn-sm btn-primary" ng-click="confirmthanhtoanvexe()">Thanh toán vé xe</button>
-                    <button ng-if="detail.ve.matrangthaive == 1" class="btn btn-sm btn-danger" ng-click="confirmhuyvexe()">Hủy vé xe</button>
+                    <button ng-if="detail.ve.matrangthaive == 0" class="btn btn-sm btn-primary" ng-click="confirmthanhtoanvexe()">Thanh toán vé xe</button>
+                    <button ng-if="detail.ve.matrangthaive == 0" class="btn btn-sm btn-danger" ng-click="confirmhuyvexe()">Hủy vé xe</button>
                     <button class="btn btn-sm btn-success" ng-click="submit()">Lưu</button>
                     <button class="btn btn-sm btn-default" data-dismiss="modal">Hủy</button>
                 </div>

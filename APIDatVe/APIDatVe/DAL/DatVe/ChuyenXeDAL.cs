@@ -137,6 +137,7 @@ namespace APIDatVe.DAL.DatVe
 						xeDTO.floor2.Single(p => p.maghe == ghe.maghe).status = 1;
 					}
 				}
+				
 			}
 			return xeDTO;
 		}

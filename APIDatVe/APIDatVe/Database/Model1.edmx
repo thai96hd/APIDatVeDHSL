@@ -212,6 +212,16 @@
           <Property Name="maquyen" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="chon" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
         <EntityType Name="TaiKhoan">
           <Key>
             <PropertyRef Name="tentaikhoan" />
@@ -659,6 +669,7 @@
           <EntitySet Name="Quyen" EntityType="Self.Quyen" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="QuyenAPIQuanLy" EntityType="Self.QuyenAPIQuanLy" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="QuyenManHinhQuanLy" EntityType="Self.QuyenManHinhQuanLy" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TaiKhoan" EntityType="Self.TaiKhoan" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TaiKhoanCauHinh" EntityType="Self.TaiKhoanCauHinh" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TinhThanh" EntityType="Self.TinhThanh" Schema="dbo" store:Type="Tables" />
@@ -1038,6 +1049,16 @@
           <Property Name="chon" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="ManHinhQuanLy" Relationship="Self.FK_QuyenManHinhQuanLy_ManHinhQuanLy" FromRole="QuyenManHinhQuanLy" ToRole="ManHinhQuanLy" />
           <NavigationProperty Name="Quyen" Relationship="Self.FK_QuyenManHinhQuanLy_Quyen" FromRole="QuyenManHinhQuanLy" ToRole="Quyen" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <EntityType Name="TaiKhoan">
           <Key>
@@ -1500,6 +1521,7 @@
           <EntitySet Name="Quyens" EntityType="Self.Quyen" />
           <EntitySet Name="QuyenAPIQuanLies" EntityType="Self.QuyenAPIQuanLy" />
           <EntitySet Name="QuyenManHinhQuanLies" EntityType="Self.QuyenManHinhQuanLy" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="TaiKhoans" EntityType="Self.TaiKhoan" />
           <EntitySet Name="TaiKhoanCauHinhs" EntityType="Self.TaiKhoanCauHinh" />
           <EntitySet Name="TinhThanhs" EntityType="Self.TinhThanh" />
@@ -1854,6 +1876,17 @@
                 <ScalarProperty Name="manhinhquanlyId" ColumnName="manhinhquanlyId" />
                 <ScalarProperty Name="maquyen" ColumnName="maquyen" />
                 <ScalarProperty Name="chon" ColumnName="chon" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="QLDatVe_UDModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

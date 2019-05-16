@@ -306,7 +306,7 @@ namespace APIDatVe.API.QuanLy
                             vexeId = vexeid,
                             machuyenxe = datXe.machuyenxe,
                             khachhangId = khachhangid,
-                            matrangthaive = 1,
+                            matrangthaive = 0,
                             sokhach = datXe.ghes.Count,
                             madiemtrungchuyendon = datXe.madiemtrungchuyendon,
                             madiemtrungchuyentra = datXe.madiemtrungchuyentra,
@@ -333,7 +333,7 @@ namespace APIDatVe.API.QuanLy
                                 vexeId = veXe.vexeId,
                                 tenhanhkhach = datXe.khachhang.hoten,
                                 sodienthoaikhach = datXe.khachhang.sodienthoai,
-                                maghe = x,
+                                maghe = maxe + "_" + x,
                                 doituong = "DTDEFAULT"
                             });
                         });
@@ -445,8 +445,8 @@ namespace APIDatVe.API.QuanLy
                 using (var db = new DB())
                 {
                     VeXe veXe = db.VeXes.FirstOrDefault(x => x.vexeId == _vexeId);
-                    if (veXe.matrangthaive == 1)
-                        veXe.matrangthaive = 2;
+                    if (veXe.matrangthaive == 0)
+                        veXe.matrangthaive = 1;
                     veXe.KhachHang.diemtichluy += int.Parse(veXe.tongtien);
                     db.SaveChanges();
                     return Ok();
@@ -463,11 +463,18 @@ namespace APIDatVe.API.QuanLy
         {
             try
             {
-                using (var db = new DB())
-                {
-                    VeXe veXe = db.VeXes.FirstOrDefault(x => x.vexeId == _vexeId);
-                    if (veXe.matrangthaive == 1)
-                        veXe.matrangthaive = 3;
+				using (var db = new DB())
+				{
+					VeXe veXe = db.VeXes.FirstOrDefault(x => x.vexeId == _vexeId);
+					if (veXe.matrangthaive == 0)
+						veXe.matrangthaive = 3;
+					string machuyenxe = veXe.machuyenxe;
+					IEnumerable<ChiTietVeXe> list = db.ChiTietVeXes.Where<ChiTietVeXe>(p => p.vexeId == veXe.vexeId);
+					List<string> maghes = new List<string>();
+					foreach (ChiTietVeXe ct in list) {
+						Database.TrangThaiGhe trangthaighe = db.TrangThaiGhes.SingleOrDefault(p =>( p.maghe == ct.maghe) && (p.machuyenxe == machuyenxe));
+						trangthaighe.trangthai = 0;
+					}
                     db.SaveChanges();
                     return Ok();
                 }

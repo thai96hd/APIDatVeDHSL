@@ -9,7 +9,7 @@ namespace APIDatVe.DAL
 {
     public class DataProvider
     {
-        private string chuoiketnoi = @"Data Source=.\SqlExpress;Initial Catalog=QLDatVe_UD;User ID=sa; Password=123456";
+        private string chuoiketnoi = @"Data Source=.\SqlExpress;Initial Catalog=QLDatVe_UD;User ID=thai96hd; Password=thaitran1234";
         private static DataProvider instance;
         public static DataProvider Instance
         {
