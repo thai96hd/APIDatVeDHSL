@@ -100,7 +100,11 @@ namespace APIDatVe.API.QuanLy
                         _taikhoan.linklaylaitaikhoan = "";
                         _taikhoan.solandangnhapsai = 0;
                         _taikhoan.matkhau = Encode.MD5(_taikhoan.matkhau);
-
+                        db.TaiKhoanCauHinhs.Add(new TaiKhoanCauHinh()
+                        {
+                            tentaikhoan = _taikhoan.tentaikhoan,
+                            cauhinh = "2"
+                        });
                         db.TaiKhoans.Add(_taikhoan);
                         db.SaveChanges();
                         transaction.Commit();
