@@ -56,18 +56,35 @@ namespace APIDatVe.API.QuanLy
                     LoTrinh loTrinh = db.LoTrinhs.FirstOrDefault(x => x.malotrinh == _malotrinh);
                     List<DiemTrungChuyen> diemTrungChuyensDon = db.DiemTrungChuyens.Where(x => x.matinh == loTrinh.matinhdon).ToList();
                     List<DiemTrungChuyen> diemTrungChuyensTra = db.DiemTrungChuyens.Where(x => x.matinh == loTrinh.matinhtra).ToList();
+                    List<string> maTinhThanhDiQua = db.ChiTietLoTrinhs.Where(x => x.malotrinh == _malotrinh).Select(x => x.TinhThanh.matinh).ToList() ;
+                    if (maTinhThanhDiQua == null)
+                        maTinhThanhDiQua = new List<string>();
+                    List<DiemTrungChuyen> allDiemTrungChuyenTinhThanhDiQua = new List<DiemTrungChuyen>();
+                    maTinhThanhDiQua.ForEach(x =>
+                    {
+                        allDiemTrungChuyenTinhThanhDiQua.AddRange(db.DiemTrungChuyens.Where(y => y.matinh == x).ToList());
+                    });
+                    allDiemTrungChuyenTinhThanhDiQua.ForEach(x =>
+                    {
+                        if (diemTrungChuyensDon.FirstOrDefault(y => y.madiemtrungchuyen == x.madiemtrungchuyen) == null)
+                            diemTrungChuyensDon.Add(x);
+                        if (diemTrungChuyensTra.FirstOrDefault(y => y.madiemtrungchuyen == x.madiemtrungchuyen) == null)
+                            diemTrungChuyensTra.Add(x);
+                    });
                     return Ok(new
                     {
                         diemTrungChuyensDon = diemTrungChuyensDon.Select(x => new
                         {
                             x.madiemtrungchuyen,
-                            x.tendiemtrungchuyen
-                        }),
+                            x.tendiemtrungchuyen,
+                            x.TinhThanh.tentinh
+                        }).ToList(),
                         diemTrungChuyensTra = diemTrungChuyensTra.Select(x => new
                         {
                             x.madiemtrungchuyen,
-                            x.tendiemtrungchuyen
-                        })
+                            x.tendiemtrungchuyen,
+                            x.TinhThanh.tentinh
+                        }).ToList()
                     });
                 }
             }
