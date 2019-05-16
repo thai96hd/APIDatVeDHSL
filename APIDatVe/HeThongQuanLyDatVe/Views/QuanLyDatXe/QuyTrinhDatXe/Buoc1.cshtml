@@ -17,7 +17,7 @@
                 <div>
                     <select ng-model="detail.madiemtrungchuyendon" class="col-xs-12" ng-change="getTuyenDi()">
                         <option value="">Chọn...</option>
-                        <option ng-repeat="item in diemtrungchuyens.diemTrungChuyensDon" value="{{item.madiemtrungchuyen}}">{{item.tendiemtrungchuyen}}</option>
+                        <option ng-repeat="item in diemtrungchuyens.diemTrungChuyensDon" value="{{item.madiemtrungchuyen}}">({{item.tentinh}}) {{item.tendiemtrungchuyen}}</option>
                     </select>
                 </div>
             </div>
@@ -28,7 +28,7 @@
                 <div>
                     <select ng-model="detail.madiemtrungchuyentra" class="col-xs-12" ng-change="getTuyenDi()">
                         <option value="">Chọn...</option>
-                        <option ng-repeat="item in diemtrungchuyens.diemTrungChuyensTra" value="{{item.madiemtrungchuyen}}">{{item.tendiemtrungchuyen}}</option>
+                        <option ng-repeat="item in diemtrungchuyens.diemTrungChuyensTra" value="{{item.madiemtrungchuyen}}">({{item.tentinh}}) {{item.tendiemtrungchuyen}}</option>
                     </select>
                 </div>
             </div>
