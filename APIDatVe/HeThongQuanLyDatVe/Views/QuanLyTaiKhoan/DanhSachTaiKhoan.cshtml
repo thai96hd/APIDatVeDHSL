@@ -27,7 +27,6 @@
                             <th>Quyền</th>
                             <th>Tên tài khoản</th>
                             <th>Họ tên</th>
-                            <th>Email</th>
                             <th class="center">Trạng thái</th>
                             <th class="center">Thao tác</th>
                         </tr>
@@ -45,9 +44,6 @@
                             </td>
                             <td>
                                 {{item.hoten}}
-                            </td>
-                            <td>
-                                {{item.email}}
                             </td>
                             <td class="center">
                                 <span ng-if="item.trangthai == 1">Hoạt động</span>
@@ -146,14 +142,6 @@
                         </div>
                         <div class="col-md-12 margin-md-bottom">
                             <div class="form-group">
-                                <label class="control-label no-padding-right">Email</label>
-                                <div>
-                                    <input type="text" ng-model="detail.email" class="col-xs-12" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-12 margin-md-bottom">
-                            <div class="form-group">
                                 <label class="control-label no-padding-right">Trạng thái</label>
                                 <div>
                                     <select ng-model="detail.trangthai" convert-to-number class="col-xs-12">
@@ -237,7 +225,6 @@
                 maquyen: '',
                 matkhau: '',
                 hoten: '',
-                email: '',
                 trangthai: 1
             }
             $("#modal").modal();

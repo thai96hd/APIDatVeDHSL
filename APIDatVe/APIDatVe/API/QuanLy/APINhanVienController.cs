@@ -28,8 +28,7 @@ namespace APIDatVe.API.QuanLy
                             .Where(x => string.IsNullOrEmpty(_tukhoa)
                                             || x.manhanvien.Contains(_tukhoa)
                                             || x.tentaikhoan.Contains(_tukhoa)
-                                            || x.hoten.Contains(_tukhoa)
-                                            || x.email.Contains(_tukhoa))
+                                            || x.hoten.Contains(_tukhoa))
                             .ToList();
                     int sobanghi = nhanViens.Count;
                     return Ok(new
@@ -41,7 +40,6 @@ namespace APIDatVe.API.QuanLy
                             x.hoten,
                             x.sodienthoai,
                             x.ChucVu.tenchucvu,
-                            x.email,
                             x.TaiKhoan.trangthai
                         }).Skip((_trang - 1) * _sobanghi).Take(_sobanghi).ToList(),
                         sobanghi = sobanghi
@@ -73,7 +71,6 @@ namespace APIDatVe.API.QuanLy
                         sodienthoai = nhanVien.sodienthoai,
                         socmt = nhanVien.socmt,
                         noicap = nhanVien.noicap,
-                        email = nhanVien.email,
                         hoten = nhanVien.hoten,
                         machucvu = nhanVien.machucvu,
                         manhanvien = nhanVien.manhanvien,
@@ -125,7 +122,6 @@ namespace APIDatVe.API.QuanLy
                             {
                                 tentaikhoan = eNhanVien.tentaikhoan,
                                 diachi = eNhanVien.diachi,
-                                email = eNhanVien.email,
                                 hoten = eNhanVien.hoten,
                                 machucvu = eNhanVien.machucvu,
                                 manhanvien = eNhanVien.manhanvien,
@@ -137,7 +133,6 @@ namespace APIDatVe.API.QuanLy
                                 TaiKhoan = new TaiKhoan()
                                 {
                                     hoten = eNhanVien.hoten,
-                                    email = eNhanVien.email,
                                     maquyen = eNhanVien.maquyen,
                                     matkhau = Encode.MD5(eNhanVien.matkhau),
                                     solandangnhapsai = 0,
@@ -155,7 +150,6 @@ namespace APIDatVe.API.QuanLy
                         {
                             oldNhanVien.tentaikhoan = eNhanVien.tentaikhoan;
                             oldNhanVien.diachi = eNhanVien.diachi;
-                            oldNhanVien.email = eNhanVien.email;
                             oldNhanVien.hoten = eNhanVien.hoten;
                             oldNhanVien.machucvu = eNhanVien.machucvu;
                             oldNhanVien.manhanvien = eNhanVien.manhanvien;
@@ -165,7 +159,6 @@ namespace APIDatVe.API.QuanLy
                             oldNhanVien.socmt = eNhanVien.socmt;
                             oldNhanVien.sodienthoai = eNhanVien.sodienthoai;
                             oldNhanVien.TaiKhoan.hoten = eNhanVien.hoten;
-                            oldNhanVien.TaiKhoan.email = eNhanVien.email;
                             oldNhanVien.TaiKhoan.maquyen = eNhanVien.maquyen;
                             oldNhanVien.TaiKhoan.tentaikhoan = eNhanVien.tentaikhoan;
                             oldNhanVien.TaiKhoan.trangthai = eNhanVien.trangthai;
@@ -182,7 +175,7 @@ namespace APIDatVe.API.QuanLy
                             db.ChiTietLaiXes.Add(new ChiTietLaiXe()
                             {
                                 ghichu = eNhanVien.ghichu,
-                                giaypheplaixe = eNhanVien.giaypheplaixe,
+                                giaypheplaixe = eNhanVien.giaypheplaixe ?? " ", // ký hiệu này là nếu null thì giá trị lấy là " "
                                 hanglai = eNhanVien.hanglai,
                                 manhanvien = eNhanVien.manhanvien,
                                 ngaycap = eNhanVien.ngaycaplaixe,
@@ -192,7 +185,7 @@ namespace APIDatVe.API.QuanLy
                         else
                         {
                             chiTietLaiXe.ghichu = eNhanVien.ghichu;
-                            chiTietLaiXe.giaypheplaixe = eNhanVien.giaypheplaixe;
+                            chiTietLaiXe.giaypheplaixe = eNhanVien.giaypheplaixe ?? " ";
                             chiTietLaiXe.hanglai = eNhanVien.hanglai;
                             chiTietLaiXe.ngaycap = eNhanVien.ngaycaplaixe;
                             chiTietLaiXe.noicap = eNhanVien.noicaplaixe;

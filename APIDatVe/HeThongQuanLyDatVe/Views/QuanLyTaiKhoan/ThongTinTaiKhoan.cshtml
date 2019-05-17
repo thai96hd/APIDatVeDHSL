@@ -60,13 +60,11 @@
         </div>
         <div class="col-md-5">
             <div class="form-group clearfix">
-                <label class="control-label no-padding-right">Địa chỉ email</label>
+                <label class="control-label no-padding-right">Tên tài khoản</label>
                 <div ng-cloak>
-                    <label ng-if="!isEditEmail" class="control-label no-padding-right">
-                        <b>{{detail.email}}</b>
+                    <label class="control-label no-padding-right">
+                        <b>{{detail.tentaikhoan}}</b>
                     </label>
-                    <input ng-if="isEditEmail" type="text" ng-model="detail.email" class="form-control" />
-                    <button class="btn btn-primary btn-sm pull-right" ng-click="editemail()">Edit</button>
                 </div>
             </div>
             <div class="form-group clearfix">
@@ -118,12 +116,7 @@
         }
     });
     app.controller('controller', ['$scope', '$http', function ($scope, $http) {
-        $scope.isEditEmail = false;
         $scope.isEditPassword = false;
-        $scope.editemail = function () {
-            $scope.isEditEmail = true;
-            $("#box_submit").removeClass("hidden")
-        }
         $scope.editpassword = function () {
             $scope.isEditPassword = true;
             $("#box_submit").removeClass("hidden")

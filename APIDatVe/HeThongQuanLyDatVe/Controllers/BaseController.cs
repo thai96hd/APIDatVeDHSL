@@ -17,12 +17,16 @@ namespace HeThongQuanLyDatVe.Controllers
                 string token = Request.Cookies["token"].Value;
                 string danhsachmanhinh = Request.Cookies["danhsachmanhinh"].Value;
                 string setingstyle = Request.Cookies["setingstyle"].Value;
+                string avatar = Request.Cookies["avatar"].Value;
+                string hoten = Request.Cookies["hoten"].Value;
                 if (token is null || danhsachmanhinh is null)
                 {
                     return false;
                 }
                 Session["userName"] = Encode.Decrypt(token).Split(':')[0];
                 Session["setingstyle"] = setingstyle;
+                Session["avatar"] = avatar;
+                Session["hoten"] = hoten;
                 Session["acceptScreen"] = JsonConvert.DeserializeObject<List<string>>(Encode.Decrypt(danhsachmanhinh));
                 return true;
             }

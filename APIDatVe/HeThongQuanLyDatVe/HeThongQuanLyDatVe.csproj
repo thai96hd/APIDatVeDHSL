@@ -1346,6 +1346,7 @@
     <Content Include="FileDefault\icon_new_travel_style.png" />
     <Content Include="FileDefault\img-default.gif" />
     <Content Include="FileDefault\login.jpg" />
+    <Content Include="FileDefault\noimg.png" />
     <Content Include="FileDefault\owl.video.play.png" />
     <Content Include="FileDefault\sprites2x.15112018.png" />
     <Content Include="FileDefault\tour_icon2x_why_us.04052017.png" />
@@ -1385,6 +1386,7 @@
     <Content Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
     <Content Include="obj\Debug\HeThongQuanLyDatVe.csproj.CoreCompileInputs.cache" />
     <Content Include="obj\Debug\HeThongQuanLyDatVe.csprojAssemblyReference.cache" />
+    <Content Include="obj\Release\HeThongQuanLyDatVe.csproj.CoreCompileInputs.cache" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -1423,7 +1425,6 @@
     <Content Include="Views\QuanLyKhachHang\DanhSachKhachHang.cshtml" />
     <Content Include="Views\QuanLyLoTrinh\DanhSachLoTrinh.cshtml" />
     <Content Include="Views\QuanLyNhaXe\ThongTinNhaXe.cshtml" />
-    <Content Include="Views\QuanLyTaiKhoan\DanhSachQuyen.cshtml" />
     <Content Include="Views\QuanLyTaiKhoan\DanhSachTaiKhoan.cshtml" />
     <Content Include="Views\QuanLyTaiKhoan\PhanQuyen.cshtml" />
     <Content Include="Views\QuanLyTaiKhoan\ThongTinTaiKhoan.cshtml" />
@@ -1438,6 +1439,7 @@
     <Content Include="Views\Setting\SettingStyle.cshtml" />
     <Content Include="Views\ThongKe\ThongKeDatXe.cshtml" />
     <Content Include="Views\QuanLyLoTrinh\DanhSachChiTietLoTrinh.cshtml" />
+    <Content Include="Views\Login\ResetPasswork.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

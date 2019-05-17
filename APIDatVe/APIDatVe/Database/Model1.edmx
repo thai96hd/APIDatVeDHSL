@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="QLDatVe_UDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="QLDatVeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="APIQuanLy">
           <Key>
             <PropertyRef Name="APIquanlyid" />
@@ -212,16 +212,6 @@
           <Property Name="maquyen" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="chon" Type="bit" Nullable="false" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
-        </EntityType>
         <EntityType Name="TaiKhoan">
           <Key>
             <PropertyRef Name="tentaikhoan" />
@@ -299,6 +289,16 @@
           <Property Name="sohang" Type="int" />
           <Property Name="ghichu" Type="ntext" />
           <Property Name="trangthai" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'QLDatVe.dbo.getBookingNotPayment' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="getBookingNotPayment">
+          <Key>
+            <PropertyRef Name="maghe" />
+            <PropertyRef Name="machuyenxe" />
+          </Key>
+          <Property Name="maghe" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="machuyenxe" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <Association Name="FK_APIQuanLy_NhomAPI">
           <End Role="NhomAPI" Type="Self.NhomAPI" Multiplicity="1" />
@@ -648,7 +648,122 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="QLDatVe_UDModelStoreContainer">
+        <Function Name="getTicketDetailByTicketID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="vexeid" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_addFeedbackCustomer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="madanhgia" Type="varchar" Mode="In" />
+          <Parameter Name="makhachhang" Type="varchar" Mode="In" />
+          <Parameter Name="machuyenxe" Type="varchar" Mode="In" />
+          <Parameter Name="diemdanhgia" Type="int" Mode="In" />
+          <Parameter Name="noidungdanhgia" Type="ntext" Mode="In" />
+        </Function>
+        <Function Name="sp_addTicket" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="vexeid" Type="varchar" Mode="In" />
+          <Parameter Name="machuyenxe" Type="varchar" Mode="In" />
+          <Parameter Name="khachhangid" Type="varchar" Mode="In" />
+          <Parameter Name="matrangthaive" Type="int" Mode="In" />
+          <Parameter Name="tongtien" Type="nchar" Mode="In" />
+          <Parameter Name="sokhach" Type="int" Mode="In" />
+          <Parameter Name="ghichu" Type="nvarchar" Mode="In" />
+          <Parameter Name="madiemtrungchuyendon" Type="varchar" Mode="In" />
+          <Parameter Name="madiemtrungchuyentra" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_addTicketDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="chitietvexeid" Type="varchar" Mode="In" />
+          <Parameter Name="vexeid" Type="varchar" Mode="In" />
+          <Parameter Name="maghe" Type="varchar" Mode="In" />
+          <Parameter Name="tenhanhkhach" Type="nvarchar" Mode="In" />
+          <Parameter Name="sodienthoai" Type="varchar" Mode="In" />
+          <Parameter Name="doituong" Type="nvarchar" Mode="In" />
+          <Parameter Name="machuyenxe" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_checkLogin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="sodienthoai" Type="varchar" Mode="In" />
+          <Parameter Name="matkhau" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_count_car_seatnumber" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="maxe" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_count_seat_empty_byTripID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="machuyenxe" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_getBookingTicketByCustomerID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="makhachhang" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_getInfoPointStartById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="madiemtrungchuyen" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_getListBookingTicketByCustomerID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="makhachhang" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_getSechemaCar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="maxe" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_getStatusSeatByTripId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="machuyenxe" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_gettripbytripId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="malotrinh" Type="varchar" Mode="In" />
+          <Parameter Name="ngayhoatdong" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="sp_journey_book" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="maghe" Type="varchar" Mode="In" />
+          <Parameter Name="machuyenxe" Type="varchar" Mode="In" />
+          <Parameter Name="khachhangId" Type="varchar" Mode="In" />
+          <Parameter Name="matrangthaive" Type="int" Mode="In" />
+          <Parameter Name="tongtien" Type="nchar" Mode="In" />
+          <Parameter Name="sokhach" Type="int" Mode="In" />
+          <Parameter Name="ghichu" Type="ntext" Mode="In" />
+          <Parameter Name="madiemtrungchuyendon" Type="varchar" Mode="In" />
+          <Parameter Name="madiemtrungchuyentra" Type="varchar" Mode="In" />
+          <Parameter Name="tenhanhkhach" Type="nvarchar" Mode="In" />
+          <Parameter Name="sodienthoaikhach" Type="varchar" Mode="In" />
+          <Parameter Name="doituong" Type="nvarchar" Mode="In" />
+          <Parameter Name="trangthai" Type="int" Mode="In" />
+          <Parameter Name="vexeId" Type="varchar" Mode="In" />
+          <Parameter Name="chitietvexeId" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_laythongtingiave" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="madiemtrungchuyendon" Type="varchar" Mode="In" />
+          <Parameter Name="madiemtrungchuyentra" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_listdiemtrungchuyen" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="malotrinh" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_search_customerbyusername" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="username" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_themkhachhang" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="makhachhang" Type="varchar" Mode="In" />
+          <Parameter Name="hoten" Type="nvarchar" Mode="In" />
+          <Parameter Name="diachi" Type="nvarchar" Mode="In" />
+          <Parameter Name="sodienthoai" Type="varchar" Mode="In" />
+          <Parameter Name="email" Type="varchar" Mode="In" />
+          <Parameter Name="matkhau" Type="nvarchar" Mode="In" />
+          <Parameter Name="gioitinh" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_update_password_customer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="username" Type="varchar" Mode="In" />
+          <Parameter Name="password" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_updateCustomeInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="makhachhang" Type="varchar" Mode="In" />
+          <Parameter Name="tenkhachhang" Type="nvarchar" Mode="In" />
+          <Parameter Name="sodienthoai" Type="varchar" Mode="In" />
+          <Parameter Name="diachi" Type="nvarchar" Mode="In" />
+          <Parameter Name="gioitinh" Type="nvarchar" Mode="In" />
+          <Parameter Name="matkhau" Type="nvarchar" Mode="In" />
+          <Parameter Name="email" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_updateSeatStatusNotPayment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="updatetrangthaighe" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="maghe" Type="varchar" Mode="In" />
+          <Parameter Name="trangthai" Type="int" Mode="In" />
+          <Parameter Name="vexeid" Type="varchar" Mode="In" />
+          <Parameter Name="matrangthaive" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="QLDatVeModelStoreContainer">
           <EntitySet Name="APIQuanLy" EntityType="Self.APIQuanLy" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BangGia" EntityType="Self.BangGia" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ChiTietLaiXe" EntityType="Self.ChiTietLaiXe" Schema="dbo" store:Type="Tables" />
@@ -669,7 +784,6 @@
           <EntitySet Name="Quyen" EntityType="Self.Quyen" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="QuyenAPIQuanLy" EntityType="Self.QuyenAPIQuanLy" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="QuyenManHinhQuanLy" EntityType="Self.QuyenManHinhQuanLy" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TaiKhoan" EntityType="Self.TaiKhoan" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TaiKhoanCauHinh" EntityType="Self.TaiKhoanCauHinh" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TinhThanh" EntityType="Self.TinhThanh" Schema="dbo" store:Type="Tables" />
@@ -677,6 +791,12 @@
           <EntitySet Name="TrangThaiVeXe" EntityType="Self.TrangThaiVeXe" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VeXe" EntityType="Self.VeXe" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Xe" EntityType="Self.Xe" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="getBookingNotPayment" EntityType="Self.getBookingNotPayment" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [getBookingNotPayment].[maghe] AS [maghe], 
+    [getBookingNotPayment].[machuyenxe] AS [machuyenxe]
+    FROM [dbo].[getBookingNotPayment] AS [getBookingNotPayment]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_APIQuanLy_NhomAPI" Association="Self.FK_APIQuanLy_NhomAPI">
             <End Role="NhomAPI" EntitySet="NhomAPI" />
             <End Role="APIQuanLy" EntitySet="APIQuanLy" />
@@ -798,7 +918,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="QLDatVe_UDModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="QLDatVeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="APIQuanLy">
           <Key>
             <PropertyRef Name="APIquanlyid" />
@@ -1050,16 +1170,6 @@
           <NavigationProperty Name="ManHinhQuanLy" Relationship="Self.FK_QuyenManHinhQuanLy_ManHinhQuanLy" FromRole="QuyenManHinhQuanLy" ToRole="ManHinhQuanLy" />
           <NavigationProperty Name="Quyen" Relationship="Self.FK_QuyenManHinhQuanLy_Quyen" FromRole="QuyenManHinhQuanLy" ToRole="Quyen" />
         </EntityType>
-        <EntityType Name="sysdiagram">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
         <EntityType Name="TaiKhoan">
           <Key>
             <PropertyRef Name="tentaikhoan" />
@@ -1151,6 +1261,14 @@
           <Property Name="trangthai" Type="Int32" Nullable="false" />
           <NavigationProperty Name="ChuyenXes" Relationship="Self.FK_ChiTietHoatDongXe_Xe" FromRole="Xe" ToRole="ChuyenXe" />
           <NavigationProperty Name="Ghes" Relationship="Self.FK_Ghe_Xe" FromRole="Xe" ToRole="Ghe" />
+        </EntityType>
+        <EntityType Name="getBookingNotPayment">
+          <Key>
+            <PropertyRef Name="maghe" />
+            <PropertyRef Name="machuyenxe" />
+          </Key>
+          <Property Name="maghe" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="machuyenxe" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
         <Association Name="FK_APIQuanLy_NhomAPI">
           <End Role="NhomAPI" Type="Self.NhomAPI" Multiplicity="1" />
@@ -1521,7 +1639,6 @@
           <EntitySet Name="Quyens" EntityType="Self.Quyen" />
           <EntitySet Name="QuyenAPIQuanLies" EntityType="Self.QuyenAPIQuanLy" />
           <EntitySet Name="QuyenManHinhQuanLies" EntityType="Self.QuyenManHinhQuanLy" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="TaiKhoans" EntityType="Self.TaiKhoan" />
           <EntitySet Name="TaiKhoanCauHinhs" EntityType="Self.TaiKhoanCauHinh" />
           <EntitySet Name="TinhThanhs" EntityType="Self.TinhThanh" />
@@ -1529,6 +1646,7 @@
           <EntitySet Name="TrangThaiVeXes" EntityType="Self.TrangThaiVeXe" />
           <EntitySet Name="VeXes" EntityType="Self.VeXe" />
           <EntitySet Name="Xes" EntityType="Self.Xe" />
+          <EntitySet Name="getBookingNotPayments" EntityType="Self.getBookingNotPayment" />
           <AssociationSet Name="FK_APIQuanLy_NhomAPI" Association="Self.FK_APIQuanLy_NhomAPI">
             <End Role="NhomAPI" EntitySet="NhomAPIs" />
             <End Role="APIQuanLy" EntitySet="APIQuanLies" />
@@ -1645,15 +1763,238 @@
             <End Role="TrangThaiVeXe" EntitySet="TrangThaiVeXes" />
             <End Role="VeXe" EntitySet="VeXes" />
           </AssociationSet>
+          <FunctionImport Name="getTicketDetailByTicketID" ReturnType="Collection(QLDatVeModel.getTicketDetailByTicketID_Result)">
+            <Parameter Name="vexeid" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_addFeedbackCustomer">
+            <Parameter Name="madanhgia" Mode="In" Type="String" />
+            <Parameter Name="makhachhang" Mode="In" Type="String" />
+            <Parameter Name="machuyenxe" Mode="In" Type="String" />
+            <Parameter Name="diemdanhgia" Mode="In" Type="Int32" />
+            <Parameter Name="noidungdanhgia" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_addTicket">
+            <Parameter Name="vexeid" Mode="In" Type="String" />
+            <Parameter Name="machuyenxe" Mode="In" Type="String" />
+            <Parameter Name="khachhangid" Mode="In" Type="String" />
+            <Parameter Name="matrangthaive" Mode="In" Type="Int32" />
+            <Parameter Name="tongtien" Mode="In" Type="String" />
+            <Parameter Name="sokhach" Mode="In" Type="Int32" />
+            <Parameter Name="ghichu" Mode="In" Type="String" />
+            <Parameter Name="madiemtrungchuyendon" Mode="In" Type="String" />
+            <Parameter Name="madiemtrungchuyentra" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_addTicketDetail">
+            <Parameter Name="chitietvexeid" Mode="In" Type="String" />
+            <Parameter Name="vexeid" Mode="In" Type="String" />
+            <Parameter Name="maghe" Mode="In" Type="String" />
+            <Parameter Name="tenhanhkhach" Mode="In" Type="String" />
+            <Parameter Name="sodienthoai" Mode="In" Type="String" />
+            <Parameter Name="doituong" Mode="In" Type="String" />
+            <Parameter Name="machuyenxe" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_checkLogin" ReturnType="Collection(Int32)">
+            <Parameter Name="sodienthoai" Mode="In" Type="String" />
+            <Parameter Name="matkhau" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_count_car_seatnumber" ReturnType="Collection(Int32)">
+            <Parameter Name="maxe" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_count_seat_empty_byTripID" ReturnType="Collection(Int32)">
+            <Parameter Name="machuyenxe" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_getBookingTicketByCustomerID" ReturnType="Collection(QLDatVeModel.sp_getBookingTicketByCustomerID_Result)">
+            <Parameter Name="makhachhang" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_getInfoPointStartById" ReturnType="Collection(QLDatVeModel.sp_getInfoPointStartById_Result)">
+            <Parameter Name="madiemtrungchuyen" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_getListBookingTicketByCustomerID" ReturnType="Collection(QLDatVeModel.sp_getListBookingTicketByCustomerID_Result)">
+            <Parameter Name="makhachhang" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_getSechemaCar" ReturnType="Collection(QLDatVeModel.sp_getSechemaCar_Result)">
+            <Parameter Name="maxe" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_getStatusSeatByTripId" ReturnType="Collection(QLDatVeModel.sp_getStatusSeatByTripId_Result)">
+            <Parameter Name="machuyenxe" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_gettripbytripId" ReturnType="Collection(QLDatVeModel.sp_gettripbytripId_Result)">
+            <Parameter Name="malotrinh" Mode="In" Type="String" />
+            <Parameter Name="ngayhoatdong" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_journey_book">
+            <Parameter Name="maghe" Mode="In" Type="String" />
+            <Parameter Name="machuyenxe" Mode="In" Type="String" />
+            <Parameter Name="khachhangId" Mode="In" Type="String" />
+            <Parameter Name="matrangthaive" Mode="In" Type="Int32" />
+            <Parameter Name="tongtien" Mode="In" Type="String" />
+            <Parameter Name="sokhach" Mode="In" Type="Int32" />
+            <Parameter Name="ghichu" Mode="In" Type="String" />
+            <Parameter Name="madiemtrungchuyendon" Mode="In" Type="String" />
+            <Parameter Name="madiemtrungchuyentra" Mode="In" Type="String" />
+            <Parameter Name="tenhanhkhach" Mode="In" Type="String" />
+            <Parameter Name="sodienthoaikhach" Mode="In" Type="String" />
+            <Parameter Name="doituong" Mode="In" Type="String" />
+            <Parameter Name="trangthai" Mode="In" Type="Int32" />
+            <Parameter Name="vexeId" Mode="In" Type="String" />
+            <Parameter Name="chitietvexeId" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_laythongtingiave" ReturnType="Collection(QLDatVeModel.sp_laythongtingiave_Result)">
+            <Parameter Name="madiemtrungchuyendon" Mode="In" Type="String" />
+            <Parameter Name="madiemtrungchuyentra" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_listdiemtrungchuyen" ReturnType="Collection(QLDatVeModel.sp_listdiemtrungchuyen_Result)">
+            <Parameter Name="malotrinh" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_search_customerbyusername" ReturnType="Collection(QLDatVeModel.sp_search_customerbyusername_Result)">
+            <Parameter Name="username" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_themkhachhang">
+            <Parameter Name="makhachhang" Mode="In" Type="String" />
+            <Parameter Name="hoten" Mode="In" Type="String" />
+            <Parameter Name="diachi" Mode="In" Type="String" />
+            <Parameter Name="sodienthoai" Mode="In" Type="String" />
+            <Parameter Name="email" Mode="In" Type="String" />
+            <Parameter Name="matkhau" Mode="In" Type="String" />
+            <Parameter Name="gioitinh" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_update_password_customer">
+            <Parameter Name="username" Mode="In" Type="String" />
+            <Parameter Name="password" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_updateCustomeInfo">
+            <Parameter Name="makhachhang" Mode="In" Type="String" />
+            <Parameter Name="tenkhachhang" Mode="In" Type="String" />
+            <Parameter Name="sodienthoai" Mode="In" Type="String" />
+            <Parameter Name="diachi" Mode="In" Type="String" />
+            <Parameter Name="gioitinh" Mode="In" Type="String" />
+            <Parameter Name="matkhau" Mode="In" Type="String" />
+            <Parameter Name="email" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_updateSeatStatusNotPayment" />
+          <FunctionImport Name="updatetrangthaighe">
+            <Parameter Name="maghe" Mode="In" Type="String" />
+            <Parameter Name="trangthai" Mode="In" Type="Int32" />
+            <Parameter Name="vexeid" Mode="In" Type="String" />
+            <Parameter Name="matrangthaive" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
+        <ComplexType Name="getTicketDetailByTicketID_Result">
+          <Property Type="String" Name="chitietvexeId" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="vexeId" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="maghe" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="tenhanhkhach" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="sodienthoaikhach" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="doituong" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="sp_getBookingTicketByCustomerID_Result">
+          <Property Type="String" Name="vexeId" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="machuyenxe" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="khachhangId" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="matrangthaive" Nullable="true" />
+          <Property Type="String" Name="tongtien" Nullable="true" MaxLength="10" />
+          <Property Type="Int32" Name="sokhach" Nullable="true" />
+          <Property Type="String" Name="ghichu" Nullable="true" MaxLength="Max" />
+          <Property Type="String" Name="madiemtrungchuyendon" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="madiemtrungchuyentra" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="ngaydat" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="ngayhoatdong" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_getInfoPointStartById_Result">
+          <Property Type="String" Name="madiemtrungchuyen" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="matinh" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="tendiemtrungchuyen" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="diachi" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="trangthai" Nullable="false" />
+          <Property Type="String" Name="lat" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="long" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="thutu" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_getListBookingTicketByCustomerID_Result">
+          <Property Type="String" Name="vexeId" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="machuyenxe" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="khachhangId" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="matrangthaive" Nullable="true" />
+          <Property Type="String" Name="tongtien" Nullable="true" MaxLength="10" />
+          <Property Type="Int32" Name="sokhach" Nullable="true" />
+          <Property Type="String" Name="ghichu" Nullable="true" MaxLength="Max" />
+          <Property Type="String" Name="madiemtrungchuyendon" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="madiemtrungchuyentra" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="ngaydat" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="sp_getSechemaCar_Result">
+          <Property Type="String" Name="maghe" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="tang" Nullable="true" />
+          <Property Type="String" Name="maxe" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="vitriX" Nullable="false" />
+          <Property Type="Int32" Name="vitriY" Nullable="false" />
+          <Property Type="Boolean" Name="active" Nullable="true" />
+          <Property Type="String" Name="tenghe" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="ngaycapnhat" Nullable="false" Precision="23" />
+          <Property Type="String" Name="maxe1" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="socot" Nullable="true" />
+          <Property Type="Int32" Name="sohang" Nullable="true" />
+          <Property Type="Int32" Name="soghe" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_getStatusSeatByTripId_Result">
+          <Property Type="String" Name="maghe" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="tang" Nullable="true" />
+          <Property Type="String" Name="maxe" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="vitriX" Nullable="false" />
+          <Property Type="Int32" Name="vitriY" Nullable="false" />
+          <Property Type="Boolean" Name="active" Nullable="true" />
+          <Property Type="String" Name="tenghe" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="ngaycapnhat" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="trangthai" Nullable="true" />
+          <Property Type="String" Name="machuyenxe" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="sp_gettripbytripId_Result">
+          <Property Type="String" Name="machuyenxe" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="malotrinh" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="mataixe" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="makip" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="tenkip" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="maphuxe" Nullable="false" MaxLength="50" />
+          <Property Type="DateTime" Name="ngayhoatdong" Nullable="true" />
+          <Property Type="DateTime" Name="thoigiandungxe" Nullable="true" Precision="23" />
+          <Property Type="String" Name="maxe" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="gio" Nullable="true" />
+          <Property Type="Int32" Name="phut" Nullable="true" />
+          <Property Type="String" Name="tenlotrinh" Nullable="true" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="sp_laythongtingiave_Result">
+          <Property Type="Int32" Name="banggiaId" Nullable="false" />
+          <Property Type="String" Name="madiemtrungchuyendon" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="madiemtrungchuyentra" Nullable="true" MaxLength="50" />
+          <Property Type="Double" Name="giave" Nullable="true" />
+          <Property Type="Double" Name="thoigiandukien" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_listdiemtrungchuyen_Result">
+          <Property Type="String" Name="madiemtrungchuyen" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="tendiemtrungchuyen" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="diachi" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="matinh" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="thutu" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_search_customerbyusername_Result">
+          <Property Type="String" Name="khachhangId" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="madoituong" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="hoten" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="diachi" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="sodienthoai" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="email" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="diemtichluy" Nullable="true" />
+          <Property Type="String" Name="matkhau" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="gioitinh" Nullable="true" MaxLength="10" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="QLDatVe_UDModelStoreContainer" CdmEntityContainer="DB">
+        <EntityContainerMapping StorageEntityContainer="QLDatVeModelStoreContainer" CdmEntityContainer="DB">
           <EntitySetMapping Name="APIQuanLies">
-            <EntityTypeMapping TypeName="QLDatVe_UDModel.APIQuanLy">
+            <EntityTypeMapping TypeName="QLDatVeModel.APIQuanLy">
               <MappingFragment StoreEntitySet="APIQuanLy">
                 <ScalarProperty Name="APIquanlyid" ColumnName="APIquanlyid" />
                 <ScalarProperty Name="manhomapi" ColumnName="manhomapi" />
@@ -1664,7 +2005,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="BangGias">
-            <EntityTypeMapping TypeName="QLDatVe_UDModel.BangGia">
+            <EntityTypeMapping TypeName="QLDatVeModel.BangGia">
               <MappingFragment StoreEntitySet="BangGia">
                 <ScalarProperty Name="banggiaId" ColumnName="banggiaId" />
                 <ScalarProperty Name="madiemtrungchuyendon" ColumnName="madiemtrungchuyendon" />
@@ -1675,7 +2016,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ChiTietLaiXes">
-            <EntityTypeMapping TypeName="QLDatVe_UDModel.ChiTietLaiXe">
+            <EntityTypeMapping TypeName="QLDatVeModel.ChiTietLaiXe">
               <MappingFragment StoreEntitySet="ChiTietLaiXe">
                 <ScalarProperty Name="chitietlaixeId" ColumnName="chitietlaixeId" />
                 <ScalarProperty Name="manhanvien" ColumnName="manhanvien" />
@@ -1688,7 +2029,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ChiTietLoTrinhs">
-            <EntityTypeMapping TypeName="QLDatVe_UDModel.ChiTietLoTrinh">
+            <EntityTypeMapping TypeName="QLDatVeModel.ChiTietLoTrinh">
               <MappingFragment StoreEntitySet="ChiTietLoTrinh">
                 <ScalarProperty Name="machitietlotrinh" ColumnName="machitietlotrinh" />
                 <ScalarProperty Name="malotrinh" ColumnName="malotrinh" />
@@ -1697,7 +2038,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ChiTietVeXes">
-            <EntityTypeMapping TypeName="QLDatVe_UDModel.ChiTietVeXe">
+            <EntityTypeMapping TypeName="QLDatVeModel.ChiTietVeXe">
               <MappingFragment StoreEntitySet="ChiTietVeXe">
                 <ScalarProperty Name="chitietvexeId" ColumnName="chitietvexeId" />
                 <ScalarProperty Name="vexeId" ColumnName="vexeId" />
@@ -1709,7 +2050,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ChucVus">
-            <EntityTypeMapping TypeName="QLDatVe_UDModel.ChucVu">
+            <EntityTypeMapping TypeName="QLDatVeModel.ChucVu">
               <MappingFragment StoreEntitySet="ChucVu">
                 <ScalarProperty Name="machucvu" ColumnName="machucvu" />
                 <ScalarProperty Name="tenchucvu" ColumnName="tenchucvu" />
@@ -1718,7 +2059,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ChuyenXes">
-            <EntityTypeMapping TypeName="QLDatVe_UDModel.ChuyenXe">
+            <EntityTypeMapping TypeName="QLDatVeModel.ChuyenXe">
               <MappingFragment StoreEntitySet="ChuyenXe">
                 <ScalarProperty Name="machuyenxe" ColumnName="machuyenxe" />
                 <ScalarProperty Name="malotrinh" ColumnName="malotrinh" />
@@ -1732,7 +2073,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DanhGias">
-            <EntityTypeMapping TypeName="QLDatVe_UDModel.DanhGia">
+            <EntityTypeMapping TypeName="QLDatVeModel.DanhGia">
               <MappingFragment StoreEntitySet="DanhGia">
                 <ScalarProperty Name="madanhgia" ColumnName="madanhgia" />
                 <ScalarProperty Name="makhachhang" ColumnName="makhachhang" />
@@ -1743,7 +2084,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DiemTrungChuyens">
-            <EntityTypeMapping TypeName="QLDatVe_UDModel.DiemTrungChuyen">
+            <EntityTypeMapping TypeName="QLDatVeModel.DiemTrungChuyen">
               <MappingFragment StoreEntitySet="DiemTrungChuyen">
                 <ScalarProperty Name="madiemtrungchuyen" ColumnName="madiemtrungchuyen" />
                 <ScalarProperty Name="matinh" ColumnName="matinh" />
@@ -1757,7 +2098,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DoiTuongs">
-            <EntityTypeMapping TypeName="QLDatVe_UDModel.DoiTuong">
+            <EntityTypeMapping TypeName="QLDatVeModel.DoiTuong">
               <MappingFragment StoreEntitySet="DoiTuong">
                 <ScalarProperty Name="madoituong" ColumnName="madoituong" />
                 <ScalarProperty Name="tendoituong" ColumnName="tendoituong" />
@@ -1766,7 +2107,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Ghes">
-            <EntityTypeMapping TypeName="QLDatVe_UDModel.Ghe">
+            <EntityTypeMapping TypeName="QLDatVeModel.Ghe">
               <MappingFragment StoreEntitySet="Ghe">
                 <ScalarProperty Name="maghe" ColumnName="maghe" />
                 <ScalarProperty Name="tang" ColumnName="tang" />
@@ -1780,7 +2121,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="KhachHangs">
-            <EntityTypeMapping TypeName="QLDatVe_UDModel.KhachHang">
+            <EntityTypeMapping TypeName="QLDatVeModel.KhachHang">
               <MappingFragment StoreEntitySet="KhachHang">
                 <ScalarProperty Name="khachhangId" ColumnName="khachhangId" />
                 <ScalarProperty Name="madoituong" ColumnName="madoituong" />
@@ -1795,7 +2136,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Kips">
-            <EntityTypeMapping TypeName="QLDatVe_UDModel.Kip">
+            <EntityTypeMapping TypeName="QLDatVeModel.Kip">
               <MappingFragment StoreEntitySet="Kip">
                 <ScalarProperty Name="makip" ColumnName="makip" />
                 <ScalarProperty Name="tenkip" ColumnName="tenkip" />
@@ -1806,7 +2147,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="LoTrinhs">
-            <EntityTypeMapping TypeName="QLDatVe_UDModel.LoTrinh">
+            <EntityTypeMapping TypeName="QLDatVeModel.LoTrinh">
               <MappingFragment StoreEntitySet="LoTrinh">
                 <ScalarProperty Name="malotrinh" ColumnName="malotrinh" />
                 <ScalarProperty Name="matinhtra" ColumnName="matinhtra" />
@@ -1817,7 +2158,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ManHinhQuanLies">
-            <EntityTypeMapping TypeName="QLDatVe_UDModel.ManHinhQuanLy">
+            <EntityTypeMapping TypeName="QLDatVeModel.ManHinhQuanLy">
               <MappingFragment StoreEntitySet="ManHinhQuanLy">
                 <ScalarProperty Name="manhinhquanlyId" ColumnName="manhinhquanlyId" />
                 <ScalarProperty Name="tenmanhinh" ColumnName="tenmanhinh" />
@@ -1826,7 +2167,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="NhanViens">
-            <EntityTypeMapping TypeName="QLDatVe_UDModel.NhanVien">
+            <EntityTypeMapping TypeName="QLDatVeModel.NhanVien">
               <MappingFragment StoreEntitySet="NhanVien">
                 <ScalarProperty Name="manhanvien" ColumnName="manhanvien" />
                 <ScalarProperty Name="hoten" ColumnName="hoten" />
@@ -1843,7 +2184,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="NhomAPIs">
-            <EntityTypeMapping TypeName="QLDatVe_UDModel.NhomAPI">
+            <EntityTypeMapping TypeName="QLDatVeModel.NhomAPI">
               <MappingFragment StoreEntitySet="NhomAPI">
                 <ScalarProperty Name="manhomapi" ColumnName="manhomapi" />
                 <ScalarProperty Name="classname" ColumnName="classname" />
@@ -1852,7 +2193,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Quyens">
-            <EntityTypeMapping TypeName="QLDatVe_UDModel.Quyen">
+            <EntityTypeMapping TypeName="QLDatVeModel.Quyen">
               <MappingFragment StoreEntitySet="Quyen">
                 <ScalarProperty Name="maquyen" ColumnName="maquyen" />
                 <ScalarProperty Name="tenquyen" ColumnName="tenquyen" />
@@ -1860,7 +2201,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="QuyenAPIQuanLies">
-            <EntityTypeMapping TypeName="QLDatVe_UDModel.QuyenAPIQuanLy">
+            <EntityTypeMapping TypeName="QLDatVeModel.QuyenAPIQuanLy">
               <MappingFragment StoreEntitySet="QuyenAPIQuanLy">
                 <ScalarProperty Name="quyenapiquanlyid" ColumnName="quyenapiquanlyid" />
                 <ScalarProperty Name="APIquanlyid" ColumnName="APIquanlyid" />
@@ -1870,7 +2211,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="QuyenManHinhQuanLies">
-            <EntityTypeMapping TypeName="QLDatVe_UDModel.QuyenManHinhQuanLy">
+            <EntityTypeMapping TypeName="QLDatVeModel.QuyenManHinhQuanLy">
               <MappingFragment StoreEntitySet="QuyenManHinhQuanLy">
                 <ScalarProperty Name="quyenmanhinhquanlyId" ColumnName="quyenmanhinhquanlyId" />
                 <ScalarProperty Name="manhinhquanlyId" ColumnName="manhinhquanlyId" />
@@ -1879,19 +2220,8 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="QLDatVe_UDModel.sysdiagram">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="TaiKhoans">
-            <EntityTypeMapping TypeName="QLDatVe_UDModel.TaiKhoan">
+            <EntityTypeMapping TypeName="QLDatVeModel.TaiKhoan">
               <MappingFragment StoreEntitySet="TaiKhoan">
                 <ScalarProperty Name="tentaikhoan" ColumnName="tentaikhoan" />
                 <ScalarProperty Name="maquyen" ColumnName="maquyen" />
@@ -1910,7 +2240,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TaiKhoanCauHinhs">
-            <EntityTypeMapping TypeName="QLDatVe_UDModel.TaiKhoanCauHinh">
+            <EntityTypeMapping TypeName="QLDatVeModel.TaiKhoanCauHinh">
               <MappingFragment StoreEntitySet="TaiKhoanCauHinh">
                 <ScalarProperty Name="taikhoancauhinhId" ColumnName="taikhoancauhinhId" />
                 <ScalarProperty Name="tentaikhoan" ColumnName="tentaikhoan" />
@@ -1919,7 +2249,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TinhThanhs">
-            <EntityTypeMapping TypeName="QLDatVe_UDModel.TinhThanh">
+            <EntityTypeMapping TypeName="QLDatVeModel.TinhThanh">
               <MappingFragment StoreEntitySet="TinhThanh">
                 <ScalarProperty Name="matinh" ColumnName="matinh" />
                 <ScalarProperty Name="tentinh" ColumnName="tentinh" />
@@ -1928,7 +2258,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TrangThaiGhes">
-            <EntityTypeMapping TypeName="QLDatVe_UDModel.TrangThaiGhe">
+            <EntityTypeMapping TypeName="QLDatVeModel.TrangThaiGhe">
               <MappingFragment StoreEntitySet="TrangThaiGhe">
                 <ScalarProperty Name="trangthaigheId" ColumnName="trangthaigheId" />
                 <ScalarProperty Name="maghe" ColumnName="maghe" />
@@ -1939,7 +2269,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TrangThaiVeXes">
-            <EntityTypeMapping TypeName="QLDatVe_UDModel.TrangThaiVeXe">
+            <EntityTypeMapping TypeName="QLDatVeModel.TrangThaiVeXe">
               <MappingFragment StoreEntitySet="TrangThaiVeXe">
                 <ScalarProperty Name="matrangthaive" ColumnName="matrangthaive" />
                 <ScalarProperty Name="tentrangthai" ColumnName="tentrangthai" />
@@ -1947,7 +2277,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="VeXes">
-            <EntityTypeMapping TypeName="QLDatVe_UDModel.VeXe">
+            <EntityTypeMapping TypeName="QLDatVeModel.VeXe">
               <MappingFragment StoreEntitySet="VeXe">
                 <ScalarProperty Name="vexeId" ColumnName="vexeId" />
                 <ScalarProperty Name="machuyenxe" ColumnName="machuyenxe" />
@@ -1963,7 +2293,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Xes">
-            <EntityTypeMapping TypeName="QLDatVe_UDModel.Xe">
+            <EntityTypeMapping TypeName="QLDatVeModel.Xe">
               <MappingFragment StoreEntitySet="Xe">
                 <ScalarProperty Name="maxe" ColumnName="maxe" />
                 <ScalarProperty Name="biensoxe" ColumnName="biensoxe" />
@@ -1975,6 +2305,174 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="getBookingNotPayments">
+            <EntityTypeMapping TypeName="QLDatVeModel.getBookingNotPayment">
+              <MappingFragment StoreEntitySet="getBookingNotPayment">
+                <ScalarProperty Name="maghe" ColumnName="maghe" />
+                <ScalarProperty Name="machuyenxe" ColumnName="machuyenxe" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="getTicketDetailByTicketID" FunctionName="QLDatVeModel.Store.getTicketDetailByTicketID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="QLDatVeModel.getTicketDetailByTicketID_Result">
+                <ScalarProperty Name="chitietvexeId" ColumnName="chitietvexeId" />
+                <ScalarProperty Name="vexeId" ColumnName="vexeId" />
+                <ScalarProperty Name="maghe" ColumnName="maghe" />
+                <ScalarProperty Name="tenhanhkhach" ColumnName="tenhanhkhach" />
+                <ScalarProperty Name="sodienthoaikhach" ColumnName="sodienthoaikhach" />
+                <ScalarProperty Name="doituong" ColumnName="doituong" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_addFeedbackCustomer" FunctionName="QLDatVeModel.Store.sp_addFeedbackCustomer" />
+          <FunctionImportMapping FunctionImportName="sp_addTicket" FunctionName="QLDatVeModel.Store.sp_addTicket" />
+          <FunctionImportMapping FunctionImportName="sp_addTicketDetail" FunctionName="QLDatVeModel.Store.sp_addTicketDetail" />
+          <FunctionImportMapping FunctionImportName="sp_checkLogin" FunctionName="QLDatVeModel.Store.sp_checkLogin" />
+          <FunctionImportMapping FunctionImportName="sp_count_car_seatnumber" FunctionName="QLDatVeModel.Store.sp_count_car_seatnumber" />
+          <FunctionImportMapping FunctionImportName="sp_count_seat_empty_byTripID" FunctionName="QLDatVeModel.Store.sp_count_seat_empty_byTripID" />
+          <FunctionImportMapping FunctionImportName="sp_getBookingTicketByCustomerID" FunctionName="QLDatVeModel.Store.sp_getBookingTicketByCustomerID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="QLDatVeModel.sp_getBookingTicketByCustomerID_Result">
+                <ScalarProperty Name="vexeId" ColumnName="vexeId" />
+                <ScalarProperty Name="machuyenxe" ColumnName="machuyenxe" />
+                <ScalarProperty Name="khachhangId" ColumnName="khachhangId" />
+                <ScalarProperty Name="matrangthaive" ColumnName="matrangthaive" />
+                <ScalarProperty Name="tongtien" ColumnName="tongtien" />
+                <ScalarProperty Name="sokhach" ColumnName="sokhach" />
+                <ScalarProperty Name="ghichu" ColumnName="ghichu" />
+                <ScalarProperty Name="madiemtrungchuyendon" ColumnName="madiemtrungchuyendon" />
+                <ScalarProperty Name="madiemtrungchuyentra" ColumnName="madiemtrungchuyentra" />
+                <ScalarProperty Name="ngaydat" ColumnName="ngaydat" />
+                <ScalarProperty Name="ngayhoatdong" ColumnName="ngayhoatdong" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_getInfoPointStartById" FunctionName="QLDatVeModel.Store.sp_getInfoPointStartById">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="QLDatVeModel.sp_getInfoPointStartById_Result">
+                <ScalarProperty Name="madiemtrungchuyen" ColumnName="madiemtrungchuyen" />
+                <ScalarProperty Name="matinh" ColumnName="matinh" />
+                <ScalarProperty Name="tendiemtrungchuyen" ColumnName="tendiemtrungchuyen" />
+                <ScalarProperty Name="diachi" ColumnName="diachi" />
+                <ScalarProperty Name="trangthai" ColumnName="trangthai" />
+                <ScalarProperty Name="lat" ColumnName="lat" />
+                <ScalarProperty Name="long" ColumnName="long" />
+                <ScalarProperty Name="thutu" ColumnName="thutu" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_getListBookingTicketByCustomerID" FunctionName="QLDatVeModel.Store.sp_getListBookingTicketByCustomerID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="QLDatVeModel.sp_getListBookingTicketByCustomerID_Result">
+                <ScalarProperty Name="vexeId" ColumnName="vexeId" />
+                <ScalarProperty Name="machuyenxe" ColumnName="machuyenxe" />
+                <ScalarProperty Name="khachhangId" ColumnName="khachhangId" />
+                <ScalarProperty Name="matrangthaive" ColumnName="matrangthaive" />
+                <ScalarProperty Name="tongtien" ColumnName="tongtien" />
+                <ScalarProperty Name="sokhach" ColumnName="sokhach" />
+                <ScalarProperty Name="ghichu" ColumnName="ghichu" />
+                <ScalarProperty Name="madiemtrungchuyendon" ColumnName="madiemtrungchuyendon" />
+                <ScalarProperty Name="madiemtrungchuyentra" ColumnName="madiemtrungchuyentra" />
+                <ScalarProperty Name="ngaydat" ColumnName="ngaydat" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_getSechemaCar" FunctionName="QLDatVeModel.Store.sp_getSechemaCar">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="QLDatVeModel.sp_getSechemaCar_Result">
+                <ScalarProperty Name="maghe" ColumnName="maghe" />
+                <ScalarProperty Name="tang" ColumnName="tang" />
+                <ScalarProperty Name="maxe" ColumnName="maxe" />
+                <ScalarProperty Name="vitriX" ColumnName="vitriX" />
+                <ScalarProperty Name="vitriY" ColumnName="vitriY" />
+                <ScalarProperty Name="active" ColumnName="active" />
+                <ScalarProperty Name="tenghe" ColumnName="tenghe" />
+                <ScalarProperty Name="ngaycapnhat" ColumnName="ngaycapnhat" />
+                <ScalarProperty Name="maxe1" ColumnName="maxe1" />
+                <ScalarProperty Name="socot" ColumnName="socot" />
+                <ScalarProperty Name="sohang" ColumnName="sohang" />
+                <ScalarProperty Name="soghe" ColumnName="soghe" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_getStatusSeatByTripId" FunctionName="QLDatVeModel.Store.sp_getStatusSeatByTripId">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="QLDatVeModel.sp_getStatusSeatByTripId_Result">
+                <ScalarProperty Name="maghe" ColumnName="maghe" />
+                <ScalarProperty Name="tang" ColumnName="tang" />
+                <ScalarProperty Name="maxe" ColumnName="maxe" />
+                <ScalarProperty Name="vitriX" ColumnName="vitriX" />
+                <ScalarProperty Name="vitriY" ColumnName="vitriY" />
+                <ScalarProperty Name="active" ColumnName="active" />
+                <ScalarProperty Name="tenghe" ColumnName="tenghe" />
+                <ScalarProperty Name="ngaycapnhat" ColumnName="ngaycapnhat" />
+                <ScalarProperty Name="trangthai" ColumnName="trangthai" />
+                <ScalarProperty Name="machuyenxe" ColumnName="machuyenxe" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_gettripbytripId" FunctionName="QLDatVeModel.Store.sp_gettripbytripId">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="QLDatVeModel.sp_gettripbytripId_Result">
+                <ScalarProperty Name="machuyenxe" ColumnName="machuyenxe" />
+                <ScalarProperty Name="malotrinh" ColumnName="malotrinh" />
+                <ScalarProperty Name="mataixe" ColumnName="mataixe" />
+                <ScalarProperty Name="makip" ColumnName="makip" />
+                <ScalarProperty Name="tenkip" ColumnName="tenkip" />
+                <ScalarProperty Name="maphuxe" ColumnName="maphuxe" />
+                <ScalarProperty Name="ngayhoatdong" ColumnName="ngayhoatdong" />
+                <ScalarProperty Name="thoigiandungxe" ColumnName="thoigiandungxe" />
+                <ScalarProperty Name="maxe" ColumnName="maxe" />
+                <ScalarProperty Name="gio" ColumnName="gio" />
+                <ScalarProperty Name="phut" ColumnName="phut" />
+                <ScalarProperty Name="tenlotrinh" ColumnName="tenlotrinh" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_journey_book" FunctionName="QLDatVeModel.Store.sp_journey_book" />
+          <FunctionImportMapping FunctionImportName="sp_laythongtingiave" FunctionName="QLDatVeModel.Store.sp_laythongtingiave">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="QLDatVeModel.sp_laythongtingiave_Result">
+                <ScalarProperty Name="banggiaId" ColumnName="banggiaId" />
+                <ScalarProperty Name="madiemtrungchuyendon" ColumnName="madiemtrungchuyendon" />
+                <ScalarProperty Name="madiemtrungchuyentra" ColumnName="madiemtrungchuyentra" />
+                <ScalarProperty Name="giave" ColumnName="giave" />
+                <ScalarProperty Name="thoigiandukien" ColumnName="thoigiandukien" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_listdiemtrungchuyen" FunctionName="QLDatVeModel.Store.sp_listdiemtrungchuyen">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="QLDatVeModel.sp_listdiemtrungchuyen_Result">
+                <ScalarProperty Name="madiemtrungchuyen" ColumnName="madiemtrungchuyen" />
+                <ScalarProperty Name="tendiemtrungchuyen" ColumnName="tendiemtrungchuyen" />
+                <ScalarProperty Name="diachi" ColumnName="diachi" />
+                <ScalarProperty Name="matinh" ColumnName="matinh" />
+                <ScalarProperty Name="thutu" ColumnName="thutu" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_search_customerbyusername" FunctionName="QLDatVeModel.Store.sp_search_customerbyusername">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="QLDatVeModel.sp_search_customerbyusername_Result">
+                <ScalarProperty Name="khachhangId" ColumnName="khachhangId" />
+                <ScalarProperty Name="madoituong" ColumnName="madoituong" />
+                <ScalarProperty Name="hoten" ColumnName="hoten" />
+                <ScalarProperty Name="diachi" ColumnName="diachi" />
+                <ScalarProperty Name="sodienthoai" ColumnName="sodienthoai" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="diemtichluy" ColumnName="diemtichluy" />
+                <ScalarProperty Name="matkhau" ColumnName="matkhau" />
+                <ScalarProperty Name="gioitinh" ColumnName="gioitinh" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_themkhachhang" FunctionName="QLDatVeModel.Store.sp_themkhachhang" />
+          <FunctionImportMapping FunctionImportName="sp_update_password_customer" FunctionName="QLDatVeModel.Store.sp_update_password_customer" />
+          <FunctionImportMapping FunctionImportName="sp_updateCustomeInfo" FunctionName="QLDatVeModel.Store.sp_updateCustomeInfo" />
+          <FunctionImportMapping FunctionImportName="sp_updateSeatStatusNotPayment" FunctionName="QLDatVeModel.Store.sp_updateSeatStatusNotPayment" />
+          <FunctionImportMapping FunctionImportName="updatetrangthaighe" FunctionName="QLDatVeModel.Store.updatetrangthaighe" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

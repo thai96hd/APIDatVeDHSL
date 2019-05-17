@@ -10,14 +10,13 @@
 namespace APIDatVe.Database
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class sysdiagram
+    public partial class sp_laythongtingiave_Result
     {
-        public string name { get; set; }
-        public int principal_id { get; set; }
-        public int diagram_id { get; set; }
-        public Nullable<int> version { get; set; }
-        public byte[] definition { get; set; }
+        public int banggiaId { get; set; }
+        public string madiemtrungchuyendon { get; set; }
+        public string madiemtrungchuyentra { get; set; }
+        public Nullable<double> giave { get; set; }
+        public Nullable<double> thoigiandukien { get; set; }
     }
 }

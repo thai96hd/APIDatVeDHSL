@@ -29,7 +29,6 @@
                             <th>Tên tài khoản</th>
                             <th>Chức vụ</th>
                             <th>SĐT</th>
-                            <th>Email</th>
                             <th class="center">Trạng thái</th>
                             <th class="center">Thao tác</th>
                         </tr>
@@ -53,9 +52,6 @@
                             </td>
                             <td>
                                 {{item.sodienthoai}}
-                            </td>
-                            <td>
-                                {{item.email}}
                             </td>
                             <td class="center">
                                 <span ng-if="item.trangthai == 1">Hoạt động</span>
@@ -166,14 +162,6 @@
                                 </div>
                                 <div class="col-md-6 margin-md-bottom">
                                     <div class="form-group">
-                                        <label class="control-label no-padding-right">Email</label>
-                                        <div>
-                                            <input type="text" ng-model="detail.email" class="col-xs-12" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 margin-md-bottom">
-                                    <div class="form-group">
                                         <label class="control-label no-padding-right">Số CMND</label>
                                         <div>
                                             <input type="text" ng-model="detail.socmt" class="col-xs-12" />
@@ -200,7 +188,7 @@
                                     <div class="form-group">
                                         <label class="control-label no-padding-right">Địa chỉ</label>
                                         <div>
-                                            <input type="text" ng-model="detail.diachi" class="col-xs-12" />
+                                            <input type="text" ng-model="detail.diachi" class="col-xs-12" autocomplete="off" />
                                         </div>
                                     </div>
                                 </div>
@@ -233,7 +221,7 @@
                                     <div class="form-group">
                                         <label class="control-label no-padding-right">Mật khẩu <span class="require">(*)</span> </label>
                                         <div>
-                                            <input type="password" ng-model="detail.matkhau" class="col-xs-12" />
+                                            <input type="password" ng-model="detail.matkhau" class="col-xs-12" autocomplete="off" />
                                         </div>
                                     </div>
                                 </div>
@@ -250,7 +238,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-md-12 {{detail.machucvu == 'CV1002' || detail.machucvu == 'CV1004'?'':'hidden'}} ">
                             <h4>Thông tin lái xe (Phần dành cho lái xe)</h4>
                             <hr />
                             <div class="row">
@@ -379,7 +367,6 @@
                 machucvu: '',
                 ngaysinh: new Date('@DateTime.Now.ToString("yyyy-MM-dd")'),
                 sodienthoai: '',
-                email: '',
                 socmt: '',
                 ngaycap: '',
                 tentaikhoan: '',

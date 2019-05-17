@@ -282,13 +282,17 @@ namespace APIDatVe.API.QuanLy
                 using (var db = new DB())
                 {
                     TaiKhoan taiKhoan = db.TaiKhoans.FirstOrDefault(x => x.tentaikhoan == _tentaikhoan);
-                    string tokenReset = DataHelper.RandomString(24);
-                    string tokenEncode = HttpUtility.HtmlEncode(Encode.Encrypt(taiKhoan.email + "|" + tokenReset));
-                    string urlResetPasswork = "http://localhost:54328/Login/ResetPasswork?token=" + tokenEncode;
+                    if (taiKhoan == null)
+                    {
+                        return BadRequest("Gửi email thất bại! Thông tin email/tên tài khoản không tồn tại");
+                    }
+                    string tokenEncode = Encode.MD5(_tentaikhoan);
+                    string urlResetPasswork = "http://localhost:54328/Login/ResetPasswork?email=" + _tentaikhoan + "&token=" + tokenEncode;
                     taiKhoan.linklaylaitaikhoan = tokenEncode;
                     taiKhoan.thoigianyeucaulaylaitk = DateTime.Now.AddDays(1);
                     db.SaveChanges();
-                    MailHelper.SendMailGuest(taiKhoan.email, "Thông tin tài khoản", "Tài khoản của bạn : " + taiKhoan.tentaikhoan
+                    
+                    MailHelper.SendMailGuest(taiKhoan.tentaikhoan, "Thông tin tài khoản", "Tài khoản của bạn : " + taiKhoan.tentaikhoan
                         + ". Vui lòng cập nhật lại mật khẩu theo đường dẫn sau: " + urlResetPasswork);
                     return Ok(_tentaikhoan);
                 }

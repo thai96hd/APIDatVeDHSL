@@ -9,6 +9,20 @@
     {
         settingstyle = int.Parse(Session["setingstyle"].ToString());
     }
+    string userName = "";
+    string avatar = "/FileDefault/noimg.png";
+    if (Session["hoten"] != null)
+    {
+        userName = (string)Session["hoten"];
+    }
+    if (Session["avatar"] != null)
+    {
+        avatar = (string)Session["avatar"];
+        if (avatar.Trim() == "")
+        {
+            avatar = "/FileDefault/noimg.png";
+        }
+    }
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -111,7 +125,7 @@
                 <a href="/" class="navbar-brand">
                     <small>
                         <i class="fa fa-leaf"></i>
-                        Admin
+                        Hệ thống quản lý nhà xe Đồng Hương Sông Lam
                     </small>
                 </a>
             </div>
@@ -120,9 +134,9 @@
                 <ul class="nav ace-nav">
                     <li class="light-blue dropdown-modal">
                         <a data-toggle="dropdown" href="#" class="dropdown-toggle">
-                            <img class="nav-user-photo" src="~/assets/images/avatars/user.jpg" alt="Thông tin tài khoản" />
+                            <img class="nav-user-photo" src="@avatar" alt="Thông tin tài khoản" />
                             <span class="user-info">
-                                <small>Admin</small>
+                                <small>@userName</small>
                             </span>
                             <i class="ace-icon fa fa-caret-down"></i>
                         </a>
