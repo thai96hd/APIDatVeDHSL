@@ -14,9 +14,10 @@ namespace HeThongQuanLyNhaXe.Controllers
             Session["acceptScreen"] = null;
             return RedirectToAction("DangNhap");
         }
-        public ActionResult ResetPasswork(string token)
+        public ActionResult ResetPasswork(string email, string token)
         {
             ViewBag.token = token;
+            ViewBag.email = email;
             return View();
         }
     }
