@@ -85,13 +85,13 @@ namespace APIDatVe.API.QuyenTruyCap
             {
                 using (var db = new DB())
                 {
-                    TaiKhoan taiKhoan = db.TaiKhoans.FirstOrDefault(x => x.email == account.emailresetpasswork || x.tentaikhoan == account.emailresetpasswork);
+                    TaiKhoan taiKhoan = db.TaiKhoans.FirstOrDefault(x => x.tentaikhoan == account.emailresetpasswork);
                     if (taiKhoan == null)
                     {
-                        return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Gửi email thất bại! Thông tin email không tồn tại");
+                        return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Gửi email thất bại! Thông tin email/tên tài khoản không tồn tại");
                     }
-                    string tokenEncode = HttpUtility.HtmlEncode(Encode.Encrypt(account.emailresetpasswork));
-                    string urlResetPasswork = "http://localhost:54328/Login/ResetPasswork?token=" + tokenEncode;
+                    string tokenEncode = Encode.MD5(account.emailresetpasswork);
+                    string urlResetPasswork = "http://localhost:54328/Login/ResetPasswork?email="+ account.emailresetpasswork + "&token=" + tokenEncode;
                     taiKhoan.linklaylaitaikhoan = tokenEncode;
                     taiKhoan.thoigianyeucaulaylaitk = DateTime.Now.AddDays(1);
                     db.SaveChanges();
@@ -113,9 +113,9 @@ namespace APIDatVe.API.QuyenTruyCap
             {
                 using (var db = new DB())
                 {
-                    string tokenParse = Encode.Decrypt(HttpUtility.HtmlDecode(account._token));
-                    string username = tokenParse;
-                    TaiKhoan taiKhoan = db.TaiKhoans.FirstOrDefault(x => x.email == username || x.tentaikhoan == username);
+                    TaiKhoan taiKhoan = db.TaiKhoans.FirstOrDefault(x => x.tentaikhoan == account.emailresetpasswork);
+                    if(taiKhoan == null)
+                        return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Token không hợp lệ");
                     if (taiKhoan.thoigianyeucaulaylaitk < DateTime.Now)
                         return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Đường link hết hiệu lực");
                     if (taiKhoan.linklaylaitaikhoan != account._token)
