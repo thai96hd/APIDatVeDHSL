@@ -90,8 +90,7 @@ namespace APIDatVe.API.QuyenTruyCap
                     {
                         return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Gửi email thất bại! Thông tin email không tồn tại");
                     }
-                    string tokenReset = DataHelper.RandomString(24);
-                    string tokenEncode = HttpUtility.HtmlEncode(Encode.Encrypt(account.emailresetpasswork + "|" + tokenReset));
+                    string tokenEncode = HttpUtility.HtmlEncode(Encode.Encrypt(account.emailresetpasswork));
                     string urlResetPasswork = "http://localhost:54328/Login/ResetPasswork?token=" + tokenEncode;
                     taiKhoan.linklaylaitaikhoan = tokenEncode;
                     taiKhoan.thoigianyeucaulaylaitk = DateTime.Now.AddDays(1);
@@ -115,8 +114,7 @@ namespace APIDatVe.API.QuyenTruyCap
                 using (var db = new DB())
                 {
                     string tokenParse = Encode.Decrypt(HttpUtility.HtmlDecode(account._token));
-                    string[] tokenInfos = tokenParse.Split('|');
-                    string username = tokenInfos[0];
+                    string username = tokenParse;
                     TaiKhoan taiKhoan = db.TaiKhoans.FirstOrDefault(x => x.email == username || x.tentaikhoan == username);
                     if (taiKhoan.thoigianyeucaulaylaitk < DateTime.Now)
                         return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Đường link hết hiệu lực");
