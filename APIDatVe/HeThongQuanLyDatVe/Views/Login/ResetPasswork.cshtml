@@ -132,6 +132,7 @@
                     url: urlCheckToken,
                     method: 'POST',
                     data: {
+                        emailresetpasswork: '@ViewBag.email',
                         _token: '@ViewBag.token'
                     }
                 }).then(function success(response) {
