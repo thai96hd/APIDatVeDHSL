@@ -47,6 +47,9 @@ namespace APIDatVe.DAL.DatVe
 					bangGiaDTO.thoigiandukien = float.Parse(dr["thoigiandukien"].ToString());
 					bangGiaDTO.madiemtrungchuyendon = dr["madiemtrungchuyendon"].ToString();
 					bangGiaDTO.madiemtrungchuyentra = dr["madiemtrungchuyentra"].ToString();
+					DiemTrungChuyenDAL diemTrungChuyenDAL = new DiemTrungChuyenDAL();
+					bangGiaDTO.diemdon = diemTrungChuyenDAL.getInforPointStartByID(bangGiaDTO.madiemtrungchuyendon);
+					bangGiaDTO.diemtra = diemTrungChuyenDAL.getInforPointStartByID(bangGiaDTO.madiemtrungchuyentra);
 					bangGiaDTO.giave = float.Parse(dr["giave"].ToString());
 				}
 				return bangGiaDTO;

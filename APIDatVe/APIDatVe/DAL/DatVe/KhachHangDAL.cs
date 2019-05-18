@@ -128,6 +128,12 @@ namespace APIDatVe.DAL.DatVe
 					VeXeDAL veXeDAL = new VeXeDAL();
 					List<ChiTietVeXeDTO> list = veXeDAL.getTicketDetailByTicketID(khachHangDatVeDTO.vexeid);
 					khachHangDatVeDTO.danhsachve = list;
+
+					// change api
+					ChuyenXeDTO chuyenXeDTO = new ChuyenXeDAL().getTripByID(khachHangDatVeDTO.machuyenxe, madiemdon, madiemtra);
+					khachHangDatVeDTO.chuyenxe = chuyenXeDTO;
+						
+					//
 					khachHangDatVeDTOs.Add(khachHangDatVeDTO);
 				}
 				return khachHangDatVeDTOs;

@@ -51,6 +51,7 @@ namespace APIDatVe.DAL.DatVe
 				chiTietVeXeDTO.sodienthoai = dr["sodienthoaikhach"].ToString();
 				chiTietVeXeDTO.tenhanhkhach = dr["tenhanhkhach"].ToString();
 				chiTietVeXeDTO.maghe = dr["maghe"].ToString();
+				chiTietVeXeDTO.tenghe = dr["tenghe"].ToString();
 				chiTietVeXeDTO.chitietvexeid = dr["chitietvexeid"].ToString();
 				chiTietVeXeDTO.doituong = dr["doituong"].ToString();
 				chiTietVeXeDTO.vexeid = dr["vexeid"].ToString();

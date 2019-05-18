@@ -17,5 +17,6 @@ namespace APIDatVe.DTO.DatVe
 		public int sokhach { get; set; }
 		public DateTime ngaydat { get; set; }
 		public List<ChiTietVeXeDTO> danhsachve { get; set; }
+		public ChuyenXeDTO chuyenxe { get; set; }
 	}
 }

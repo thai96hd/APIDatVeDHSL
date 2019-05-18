@@ -12,5 +12,7 @@ namespace APIDatVe.DTO.DatVe
 		public string madiemtrungchuyentra { get; set; }
 		public float giave { get; set; }
 		public float thoigiandukien { get; set; }
+		public DiemTrungChuyenDTO diemdon { get; set; }
+		public DiemTrungChuyenDTO diemtra { get; set; }
 	}
 }

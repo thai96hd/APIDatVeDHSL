@@ -10,6 +10,7 @@ namespace APIDatVe.DTO.DatVe
 		public string chitietvexeid { get; set; }
 		public string vexeid { get; set; }
 		public string maghe { get; set; }
+		public string tenghe { get; set; }
 		public string tenhanhkhach { get; set; }
 		public string sodienthoai { get; set; }
 		public string doituong { get; set; }

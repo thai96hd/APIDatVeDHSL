@@ -229,5 +229,24 @@ namespace APIDatVe.DAL.DatVe
 			}
 			return gheDTOs;
 		}
+		public ChuyenXeDTO getTripByID(string tripID,string pointStart,string pointEnd) {
+			ChuyenXeDTO chuyenXeDTO = new ChuyenXeDTO();
+			SqlParameter[] parameters = new SqlParameter[] {
+				new SqlParameter("@machuyenxe",tripID)
+			};
+			DataTable dt=DataProvider.Instance.GetData("sp_getInfoTripByID",parameters);
+			if (dt.Rows.Count>0) {
+				DataRow dr = dt.Rows[0];
+				chuyenXeDTO.gioxuatphat = int.Parse(dr["gio"].ToString());
+				chuyenXeDTO.phutxuatphat = int.Parse(dr["phut"].ToString());
+				chuyenXeDTO.malotrinh = dr["malotrinh"].ToString();
+				chuyenXeDTO.makip = dr["makip"].ToString();
+				chuyenXeDTO.ngayhoatdong = DateTime.Parse(dr["ngayhoatdong"].ToString());
+				chuyenXeDTO.biensoxe = dr["biensoxe"].ToString();
+				chuyenXeDTO.maxe = dr["maxe"].ToString();
+			}
+			chuyenXeDTO.banggia = new DiemTrungChuyenDAL().LayThongTinGiaVe(pointStart, pointEnd);
+			return chuyenXeDTO;
+		}
 	}
 }
