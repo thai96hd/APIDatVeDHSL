@@ -68,6 +68,7 @@ namespace APIDatVe.DAL.DatVe
 				diemTrungChuyenDTO.madiemtrungchuyen = dr["madiemtrungchuyen"].ToString();
 				diemTrungChuyenDTO.tendiemtrungchuyen = dr["tendiemtrungchuyen"].ToString();
 				diemTrungChuyenDTO.diachi = dr["diachi"].ToString();
+				diemTrungChuyenDTO.thutu = int.Parse(dr["thutu"].ToString());
 			}
 			return diemTrungChuyenDTO;
 		}
