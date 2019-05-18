@@ -56,7 +56,7 @@ namespace APIDatVe.API.QuanLy
                     LoTrinh loTrinh = db.LoTrinhs.FirstOrDefault(x => x.malotrinh == _malotrinh);
                     List<DiemTrungChuyen> diemTrungChuyensDon = db.DiemTrungChuyens.Where(x => x.matinh == loTrinh.matinhdon).ToList();
                     List<DiemTrungChuyen> diemTrungChuyensTra = db.DiemTrungChuyens.Where(x => x.matinh == loTrinh.matinhtra).ToList();
-                    List<string> maTinhThanhDiQua = db.ChiTietLoTrinhs.Where(x => x.malotrinh == _malotrinh).Select(x => x.TinhThanh.matinh).ToList() ;
+                    List<string> maTinhThanhDiQua = db.ChiTietLoTrinhs.Where(x => x.malotrinh == _malotrinh).Select(x => x.TinhThanh.matinh).ToList();
                     if (maTinhThanhDiQua == null)
                         maTinhThanhDiQua = new List<string>();
                     List<DiemTrungChuyen> allDiemTrungChuyenTinhThanhDiQua = new List<DiemTrungChuyen>();
@@ -351,7 +351,7 @@ namespace APIDatVe.API.QuanLy
 
         [Route("getdanhsachdatxe")]
         [HttpGet]
-        public IHttpActionResult GetDanhSachDatXe(DateTime _tungay, DateTime _denngay, int _trang = 1, int _sobanghi = 100)
+        public IHttpActionResult GetDanhSachDatXe(DateTime _tungay, DateTime _denngay, string _tukhoa = "", int _trang = 1, int _sobanghi = 100)
         {
             try
             {
@@ -359,7 +359,7 @@ namespace APIDatVe.API.QuanLy
                 {
                     _tungay = _tungay.Date;
                     _denngay = _denngay.Date;
-                    List<VeXe> veXes = db.VeXes.Where(x => x.ngaydat.Value >= _tungay && x.ngaydat.Value <= _denngay).ToList();
+                    List<VeXe> veXes = db.VeXes.Where(x => (x.ngaydat.Value >= _tungay && x.ngaydat.Value <= _denngay) && (string.IsNullOrEmpty(_tukhoa) || x.KhachHang.sodienthoai.Contains(_tukhoa))).ToList();
                     int sobanghi = veXes.Count;
                     return Ok(new
                     {
@@ -374,7 +374,7 @@ namespace APIDatVe.API.QuanLy
                             diemdon = db.DiemTrungChuyens.FirstOrDefault(y => y.madiemtrungchuyen == x.madiemtrungchuyendon).tendiemtrungchuyen,
                             diemtra = db.DiemTrungChuyens.FirstOrDefault(y => y.madiemtrungchuyen == x.madiemtrungchuyentra).tendiemtrungchuyen,
                             ngaydat = x.ngaydat.Value.ToString("dd/MM/yyyy HH:mm"),
-                            x.ChiTietVeXes.FirstOrDefault().sodienthoaikhach,
+                            sodienthoaikhach = x.KhachHang.sodienthoai,
                             x.tongtien
                         }).Skip((_trang - 1) * _sobanghi).Take(_sobanghi).ToList(),
                         sobanghi = sobanghi
@@ -420,7 +420,7 @@ namespace APIDatVe.API.QuanLy
                         khachhang = new
                         {
                             veXe.KhachHang.hoten,
-                            veXe.KhachHang.DoiTuong.tendoituong,
+                            tendoituong = veXe.KhachHang.DoiTuong == null ? "Thành viên" : veXe.KhachHang.DoiTuong.tendoituong,
                             veXe.KhachHang.diachi,
                             veXe.KhachHang.sodienthoai,
                             veXe.KhachHang.email,
@@ -463,18 +463,19 @@ namespace APIDatVe.API.QuanLy
         {
             try
             {
-				using (var db = new DB())
-				{
-					VeXe veXe = db.VeXes.FirstOrDefault(x => x.vexeId == _vexeId);
-					if (veXe.matrangthaive == 0)
-						veXe.matrangthaive = 3;
-					string machuyenxe = veXe.machuyenxe;
-					IEnumerable<ChiTietVeXe> list = db.ChiTietVeXes.Where<ChiTietVeXe>(p => p.vexeId == veXe.vexeId);
-					List<string> maghes = new List<string>();
-					foreach (ChiTietVeXe ct in list) {
-						Database.TrangThaiGhe trangthaighe = db.TrangThaiGhes.SingleOrDefault(p =>( p.maghe == ct.maghe) && (p.machuyenxe == machuyenxe));
-						trangthaighe.trangthai = 0;
-					}
+                using (var db = new DB())
+                {
+                    VeXe veXe = db.VeXes.FirstOrDefault(x => x.vexeId == _vexeId);
+                    if (veXe.matrangthaive == 0)
+                        veXe.matrangthaive = 3;
+                    string machuyenxe = veXe.machuyenxe;
+                    IEnumerable<ChiTietVeXe> list = db.ChiTietVeXes.Where<ChiTietVeXe>(p => p.vexeId == veXe.vexeId);
+                    List<string> maghes = new List<string>();
+                    foreach (ChiTietVeXe ct in list)
+                    {
+                        Database.TrangThaiGhe trangthaighe = db.TrangThaiGhes.SingleOrDefault(p => (p.maghe == ct.maghe) && (p.machuyenxe == machuyenxe));
+                        trangthaighe.trangthai = 0;
+                    }
                     db.SaveChanges();
                     return Ok();
                 }
