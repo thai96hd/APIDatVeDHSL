@@ -100,7 +100,7 @@ namespace APIDatVe.API.QuanLy
                         db.ChuyenXes.Add(_chuyenXe);
                         db.SaveChanges();
                         // khởi tạo danh sách ghế đặt có trạng thái mặc định trống toàn bộ trong chuyến
-                        List<Ghe> ghes = db.Ghes.Where(x => x.maxe == _chuyenXe.maxe).ToList();
+                        List<Ghe> ghes = db.Ghes.Where(x => (x.maxe == _chuyenXe.maxe)&&(x.active==true)).ToList();
                         if (ghes == null)
                             ghes = new List<Ghe>();
                         ghes.ForEach(x =>

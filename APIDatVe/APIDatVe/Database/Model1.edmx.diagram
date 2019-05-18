@@ -4,64 +4,64 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="5bf6c049f03a482c85fc978518472573" Name="Diagram1">
-        <EntityTypeShape EntityType="QLDatVeModel.APIQuanLy" Width="1.5" PointX="0.75" PointY="12.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDatVeModel.BangGia" Width="1.5" PointX="10.25" PointY="4.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDatVeModel.ChiTietLaiXe" Width="1.5" PointX="7.5" PointY="15.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDatVeModel.ChiTietLoTrinh" Width="1.5" PointX="13.5" PointY="9.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDatVeModel.ChiTietVeXe" Width="1.5" PointX="18" PointY="15.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDatVeModel.ChucVu" Width="1.5" PointX="3" PointY="23" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDatVeModel.ChuyenXe" Width="1.5" PointX="10.5" PointY="14.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDatVeModel.DanhGia" Width="1.5" PointX="12.75" PointY="15.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDatVeModel.DiemTrungChuyen" Width="1.5" PointX="8" PointY="4.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDatVeModel.DoiTuong" Width="1.5" PointX="8.25" PointY="9" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDatVeModel.Ghe" Width="1.5" PointX="10.5" PointY="22.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDatVeModel.KhachHang" Width="1.5" PointX="10.5" PointY="8.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDatVeModel.Kip" Width="1.5" PointX="8.25" PointY="12.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDatVeModel.LoTrinh" Width="1.5" PointX="8.25" PointY="19.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDatVeModel.ManHinhQuanLy" Width="1.5" PointX="0.75" PointY="7.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDatVeModel.NhanVien" Width="1.5" PointX="5.25" PointY="14.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDatVeModel.NhomAPI" Width="1.5" PointX="1.5" PointY="20.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDatVeModel.Quyen" Width="1.5" PointX="0.75" PointY="10" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDatVeModel.QuyenAPIQuanLy" Width="1.5" PointX="3" PointY="9.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDatVeModel.QuyenManHinhQuanLy" Width="1.5" PointX="3" PointY="6.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDatVeModel.TaiKhoan" Width="1.5" PointX="3" PointY="14.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDatVeModel.TaiKhoanCauHinh" Width="1.5" PointX="5.25" PointY="20.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDatVeModel.TinhThanh" Width="1.5" PointX="5.75" PointY="3" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDatVeModel.TrangThaiGhe" Width="1.5" PointX="12.75" PointY="22.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDatVeModel.TrangThaiVeXe" Width="1.5" PointX="13.5" PointY="13" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDatVeModel.VeXe" Width="1.5" PointX="15.75" PointY="15" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDatVeModel.Xe" Width="1.5" PointX="8.25" PointY="22.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="QLDatVeModel.getBookingNotPayment" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <AssociationConnector Association="QLDatVeModel.FK_APIQuanLy_NhomAPI" ManuallyRouted="false" />
-        <AssociationConnector Association="QLDatVeModel.FK_QuyenAPIQuanLy_APIQuanLy" ManuallyRouted="false" />
-        <AssociationConnector Association="QLDatVeModel.FK_BangGia_DiemChungChuyen" ManuallyRouted="false" />
-        <AssociationConnector Association="QLDatVeModel.FK_BangGia_DiemChungChuyen1" ManuallyRouted="false" />
-        <AssociationConnector Association="QLDatVeModel.FK_ChiTietLaiXe_NhanVien" ManuallyRouted="false" />
-        <AssociationConnector Association="QLDatVeModel.FK_ChiTietLoTrinh_LoTrinh" ManuallyRouted="false" />
-        <AssociationConnector Association="QLDatVeModel.FK_ChiTietLoTrinh_TinhThanh" ManuallyRouted="false" />
-        <AssociationConnector Association="QLDatVeModel.FK_ChiTietVeXe_VeXe" ManuallyRouted="false" />
-        <AssociationConnector Association="QLDatVeModel.FK_NhanVien_ChucVu" ManuallyRouted="false" />
-        <AssociationConnector Association="QLDatVeModel.FK_ChiTietHoatDongXe_Kip" ManuallyRouted="false" />
-        <AssociationConnector Association="QLDatVeModel.FK_ChiTietHoatDongXe_NhanVien" ManuallyRouted="false" />
-        <AssociationConnector Association="QLDatVeModel.FK_ChiTietHoatDongXe_NhanVien1" ManuallyRouted="false" />
-        <AssociationConnector Association="QLDatVeModel.FK_ChiTietHoatDongXe_Xe" ManuallyRouted="false" />
-        <AssociationConnector Association="QLDatVeModel.FK_ChuyenXe_LoTrinh" ManuallyRouted="false" />
-        <AssociationConnector Association="QLDatVeModel.FK_DanhGia_ChuyenXe" ManuallyRouted="false" />
-        <AssociationConnector Association="QLDatVeModel.FK_VeXe_ChuyenXe" ManuallyRouted="false" />
-        <AssociationConnector Association="QLDatVeModel.FK_DanhGia_KhachHang" ManuallyRouted="false" />
-        <AssociationConnector Association="QLDatVeModel.FK_DiemChungChuyen_TinhThanh" ManuallyRouted="false" />
-        <AssociationConnector Association="QLDatVeModel.FK_KhachHang_DoiTuong" ManuallyRouted="false" />
-        <AssociationConnector Association="QLDatVeModel.FK_Ghe_Xe" ManuallyRouted="false" />
-        <AssociationConnector Association="QLDatVeModel.FK_TrangThaiGhe_Ghe" ManuallyRouted="false" />
-        <AssociationConnector Association="QLDatVeModel.FK_VeXe_KhachHang1" ManuallyRouted="false" />
-        <AssociationConnector Association="QLDatVeModel.FK_QuyenManHinhQuanLy_ManHinhQuanLy" ManuallyRouted="false" />
-        <AssociationConnector Association="QLDatVeModel.FK_NhanVien_TaiKhoan" ManuallyRouted="false" />
-        <AssociationConnector Association="QLDatVeModel.FK_QuyenAPIQuanLy_Quyen" ManuallyRouted="false" />
-        <AssociationConnector Association="QLDatVeModel.FK_QuyenManHinhQuanLy_Quyen" ManuallyRouted="false" />
-        <AssociationConnector Association="QLDatVeModel.FK_TaiKhoan_Quyen" ManuallyRouted="false" />
-        <AssociationConnector Association="QLDatVeModel.FK_TaiKhoanCauHinh_TaiKhoan" ManuallyRouted="false" />
-        <AssociationConnector Association="QLDatVeModel.FK_VeXe_TrangThaiVeXe" ManuallyRouted="false" />
+      <Diagram DiagramId="4c5c42241ef5456b8199226b62eb98a6" Name="Diagram1">
+        <EntityTypeShape EntityType="QLDatVe_UDModel.APIQuanLy" Width="1.5" PointX="0.75" PointY="12.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDatVe_UDModel.BangGia" Width="1.5" PointX="10.25" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDatVe_UDModel.ChiTietLaiXe" Width="1.5" PointX="7.5" PointY="15.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDatVe_UDModel.ChiTietLoTrinh" Width="1.5" PointX="13.5" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDatVe_UDModel.ChiTietVeXe" Width="1.5" PointX="18" PointY="15.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDatVe_UDModel.ChucVu" Width="1.5" PointX="3" PointY="23" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDatVe_UDModel.ChuyenXe" Width="1.5" PointX="10.5" PointY="14.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDatVe_UDModel.DanhGia" Width="1.5" PointX="12.75" PointY="15.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDatVe_UDModel.DiemTrungChuyen" Width="1.5" PointX="8" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDatVe_UDModel.DoiTuong" Width="1.5" PointX="8.25" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDatVe_UDModel.Ghe" Width="1.5" PointX="10.5" PointY="22.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDatVe_UDModel.KhachHang" Width="1.5" PointX="10.5" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDatVe_UDModel.Kip" Width="1.5" PointX="8.25" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDatVe_UDModel.LoTrinh" Width="1.5" PointX="8.25" PointY="19.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDatVe_UDModel.ManHinhQuanLy" Width="1.5" PointX="0.75" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDatVe_UDModel.NhanVien" Width="1.5" PointX="5.25" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDatVe_UDModel.NhomAPI" Width="1.5" PointX="1.5" PointY="20.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDatVe_UDModel.Quyen" Width="1.5" PointX="0.75" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDatVe_UDModel.QuyenAPIQuanLy" Width="1.5" PointX="3" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDatVe_UDModel.QuyenManHinhQuanLy" Width="1.5" PointX="3" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDatVe_UDModel.sysdiagram" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDatVe_UDModel.TaiKhoan" Width="1.5" PointX="3" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDatVe_UDModel.TaiKhoanCauHinh" Width="1.5" PointX="5.25" PointY="20.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDatVe_UDModel.TinhThanh" Width="1.5" PointX="5.75" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDatVe_UDModel.TrangThaiGhe" Width="1.5" PointX="12.75" PointY="22.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDatVe_UDModel.TrangThaiVeXe" Width="1.5" PointX="13.5" PointY="13" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDatVe_UDModel.VeXe" Width="1.5" PointX="15.75" PointY="15" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDatVe_UDModel.Xe" Width="1.5" PointX="8.25" PointY="22.5" IsExpanded="true" />
+        <AssociationConnector Association="QLDatVe_UDModel.FK_APIQuanLy_NhomAPI" ManuallyRouted="false" />
+        <AssociationConnector Association="QLDatVe_UDModel.FK_QuyenAPIQuanLy_APIQuanLy" ManuallyRouted="false" />
+        <AssociationConnector Association="QLDatVe_UDModel.FK_BangGia_DiemChungChuyen" ManuallyRouted="false" />
+        <AssociationConnector Association="QLDatVe_UDModel.FK_BangGia_DiemChungChuyen1" ManuallyRouted="false" />
+        <AssociationConnector Association="QLDatVe_UDModel.FK_ChiTietLaiXe_NhanVien" ManuallyRouted="false" />
+        <AssociationConnector Association="QLDatVe_UDModel.FK_ChiTietLoTrinh_LoTrinh" ManuallyRouted="false" />
+        <AssociationConnector Association="QLDatVe_UDModel.FK_ChiTietLoTrinh_TinhThanh" ManuallyRouted="false" />
+        <AssociationConnector Association="QLDatVe_UDModel.FK_ChiTietVeXe_VeXe" ManuallyRouted="false" />
+        <AssociationConnector Association="QLDatVe_UDModel.FK_NhanVien_ChucVu" ManuallyRouted="false" />
+        <AssociationConnector Association="QLDatVe_UDModel.FK_ChiTietHoatDongXe_Kip" ManuallyRouted="false" />
+        <AssociationConnector Association="QLDatVe_UDModel.FK_ChiTietHoatDongXe_NhanVien" ManuallyRouted="false" />
+        <AssociationConnector Association="QLDatVe_UDModel.FK_ChiTietHoatDongXe_NhanVien1" ManuallyRouted="false" />
+        <AssociationConnector Association="QLDatVe_UDModel.FK_ChiTietHoatDongXe_Xe" ManuallyRouted="false" />
+        <AssociationConnector Association="QLDatVe_UDModel.FK_ChuyenXe_LoTrinh" ManuallyRouted="false" />
+        <AssociationConnector Association="QLDatVe_UDModel.FK_DanhGia_ChuyenXe" ManuallyRouted="false" />
+        <AssociationConnector Association="QLDatVe_UDModel.FK_VeXe_ChuyenXe" ManuallyRouted="false" />
+        <AssociationConnector Association="QLDatVe_UDModel.FK_DanhGia_KhachHang" ManuallyRouted="false" />
+        <AssociationConnector Association="QLDatVe_UDModel.FK_DiemChungChuyen_TinhThanh" ManuallyRouted="false" />
+        <AssociationConnector Association="QLDatVe_UDModel.FK_KhachHang_DoiTuong" ManuallyRouted="false" />
+        <AssociationConnector Association="QLDatVe_UDModel.FK_Ghe_Xe" ManuallyRouted="false" />
+        <AssociationConnector Association="QLDatVe_UDModel.FK_TrangThaiGhe_Ghe" ManuallyRouted="false" />
+        <AssociationConnector Association="QLDatVe_UDModel.FK_VeXe_KhachHang1" ManuallyRouted="false" />
+        <AssociationConnector Association="QLDatVe_UDModel.FK_QuyenManHinhQuanLy_ManHinhQuanLy" ManuallyRouted="false" />
+        <AssociationConnector Association="QLDatVe_UDModel.FK_NhanVien_TaiKhoan" ManuallyRouted="false" />
+        <AssociationConnector Association="QLDatVe_UDModel.FK_QuyenAPIQuanLy_Quyen" ManuallyRouted="false" />
+        <AssociationConnector Association="QLDatVe_UDModel.FK_QuyenManHinhQuanLy_Quyen" ManuallyRouted="false" />
+        <AssociationConnector Association="QLDatVe_UDModel.FK_TaiKhoan_Quyen" ManuallyRouted="false" />
+        <AssociationConnector Association="QLDatVe_UDModel.FK_TaiKhoanCauHinh_TaiKhoan" ManuallyRouted="false" />
+        <AssociationConnector Association="QLDatVe_UDModel.FK_VeXe_TrangThaiVeXe" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
