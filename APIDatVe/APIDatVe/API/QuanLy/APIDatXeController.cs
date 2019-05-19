@@ -109,7 +109,7 @@ namespace APIDatVe.API.QuanLy
                     chuyenXes.ForEach(x =>
                     {
                         DateTime ngayChuyenXe = new DateTime(x.ngayhoatdong.Value.Year, x.ngayhoatdong.Value.Month, x.ngayhoatdong.Value.Day, x.Kip.gio.Value, x.Kip.phut.Value, 0);
-                        if (ngayChuyenXe >= dateTimeNow)
+                        if (ngayChuyenXe.Date >= dateTimeNow.Date)
                         {
                             chuyenXesFilter.Add(x);
                         }
