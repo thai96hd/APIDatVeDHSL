@@ -13,7 +13,7 @@ namespace APIDatVe.DAL.PhuXe
 		{
 
 			SqlParameter[] parameters = new SqlParameter[] {
-				new SqlParameter("@maghe",trangThaiGhe.maghe),
+				//new SqlParameter("@maghe",trangThaiGhe.maghe),
 				new SqlParameter("@trangthai",trangThaiGhe.trangthai),
 				new SqlParameter("@vexeid",trangThaiGhe.vexeId),
 				new SqlParameter("@matrangthaive",trangThaiGhe.matrangthaive)
