@@ -136,7 +136,7 @@ namespace APIDatVe.API.QuanLy
                             phuxe = x.NhanVien1.hoten,
                             x.ngayhoatdong,
                             giave,
-                            soghetrong = db.TrangThaiGhes.Where(y => y.Ghe.maxe == x.maxe && y.ngay.Value == ngaydi && y.trangthai == 0).Count()
+                            soghetrong = db.TrangThaiGhes.Where(y => y.Ghe.maxe == x.maxe && y.machuyenxe==x.machuyenxe && y.trangthai == 0).Count()
                         }).ToList())
                     });
                 }
@@ -157,7 +157,7 @@ namespace APIDatVe.API.QuanLy
                 {
                     ngaydi = ngaydi.Date;
                     List<Database.TrangThaiGhe> trangThaiGhes = db.TrangThaiGhes
-                            .Where(x => x.machuyenxe == machuyenxe)
+                            .Where(x => x.machuyenxe == machuyenxe && x.Ghe.active==true)
                             .ToList();
                     List<GheHang> ghesAllTang1 = new List<GheHang>();
                     List<GheHang> ghesAllTang2 = new List<GheHang>();

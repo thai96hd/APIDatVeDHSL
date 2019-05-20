@@ -66,9 +66,10 @@ namespace APIDatVe.API.QuyenTruyCap
                             if (taiKhoan.solandangnhapsai >= 5)
                             {
                                 taiKhoan.trangthai = (int)Constant.KHOA;
-                                db.SaveChanges();
+                                
                             }
-                        }
+							db.SaveChanges();
+						}
                         return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Tài khoản hoặc mật khẩu không đúng");
                     }
                 }

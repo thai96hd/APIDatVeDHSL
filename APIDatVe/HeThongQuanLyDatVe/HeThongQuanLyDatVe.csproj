@@ -1440,12 +1440,12 @@
     <Content Include="Views\ThongKe\ThongKeDatXe.cshtml" />
     <Content Include="Views\QuanLyLoTrinh\DanhSachChiTietLoTrinh.cshtml" />
     <Content Include="Views\Login\ResetPasswork.cshtml" />
+    <Content Include="Views\QuanLyChuyenXe\DanhSachChuyenXe.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="ckfinder\bin\" />
     <Folder Include="obj\Debug\TempPE\" />
-    <Folder Include="Views\QuanLyChuyenXe\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

@@ -1,47 +1,47 @@
 ﻿@{
-    List<string> acceptScreen = (List<string>)Session["acceptScreen"];
-    if (acceptScreen == null)
-    {
-        acceptScreen = new List<string>();
-    }
-    int settingstyle = 1;
-    if (Session["setingstyle"] != null)
-    {
-        settingstyle = int.Parse(Session["setingstyle"].ToString());
-    }
-    string userName = "";
-    string avatar = "/FileDefault/noimg.png";
-    if (Session["hoten"] != null)
-    {
-        userName = (string)Session["hoten"];
-    }
-    if (Session["avatar"] != null)
-    {
-        avatar = (string)Session["avatar"];
-        if (avatar.Trim() == "")
-        {
-            avatar = "/FileDefault/noimg.png";
-        }
-    }
+	List<string> acceptScreen = (List<string>)Session["acceptScreen"];
+	if (acceptScreen == null)
+	{
+		acceptScreen = new List<string>();
+	}
+	int settingstyle = 1;
+	if (Session["setingstyle"] != null)
+	{
+		settingstyle = int.Parse(Session["setingstyle"].ToString());
+	}
+	string userName = "";
+	string avatar = "/FileDefault/noimg.png";
+	if (Session["hoten"] != null)
+	{
+		userName = (string)Session["hoten"];
+	}
+	if (Session["avatar"] != null)
+	{
+		avatar = (string)Session["avatar"];
+		if (avatar.Trim() == "")
+		{
+			avatar = "/FileDefault/noimg.png";
+		}
+	}
 }
 <!DOCTYPE html>
-<html lang="en">
+<html >
 <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <meta charset="utf-8" />
-    <title>@ViewBag.Title</title>
-    <link rel="stylesheet" href="~/assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/assets/font-awesome/4.5.0/css/font-awesome.min.css" />
-    <link rel="stylesheet" href="~/assets/css/fonts.googleapis.com.css" />
-    <link rel="stylesheet" href="~/assets/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
-    <link rel="stylesheet" href="~/assets/css/ace-skins.min.css" />
-    <link rel="stylesheet" href="~/assets/css/ace-rtl.min.css" />
-    <script src="~/assets/js/ace-extra.min.js"></script>
-    <script src="~/assets/js/jquery-2.1.4.min.js"></script>
-    <link href="~/Content/style.css" rel="stylesheet" />
-    <script src="~/Scripts/angular.min.js"></script>
-    <script src="~/Scripts/angular-sanitize.min.js"></script>
-    <script src="~/Scripts/layout-angular.js"></script>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta charset="utf-8" />
+	<title>@ViewBag.Title</title>
+	<link rel="stylesheet" href="~/assets/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="~/assets/font-awesome/4.5.0/css/font-awesome.min.css" />
+	<link rel="stylesheet" href="~/assets/css/fonts.googleapis.com.css" />
+	<link rel="stylesheet" href="~/assets/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
+	<link rel="stylesheet" href="~/assets/css/ace-skins.min.css" />
+	<link rel="stylesheet" href="~/assets/css/ace-rtl.min.css" />
+	<script src="~/assets/js/ace-extra.min.js"></script>
+	<script src="~/assets/js/jquery-2.1.4.min.js"></script>
+	<link href="~/Content/style.css" rel="stylesheet" />
+	<script src="~/Scripts/angular.min.js"></script>
+	<script src="~/Scripts/angular-sanitize.min.js"></script>
+	<script src="~/Scripts/layout-angular.js"></script>
 </head>
 @if (settingstyle == 1)
 {
