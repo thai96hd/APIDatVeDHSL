@@ -27,7 +27,7 @@ namespace APIDatVe.DAL.PhuXe
 
             command.Parameters.AddWithValue("@matkhau", taiKhoanDTO.matkhau);
 
-            command.Parameters.AddWithValue("@machucvu", "CV1004");
+            command.Parameters.AddWithValue("@machucvu", "CV1002");
 
             SqlDataReader rowsAffected = command.ExecuteReader();
 
@@ -85,7 +85,7 @@ namespace APIDatVe.DAL.PhuXe
 
             command.Parameters.AddWithValue("@tentaikhoan", tentaikhoan);
 
-            command.Parameters.AddWithValue("@machucvu", "CV1004");
+            command.Parameters.AddWithValue("@machucvu", "CV1002");
 
             SqlDataReader rowsAffected = command.ExecuteReader();
 
